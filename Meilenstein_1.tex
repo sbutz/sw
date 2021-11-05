@@ -1,0 +1,213 @@
+\documentclass[12pt, a4paper, titlepage]{article}
+
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=3cm}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{parskip}
+\usepackage[colorlinks, citecolor=black, filecolor=black, linkcolor=black,       
+	urlcolor=black]{hyperref} 
+
+\usepackage{booktabs}
+
+
+\begin{document}
+
+\title{1. Meilenstein im Fach Softwareentwicklung}
+\author{Stefan Butz \\
+		Studiengruppen: IN7 \\
+		Matrikelnummer: 3175600}
+
+\maketitle
+
+\section{TODO}
+\begin{itemize}
+	\item Ist die Darstellung der externen System so in Ordnung?
+	\item Modell mit highlighted Änderungen darstellen
+\end{itemize}
+
+\section{Einleitung}
+Dieses Dokument enthält die geforderten Bausteine für den ersten Meilenstein
+im Fach Softwareentwicklung.
+Als Softwareprojekt soll eine webbasierte Handelsplattform für Wertpapiere
+realisiert werden.
+Schnittstellen gibt es zu den Partnerprojekten \textit{Amann Banking} von Sina
+Amann und \textit{investy} von Andreas Huber.
+Eine genaue Beschreibung der Schnittstellen finden sich in
+\autoref{subsec:Schnittstellen}.
+
+\section{Anwendungsfälle}
+\label{sec:use_case}
+\subsection{Anwendungsfalldiagramm}
+Die wesentlichen Funktionen, welche die Handelsplattform  bieten soll, werden in
+\autoref{fig:use_case} dargestellt und im Folgenden genauer erläutert.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth]{Use-Case-Diagramm.png}
+	\caption{Use-Case-Diagramm mit wesentlichen Anwendungsfällen}
+	\label{fig:use_case}
+\end{figure}
+
+\subsection{Use-Case-Beschreibungen}
+\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+	\hline
+	Use-Case & Wertpapiere abfragen \\
+	\hline
+	Vorbedingungen & - \\
+	\hline
+	Wesentliche Schritte &
+		\begin{itemize}
+			\item Auflistung der Wertpapiere oder Kursabfrage zu einem Wertpapier
+		\end{itemize} \\
+	\hline
+	Nachbedingungen & - \\
+	\hline
+\end{tabular}\par
+
+\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+	\hline
+	Use-Case & Auftrag erstellen \\
+	\hline
+	Vorbedingungen &
+		\begin{itemize}
+			\item Benutzer wurde angelegt
+			\item Wertpapier, dass gehandelt werden soll, wurde angelegt
+		\end{itemize} \\
+	\hline
+	Wesentliche Schritte &
+		\begin{itemize}
+			\item Mit Namen und Passwort anmelden
+			\item Auftrag ausfüllen (Welches Wertpapier soll in welcher Anzahl und zu
+			welchem Maximalpreis gekauft bzw. zu welchem Minimalpreis verkauft werden?)
+			\item Auftrag abschicken
+			\item Auftragsbestätigung erhalten
+			\item Status des Auftrages mithilfe der Auftragsnummer abfragen
+		\end{itemize} \\
+	\hline
+	Nachbedingungen &
+		\begin{itemize}
+			\item Auftrag wird ausgeführt sobald ein passender Gegenauftrag gefunden
+			wird
+			\item Geld wird auf das angegebene Konto überwiesen bzw. vom angegeben Konto
+			eingezogen
+		\end{itemize} \\
+	\hline
+\end{tabular}\par
+
+\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+	\hline
+	Use-Case & Auftrag stornieren \\
+	\hline
+	Vorbedingungen &
+		\begin{itemize}
+			\item Benutzer wurde angelegt
+			\item Benutzer hat Auftrag angelegt
+			\item Auftrag wurde noch nicht ausgeführt
+		\end{itemize} \\
+	\hline
+	Wesentliche Schritte &
+		\begin{itemize}
+			\item Mit Namen und Passwort anmelden
+			\item Auftrag mithilfe der Auftragsnummer stornieren
+			\item Stornierungsbestätigung erhalten
+		\end{itemize} \\
+	\hline
+	Nachbedingungen &
+		\begin{itemize}
+			\item Auftrag ist storniert
+		\end{itemize} \\
+	\hline
+\end{tabular}\par
+
+\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+	\hline
+	Use-Case & Wertpapier anlegen \\
+	\hline
+	Vorbedingungen & 
+		\begin{itemize}
+			\item Benutzer wurde angelegt
+			\item Benutzer ist Angstellter
+		\end{itemize} \\
+	\hline
+	Wesentliche Schritte &
+		\begin{itemize}
+			\item Mit Namen und Passwort anmelden
+			\item Wertpapier anlegen
+			\item Bestätigung erhalten
+		\end{itemize} \\
+	\hline
+	Nachbedingungen & 
+		\begin{itemize}
+			\item Wertpapier wurde angelegt
+			\item Aufträge für dieses Wertpapier können nun angelegt werden
+		\end{itemize} \\
+	\hline
+\end{tabular}\par
+
+\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+	\hline
+	Use-Case & Benutzer anlegen \\
+	\hline
+	Vorbedingungen & 
+		\begin{itemize}
+			\item Angestellter wurde angelegt
+		\end{itemize} \\
+	\hline
+	Wesentliche Schritte &
+		\begin{itemize}
+			\item Mit Namen und Passwort anmelden
+			\item Neuen Nutzer anlegen
+			\item Bestätigung erhalten
+		\end{itemize} \\
+	\hline
+	Nachbedingungen &
+		\begin{itemize}
+			\item Neuer Benutzer wurde angelegt
+			\item NEuer Benutzer kann sich nun anmelden
+		\end{itemize} \\
+	\hline
+\end{tabular}
+
+\section{Domänenmodell}
+\autoref{fig:domain} zeigt die wesentlichen Geschäftsobjekte, die auch von den
+in \autoref{sec:use_case} beschriebene Anwendungsfällen genutzt werden.
+Die Anwendungsfällen sind ein Teil der CRUD-Operationen angewendet auf den
+Geschäftsobjekten.
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth]{Domaenenmodell.png}
+	\caption{Domänenmodell als Klassendiagramm}
+	\label{fig:domain}
+\end{figure}
+
+\section{Komponentenmodel}
+\autoref{fig:components} zeigt einen technische abstrakten Abriss der
+Systemarchitektur. Es zeigt auch die Aufteilung der Komponenten in die
+Schichten der 3-Schichten-Architektur. In Blau werden die externen Dienste
+der Partnerprojekte \textit{investy} von Andreas Huber und \textit{Bank Amann}
+von Sina Amann dargestellt.
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth]{Komponentendiagramm.png}
+	\caption{Systemarchitektur als Komponentenmodell}
+	\label{fig:components}
+\end{figure}
+
+\subsection{Schnittstellenbeschreibungen}
+\autoref{fig:interfaces} zeigt die Schnittstellenvereinbarungen für die Nutzung
+der bereitgestellten Dienste. Die genutzten Datentypten Wertpapier und Auftrag
+sind in \autoref{fig:domain} beschrieben. Die Schnittstellenvereinbarung für
+den Überweisungsservice der \textit{Bank Amann} entnehmen Sie bitte dem
+1. Meilenstein Dokument von Sina Amnann.
+\label{subsec:Schnittstellen}
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth]{Schnittstellen.png}
+	\caption{Schnittstellenvereinbarungen als Interfaces}
+	\label{fig:interfaces}
+\end{figure}
+
+\end{document}
