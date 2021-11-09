@@ -4,3 +4,7 @@
 *.log
 *.pdf
 *.synctex.gz
+
+*.dia
+*.png
+software_ideas_modeler/
