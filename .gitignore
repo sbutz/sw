@@ -2,9 +2,8 @@
 *.fdb_latexmk
 *.fls
 *.log
+*.out
 *.pdf
-*.synctex.gz
-
-*.dia
 *.png
+*.synctex.gz
 software_ideas_modeler/

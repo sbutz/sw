@@ -12,6 +12,11 @@
 
 \usepackage{booktabs}
 
+\newcommand{\andi}[0]{Andreas Huber}
+\newcommand{\andiProj}[0]{\textit{ynvest}}
+\newcommand{\sina}[0]{Sina Amann}
+\newcommand{\sinaProj}[0]{\textit{eBank}}
+
 
 \begin{document}
 
@@ -22,19 +27,13 @@
 
 \maketitle
 
-\section{TODO}
-\begin{itemize}
-	\item Ist die Darstellung der externen System so in Ordnung?
-	\item Modell mit highlighted Änderungen darstellen
-\end{itemize}
-
 \section{Einleitung}
 Dieses Dokument enthält die geforderten Bausteine für den ersten Meilenstein
 im Fach Softwareentwicklung.
 Als Softwareprojekt soll eine webbasierte Handelsplattform für Wertpapiere
 realisiert werden.
-Schnittstellen gibt es zu den Partnerprojekten \textit{Amann Banking} von Sina
-Amann und \textit{investy} von Andreas Huber.
+Schnittstellen gibt es zu den Partnerprojekten \sinaProj{} von \sina{}
+und \andiProj{} von \andi{}.
 Eine genaue Beschreibung der Schnittstellen finden sich in
 \autoref{subsec:Schnittstellen}.
 
@@ -46,97 +45,123 @@ Die wesentlichen Funktionen, welche die Handelsplattform  bieten soll, werden in
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=\textwidth]{Use-Case-Diagramm.png}
+    %\includegraphics[width=\textwidth]{Use-Case-Diagramm.png}
+    \includegraphics[height=15.5cm]{Use-Case-Diagramm.png}
 	\caption{Use-Case-Diagramm mit wesentlichen Anwendungsfällen}
 	\label{fig:use_case}
 \end{figure}
 
 \subsection{Use-Case-Beschreibungen}
-\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+\begin{tabular}{|p{.26\textwidth}|p{.69\textwidth}|}
 	\hline
 	Use-Case & Wertpapiere abfragen \\
 	\hline
-	Vorbedingungen & - \\
+	Vorbedingungen &
+		\begin{itemize}
+			\item Wertpapiere wurden angelegt
+		\end{itemize} \\
 	\hline
 	Wesentliche Schritte &
 		\begin{itemize}
-			\item Auflistung der Wertpapiere oder Kursabfrage zu einem Wertpapier
+			\item Auflistung aller oder bestimmter Wertpapiere.
+			Als Filter wird ein Wertpapierobjekt mit gesetzter ISIN verwendet
 		\end{itemize} \\
 	\hline
 	Nachbedingungen & - \\
 	\hline
 \end{tabular}\par
 
-\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+\begin{tabular}{|p{.26\textwidth}|p{.69\textwidth}|}
+	\hline
+	Use-Case & Wertpapierdetails abfragen \\
+	\hline
+	Vorbedingungen &
+		\begin{itemize}
+			\item Wertpapier wurde angelegt
+		\end{itemize} \\
+	\hline
+	Wesentliche Schritte &
+		\begin{itemize}
+			\item ISIN eines Wertpapieres angeben
+			\item Details und Kurswerte dazu abfragen
+		\end{itemize} \\
+	\hline
+	Nachbedingungen & - \\
+	\hline
+\end{tabular}\par
+
+\begin{tabular}{|p{.26\textwidth}|p{.69\textwidth}|}
 	\hline
 	Use-Case & Auftrag erstellen \\
 	\hline
 	Vorbedingungen &
 		\begin{itemize}
-			\item Benutzer wurde angelegt
 			\item Wertpapier, dass gehandelt werden soll, wurde angelegt
+			\item Benutzer wurde angelegt
+			\item Benuter hat sich mit Namen und Passwort oder API-Schlüssel
+			authentifiziert
 		\end{itemize} \\
 	\hline
 	Wesentliche Schritte &
 		\begin{itemize}
-			\item Mit Namen und Passwort anmelden
 			\item Auftrag ausfüllen (Welches Wertpapier soll in welcher Anzahl und zu
-			welchem Maximalpreis gekauft bzw. zu welchem Minimalpreis verkauft werden?)
+			welchem Stückpreis gekauft bzw. verkauft werden?)
 			\item Auftrag abschicken
-			\item Auftragsbestätigung erhalten
-			\item Status des Auftrages mithilfe der Auftragsnummer abfragen
+			\item Auftragsbestätigung mit Auftragnummer abrufen
 		\end{itemize} \\
 	\hline
 	Nachbedingungen &
 		\begin{itemize}
-			\item Auftrag wird ausgeführt sobald ein passender Gegenauftrag gefunden
-			wird
-			\item Geld wird auf das angegebene Konto überwiesen bzw. vom angegeben Konto
-			eingezogen
+			\item Auftrag wurde gespeichert
+			\item Sobald ein passender Gegenauftrag gefunden wird,
+			wird der Auftrag abgeschlossen und eine Transaktion angelegt
+			\item Geld wird über das Partnerprojekt \sinaProj{} auf das angegebene
+			Konto überwiesen bzw. vom angegeben Konto eingezogen
+			\item Falls eine BenachrichtungsUrl gesetzt wird der Nutzer nach
+			Abschluss des Auftrags benachrichtigt.
+			Das Partnerprojekt \andiProj{} bietet hier zu eine Schnittstelle an.
+			\item Falls der Auftrag von einem Handelspartner erstellt wurde,
+			wird die Auftragsgebühr von seinem Rechnungskonto über das
+			Partnerprojekt \sinaProj{} eingezogen
 		\end{itemize} \\
 	\hline
 \end{tabular}\par
 
-\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+\begin{tabular}{|p{.26\textwidth}|p{.69\textwidth}|}
 	\hline
-	Use-Case & Auftrag stornieren \\
+	Use-Case & Auftrag abfragen \\
 	\hline
 	Vorbedingungen &
 		\begin{itemize}
 			\item Benutzer wurde angelegt
 			\item Benutzer hat Auftrag angelegt
-			\item Auftrag wurde noch nicht ausgeführt
+			\item Benuter hat sich mit Namen und Passwort oder API-Schlüssel
+			authentifiziert
 		\end{itemize} \\
 	\hline
 	Wesentliche Schritte &
 		\begin{itemize}
-			\item Mit Namen und Passwort anmelden
-			\item Auftrag mithilfe der Auftragsnummer stornieren
-			\item Stornierungsbestätigung erhalten
+			\item Auftrag mithilfe der Auftragsnummer abfragen
+			\item Auftrag mit aktuellem Status erhalten
 		\end{itemize} \\
 	\hline
-	Nachbedingungen &
-		\begin{itemize}
-			\item Auftrag ist storniert
-		\end{itemize} \\
+	Nachbedingungen & - \\
 	\hline
 \end{tabular}\par
 
-\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+\begin{tabular}{|p{.26\textwidth}|p{.69\textwidth}|}
 	\hline
 	Use-Case & Wertpapier anlegen \\
 	\hline
 	Vorbedingungen & 
 		\begin{itemize}
-			\item Benutzer wurde angelegt
-			\item Benutzer ist Angstellter
+			\item Angestellter wurde angelegt
+			\item Angestellter hat sich mit Namen und Passwort authentifiziert
 		\end{itemize} \\
 	\hline
 	Wesentliche Schritte &
 		\begin{itemize}
-			\item Mit Namen und Passwort anmelden
-			\item Wertpapier anlegen
-			\item Bestätigung erhalten
+			\item Neues Wertpapierobjekt ausfüllen und abschicken
 		\end{itemize} \\
 	\hline
 	Nachbedingungen & 
@@ -147,27 +172,45 @@ Die wesentlichen Funktionen, welche die Handelsplattform  bieten soll, werden in
 	\hline
 \end{tabular}\par
 
-\begin{tabular}{|p{.30\textwidth}|p{.70\textwidth}|}
+\begin{tabular}{|p{.26\textwidth}|p{.69\textwidth}|}
 	\hline
 	Use-Case & Benutzer anlegen \\
 	\hline
 	Vorbedingungen & 
 		\begin{itemize}
 			\item Angestellter wurde angelegt
+			\item Angestellter hat sich mit Namen und Passwort authentifiziert
 		\end{itemize} \\
 	\hline
 	Wesentliche Schritte &
 		\begin{itemize}
-			\item Mit Namen und Passwort anmelden
-			\item Neuen Nutzer anlegen
-			\item Bestätigung erhalten
+			\item Neues Benutzerobjekt ausfüllen und abschicken
 		\end{itemize} \\
 	\hline
 	Nachbedingungen &
 		\begin{itemize}
 			\item Neuer Benutzer wurde angelegt
-			\item NEuer Benutzer kann sich nun anmelden
+			\item Neuer Benutzer kann sich nun anmelden, Aufträge erstellen, etc.
 		\end{itemize} \\
+	\hline
+\end{tabular}
+
+\begin{tabular}{|p{.26\textwidth}|p{.69\textwidth}|}
+	\hline
+	Use-Case & Transaktionen abfragen \\
+	\hline
+	Vorbedingungen & 
+		\begin{itemize}
+			\item Angestellter wurde angelegt
+			\item Angestellter hat sich mit Namen und Passwort authentifiziert
+		\end{itemize} \\
+	\hline
+	Wesentliche Schritte &
+		\begin{itemize}
+			\item Transaktionen abfragen
+		\end{itemize} \\
+	\hline
+	Nachbedingungen & - \\
 	\hline
 \end{tabular}
 
@@ -179,16 +222,17 @@ Geschäftsobjekten.
 \begin{figure}[H]
 	\centering
     \includegraphics[width=\textwidth]{Domaenenmodell.png}
+    %\includegraphics[width=17cm]{Domaenenmodell.png}
 	\caption{Domänenmodell als Klassendiagramm}
 	\label{fig:domain}
 \end{figure}
 
 \section{Komponentenmodel}
-\autoref{fig:components} zeigt einen technische abstrakten Abriss der
+\autoref{fig:components} zeigt einen technisch abstrakten Abriss der
 Systemarchitektur. Es zeigt auch die Aufteilung der Komponenten in die
-Schichten der 3-Schichten-Architektur. In Blau werden die externen Dienste
-der Partnerprojekte \textit{investy} von Andreas Huber und \textit{Bank Amann}
-von Sina Amann dargestellt.
+Schichten der 3-Schichten-Architektur. In rot werden die externen Dienste
+der Partnerprojekte \andiProj{} von \andi{} und \sinaProj{}
+von \sina{} dargestellt.
 \begin{figure}[H]
 	\centering
     \includegraphics[width=\textwidth]{Komponentendiagramm.png}
@@ -200,8 +244,8 @@ von Sina Amann dargestellt.
 \autoref{fig:interfaces} zeigt die Schnittstellenvereinbarungen für die Nutzung
 der bereitgestellten Dienste. Die genutzten Datentypten Wertpapier und Auftrag
 sind in \autoref{fig:domain} beschrieben. Die Schnittstellenvereinbarung für
-den Überweisungsservice der \textit{Bank Amann} entnehmen Sie bitte dem
-1. Meilenstein Dokument von Sina Amnann.
+den Überweisungsservice von \sinaProj{} und den AuftragService von \andiProj{}
+entnehmen Sie bitte dem 1. Meilenstein Dokument von \sina{} und \andi{}.
 \label{subsec:Schnittstellen}
 \begin{figure}[H]
 	\centering
