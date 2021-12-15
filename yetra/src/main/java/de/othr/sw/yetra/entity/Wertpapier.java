@@ -17,7 +17,7 @@ public class Wertpapier extends SingleIdEntity<String> {
     @NotNull
     private String name;
 
-    private float aktuellerPreis;
+    private float aktuellerPreis = Float.NaN;
 
     public Wertpapier() {
 
@@ -30,7 +30,6 @@ public class Wertpapier extends SingleIdEntity<String> {
     public Wertpapier(String isin, String name) {
         this.isin = isin;
         this.name = name;
-        this.aktuellerPreis = 0;
     }
 
     public String getIsin() {
