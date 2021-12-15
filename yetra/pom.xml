@@ -10,9 +10,9 @@
     </parent>
     <groupId>de.othr.sw</groupId>
     <artifactId>yetra</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <name>yetra</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Elektronische Handelsplattform für Wertpapiere</description>
     <properties>
         <java.version>17</java.version>
     </properties>
