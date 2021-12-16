@@ -44,8 +44,6 @@ public class WertpapierServiceRestController {
 
     @PostMapping("")
     public Wertpapier wertpapierAnlegen(@Valid @RequestBody Wertpapier wertpapier) throws BereitsAngelegtException {
-        //TODO: @Valid hier oder im Service?
-        //TODO: Hanlde validation exceptions (https://www.baeldung.com/spring-boot-bean-validation)
         return wertpapierService.wertpapierAnlegen(wertpapier);
     }
 }
