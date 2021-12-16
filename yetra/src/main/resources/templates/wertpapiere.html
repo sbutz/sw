@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table>
+    <tr th:each="wertpapier: ${wertpapiere}">
+        <td th:text="${wertpapier.getIsin()}"></td>
+        <td th:text="${wertpapier.getName()}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
