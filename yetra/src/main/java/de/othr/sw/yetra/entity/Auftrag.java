@@ -13,6 +13,7 @@ public class Auftrag extends SingleIdEntity<Long> {
     @GeneratedValue
     private long nr;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
     private AuftragsTyp typ;
 
@@ -28,6 +29,7 @@ public class Auftrag extends SingleIdEntity<Long> {
     //@Negative
     private float stueckPreis;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
     private AuftragsStatus status;
 
