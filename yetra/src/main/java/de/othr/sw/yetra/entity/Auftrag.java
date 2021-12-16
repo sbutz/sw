@@ -1,16 +1,17 @@
 package de.othr.sw.yetra.entity;
 
 import de.othr.sw.yetra.entity.util.SingleIdEntity;
-import jakarta.validation.constraints.NotNull;
 
-import javax.persistence.*;
 import java.util.Date;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 
 @Entity
 public class Auftrag extends SingleIdEntity<Long> {
     @Id
-    @NotNull
-    private Long nr;
+    @GeneratedValue
+    private long nr;
 
     @NotNull
     private AuftragsTyp typ;
@@ -22,6 +23,9 @@ public class Auftrag extends SingleIdEntity<Long> {
     private int menge;
 
     @NotNull
+    //TODO: not zero
+    //@Positive
+    //@Negative
     private float stueckPreis;
 
     @NotNull
@@ -31,11 +35,13 @@ public class Auftrag extends SingleIdEntity<Long> {
     private Benutzer auftraggeber;
 
     @NotNull
+    @PastOrPresent
     private Date datum;
 
     private String benachrichtigungsUrl;
 
     @Embedded
+    @NotNull
     private Konto kundenKonto;
 
     public Auftrag() {

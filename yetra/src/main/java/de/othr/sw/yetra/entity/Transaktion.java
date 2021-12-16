@@ -1,21 +1,22 @@
 package de.othr.sw.yetra.entity;
 
 import de.othr.sw.yetra.entity.util.SingleIdEntity;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
 @Entity
 public class Transaktion extends SingleIdEntity<Long> {
     @Id
-    @NotNull
-    private Long nr;
+    private long nr;
 
     @NotNull
+    @PastOrPresent
     private Date datum;
 
     @NotNull

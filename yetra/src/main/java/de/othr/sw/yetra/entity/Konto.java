@@ -1,12 +1,14 @@
 package de.othr.sw.yetra.entity;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Size;
 
 @Embeddable
 public class Konto {
     @NotNull
+    @Size(min = 4, max = 34)
     private String iban;
 
     public Konto() {

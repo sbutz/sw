@@ -1,11 +1,14 @@
 package de.othr.sw.yetra.entity;
 
-import jakarta.validation.constraints.NotNull;
+import javax.persistence.Embedded;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class Handelspartner extends Benutzer {
-    @NotNull
+    @NotBlank
     private String apiSchluessel;
 
+    @Embedded
     @NotNull
     private Konto rechnungsKonto;
 

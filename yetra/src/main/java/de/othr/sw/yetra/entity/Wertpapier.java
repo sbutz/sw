@@ -1,23 +1,26 @@
 package de.othr.sw.yetra.entity;
 
 import de.othr.sw.yetra.entity.util.SingleIdEntity;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Wertpapier extends SingleIdEntity<String> {
     @Id
     @NotNull
-    @Size(max=12)
+    @Size(min = 12, max = 12)
     private String isin;
 
-    @NotNull
+    @NotBlank
     private String name;
 
-    private float aktuellerPreis = Float.NaN;
+    @PositiveOrZero
+    private float aktuellerPreis;
 
     public Wertpapier() {
 
@@ -27,9 +30,10 @@ public class Wertpapier extends SingleIdEntity<String> {
         this.isin = isin;
     }
 
-    public Wertpapier(String isin, String name) {
+    public Wertpapier(String isin, String name, float aktuellerPreis) {
         this.isin = isin;
         this.name = name;
+        this.aktuellerPreis = aktuellerPreis;
     }
 
     public String getIsin() {

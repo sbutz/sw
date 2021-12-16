@@ -17,8 +17,8 @@ public class Start implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        repo.save(new Wertpapier("DE0005190003", "BMW AG"));
-        repo.save(new Wertpapier("DE0007664039", "Volkswagen Group"));
-        repo.save(new Wertpapier("US88160R1014", "Telsa, Inc."));
+        repo.save(new Wertpapier("DE0005190003", "BMW AG", 58.55f));
+        repo.save(new Wertpapier("DE0007664039", "Volkswagen Group", 180.0f));
+        repo.save(new Wertpapier("US88160R1014", "Telsa, Inc.", 832.90f));
     }
 }

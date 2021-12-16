@@ -1,12 +1,12 @@
 package de.othr.sw.yetra.entity;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 public class Angestellter extends Benutzer{
-    @NotNull
+    @NotBlank
     private String nutzername;
 
-    @NotNull
+    @NotBlank
     private String passwort;
 
     public Angestellter() {
