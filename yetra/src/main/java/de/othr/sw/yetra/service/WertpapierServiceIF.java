@@ -16,5 +16,5 @@ public interface WertpapierServiceIF {
     WertpapierDetails wertpapierDetailsAbfragen(Wertpapier wertpapier, Zeitspanne zeitspanne) throws NichtGefundenException;
 
     //TODO: seperates Interface fuer nicht oeffentliche Methoden?
-    Wertpapier wertpapierAnlegen(Wertpapier wertpapier) throws BereitsAngelegtException;
+    Wertpapier wertpapierErstellen(Wertpapier wertpapier) throws BereitsAngelegtException;
 }

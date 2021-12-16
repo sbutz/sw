@@ -32,10 +32,7 @@ public class WertpapierService implements WertpapierServiceIF {
         for (Wertpapier f : filter) {
             Wertpapier w = wertpapierRepo
                     .findById(f.getIsin())
-                    .orElseThrow(() ->
-                        new NichtGefundenException(String.format(
-                                "Wertpapier mit isin %s nicht gefunden.", f.getIsin()))
-                    );
+                    .orElseThrow(NichtGefundenException::new);
             wertpapiere.add(w);
         }
         return wertpapiere;
@@ -48,7 +45,7 @@ public class WertpapierService implements WertpapierServiceIF {
     }
 
     @Override
-    public Wertpapier wertpapierAnlegen(Wertpapier wertpapier) throws BereitsAngelegtException {
+    public Wertpapier wertpapierErstellen(Wertpapier wertpapier) throws BereitsAngelegtException {
         if (wertpapierRepo.existsById(wertpapier.getIsin()))
             throw new BereitsAngelegtException();
 

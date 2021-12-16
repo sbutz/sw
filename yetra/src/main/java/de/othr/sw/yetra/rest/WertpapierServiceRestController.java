@@ -44,6 +44,6 @@ public class WertpapierServiceRestController {
 
     @PostMapping("")
     public Wertpapier wertpapierAnlegen(@Valid @RequestBody Wertpapier wertpapier) throws BereitsAngelegtException {
-        return wertpapierService.wertpapierAnlegen(wertpapier);
+        return wertpapierService.wertpapierErstellen(wertpapier);
     }
 }
