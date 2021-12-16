@@ -52,8 +52,6 @@ public class WertpapierService implements WertpapierServiceIF {
         if (wertpapierRepo.existsById(wertpapier.getIsin()))
             throw new BereitsAngelegtException();
 
-        //TODO: validate wertpappier
-        //TODO: validation exception
        return wertpapierRepo.save(wertpapier);
     }
 }

@@ -9,6 +9,7 @@ import de.othr.sw.yetra.service.WertpapierServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,9 @@ public class WertpapierServiceRestController {
     }
 
     @PostMapping("")
-    public Wertpapier wertpapierAnlegen(@RequestBody Wertpapier wertpapier) throws BereitsAngelegtException {
+    public Wertpapier wertpapierAnlegen(@Valid @RequestBody Wertpapier wertpapier) throws BereitsAngelegtException {
+        //TODO: @Valid hier oder im Service?
+        //TODO: Hanlde validation exceptions (https://www.baeldung.com/spring-boot-bean-validation)
         return wertpapierService.wertpapierAnlegen(wertpapier);
     }
 }
