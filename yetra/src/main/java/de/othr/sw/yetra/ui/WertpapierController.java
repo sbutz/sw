@@ -22,7 +22,7 @@ public class WertpapierController {
     @RequestMapping(value = "/wertpapiere", method = RequestMethod.GET)
     public String wertpapiereAnzeigen(Model model) {
         model.addAttribute("wertpapiere", wertpapierService.wertpapiereAbfragen());
-       return "wertpapiere";
+        return "wertpapiere";
     }
 
     @RequestMapping(value = "/wertpapiere/anlegen", method = RequestMethod.GET)
