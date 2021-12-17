@@ -5,11 +5,24 @@
 </head>
 
 <body>
-    <table>
-        <tr th:each="wertpapier: ${wertpapiere}">
-            <td th:text="${wertpapier.getIsin()}"></td>
-            <td th:text="${wertpapier.getName()}"></td>
-        </tr>
-    </table>
+    <div th:replace="common/navbar :: navbar"></div>
+    <div th:replace="common/container :: main-content(~{ :: table})">
+        <!--TODO: use Thymeleaf Layout Dialect-->
+        <!--TODO: table fragment like here: https://www.baeldung.com/spring-thymeleaf-fragments-->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ISIN</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="wertpapier: ${wertpapiere}">
+                    <td th:text="${wertpapier.getIsin()}"></td>
+                    <td th:text="${wertpapier.getName()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
