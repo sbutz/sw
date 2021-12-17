@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/header :: header">
-    <title>Wertpapiere</title>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>Wertpapier</title>
 </head>
-
 <body>
-    <div th:replace="common/navbar :: navbar"></div>
-    <div th:replace="common/container :: main-content(~{ :: table})">
-        <!--TODO: use Thymeleaf Layout Dialect-->
-        <!--TODO: table fragment like here: https://www.baeldung.com/spring-thymeleaf-fragments-->
+    <section layout:fragment="main-content">
+        <h1>Wertpapiere</h1>
         <table class="table table-hover">
             <thead>
-                <tr>
-                    <th>ISIN</th>
-                    <th>Name</th>
-                </tr>
+            <tr>
+                <th>ISIN</th>
+                <th>Name</th>
+            </tr>
             </thead>
             <tbody>
-                <tr th:each="wertpapier: ${wertpapiere}">
-                    <td th:text="${wertpapier.getIsin()}"></td>
-                    <td th:text="${wertpapier.getName()}"></td>
-                </tr>
+            <tr th:each="wertpapier: ${wertpapiere}">
+                <td th:text="${wertpapier.getIsin()}"></td>
+                <td th:text="${wertpapier.getName()}"></td>
+            </tr>
             </tbody>
         </table>
-    </div>
+    </section>
 </body>
 </html>
