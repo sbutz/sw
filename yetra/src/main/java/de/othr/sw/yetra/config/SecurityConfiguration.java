@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/anmelden").permitAll()
                 .defaultSuccessUrl("/wertpapiere")
-                .failureUrl("/anmelden?fehler")
+                .failureUrl("/anmelden?fehler=true")
             .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/abmelden"))
                 .logoutSuccessUrl("/")

@@ -10,7 +10,8 @@
 <section layout:fragment="main-content">
     <h1>Anmelden</h1>
     <form method="post"
-          th:action="@{/anmelden}">
+          th:action="@{/anmelden}"
+          th:class="${validiert ? 'was-validated' : ''}">
 
         <div class="mb-3">
             <label for="username"
@@ -23,6 +24,9 @@
                    name="username"
                    placeholder="Nutzername"
                    class="form-control">
+            <div class="invalid-feedback">
+                Nutzername oder Passwort falsch.
+            </div>
         </div>
         <div class="mb-3">
             <label for="password"
@@ -35,6 +39,9 @@
                    name="password"
                    placeholder="Passwort"
                    class="form-control">
+            <div class="invalid-feedback">
+                Nutzername oder Passwort falsch.
+            </div>
         </div>
         <button type="submit" class="btn btn-success">Anmelden</button>
     </form>
