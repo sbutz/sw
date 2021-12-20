@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>Anmelden</title>
+</head>
+<body>
+<section layout:fragment="main-content">
+    <h1>Anmelden</h1>
+    <form method="post"
+          th:action="@{/anmelden}">
+
+        <div class="mb-3">
+            <label for="username"
+                   class="form-label">
+                Nutzername
+            </label>
+            <input type="text"
+                   required
+                   id="username"
+                   name="username"
+                   placeholder="Nutzername"
+                   class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="password"
+                   class="form-label">
+                Passwort
+            </label>
+            <input type="password"
+                   required
+                   id="password"
+                   name="password"
+                   placeholder="Passwort"
+                   class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Anmelden</button>
+    </form>
+</section>
+</body>
+</html>
