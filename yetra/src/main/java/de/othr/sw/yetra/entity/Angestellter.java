@@ -1,14 +1,10 @@
 package de.othr.sw.yetra.entity;
 
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
 
-public class Angestellter extends Benutzer{
-    @NotBlank
-    private String nutzername;
-
-    @NotBlank
-    private String passwort;
-
+@Entity
+public class Angestellter extends Benutzer {
+    //TODO: add rechte
     public Angestellter() {
     }
 

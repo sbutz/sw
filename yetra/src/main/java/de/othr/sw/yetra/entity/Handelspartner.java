@@ -1,9 +1,11 @@
 package de.othr.sw.yetra.entity;
 
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class Handelspartner extends Benutzer {
     @NotBlank
     private String apiSchluessel;
