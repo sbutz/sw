@@ -12,9 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
-//TODO: soweit wie moeglich eindeutschen
-//TODO: pfade eindeutschen
-//TODO: request controller fuer login/logout erstellen
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -45,8 +42,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/wertpapiere")
                 .failureUrl("/anmelden?fehler")
             .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/abmelden"))
                 .logoutSuccessUrl("/")
+                //TODO: understand remeberMe()
                 .deleteCookies("remember-me")
                 .permitAll()
             .and()
