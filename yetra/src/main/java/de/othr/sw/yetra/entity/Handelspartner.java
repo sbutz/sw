@@ -1,5 +1,6 @@
 package de.othr.sw.yetra.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
@@ -7,7 +8,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Handelspartner extends Benutzer {
+    //TODO: generating keys
     @NotBlank
+    @Column(unique=true)
     private String apiSchluessel;
 
     @Embedded
@@ -17,8 +20,8 @@ public class Handelspartner extends Benutzer {
     public Handelspartner() {
     }
 
-    public Handelspartner(String apiSchluessel) {
-        this.apiSchluessel = apiSchluessel;
+    public Handelspartner(Konto rechnungsKonto) {
+        this.rechnungsKonto = rechnungsKonto;
     }
 
     public String getApiSchluessel() {
