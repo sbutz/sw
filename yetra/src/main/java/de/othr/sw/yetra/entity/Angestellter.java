@@ -9,23 +9,6 @@ public class Angestellter extends Benutzer {
     }
 
     public Angestellter(String nutzername, String passwort) {
-        this.nutzername = nutzername;
-        this.passwort = passwort;
-    }
-
-    public String getNutzername() {
-        return nutzername;
-    }
-
-    public void setNutzername(String nutzername) {
-        this.nutzername = nutzername;
-    }
-
-    public String getPasswort() {
-        return passwort;
-    }
-
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
+        super(nutzername, passwort);
     }
 }
