@@ -44,6 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/abmelden"))
                 .logoutSuccessUrl("/")
+                //TODO: warning in console: missusing same site attribute
                 //TODO: understand remeberMe()
                 .deleteCookies("remember-me")
                 .permitAll()
