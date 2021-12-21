@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
     <!--TODO: pass active page as parameter-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow"
@@ -18,11 +20,37 @@
                             Startseite
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link"
                            th:href="@{/wertpapiere}"
-                           th:classappend="${#request.getRequestURI() == '/wertpapiere'} ? 'active' : ''">
+                           th:classappend="${#request.getRequestURI() == '/wertpapiere'? 'active' : ''}">
                             Wertpapiere
+                        </a>
+                    </li>
+
+                </ul>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="navbarDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false"
+                           sec:authorize="isAuthenticated()"
+                           sec:authentication="name">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{/abmelden}">Abmelden</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"
+                        sec:authorize="isAnonymous()">
+                        <a class="nav-link"
+                           th:href="@{/anmelden}"
+                           th:classappend="${#request.getRequestURI() == '/anmelden'? 'active' : ''}">
+                            Anmelden
                         </a>
                     </li>
                 </ul>
