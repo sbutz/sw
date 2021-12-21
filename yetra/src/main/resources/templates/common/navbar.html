@@ -3,7 +3,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-    <!--TODO: pass active page as parameter-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow"
          th:fragment="navbar">
         <div class="container-lg">
@@ -27,7 +26,14 @@
                             Wertpapiere
                         </a>
                     </li>
-
+                    <!--TODO: has role admin-->
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link"
+                           th:href="@{/benutzer}"
+                           th:classappend="${#request.getRequestURI() == '/benutzer'? 'active' : ''}">
+                            Benutzer
+                        </a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
