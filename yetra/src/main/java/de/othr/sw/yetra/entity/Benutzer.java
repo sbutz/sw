@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 
 @Entity
-@Inheritance
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Benutzer extends SingleIdEntity<Long> implements UserDetails {
     @Id
     @GeneratedValue

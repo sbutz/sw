@@ -4,6 +4,7 @@ import de.othr.sw.yetra.entity.util.SingleIdEntity;
 
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 
@@ -43,6 +44,7 @@ public class Auftrag extends SingleIdEntity<Long> {
     private String benachrichtigungsUrl;
 
     @Embedded
+    @Valid
     @NotNull
     private Konto kundenKonto;
 
