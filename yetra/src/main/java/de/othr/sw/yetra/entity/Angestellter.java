@@ -8,6 +8,10 @@ public class Angestellter extends Benutzer {
     public Angestellter() {
     }
 
+    public Angestellter(long nr) {
+        this.nr = nr;
+    }
+
     public Angestellter(String nutzername, String passwort) {
         super(nutzername, passwort);
     }

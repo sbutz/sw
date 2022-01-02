@@ -20,8 +20,8 @@ public class Handelspartner extends Benutzer {
     public Handelspartner() {
     }
 
-    public Handelspartner(Konto rechnungsKonto) {
-        this.rechnungsKonto = rechnungsKonto;
+    public Handelspartner(long nr) {
+        this.nr = nr;
     }
 
     public String getApiSchluessel() {

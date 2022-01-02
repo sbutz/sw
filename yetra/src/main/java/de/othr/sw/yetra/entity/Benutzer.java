@@ -13,14 +13,14 @@ import java.util.Collection;
 public abstract class Benutzer extends SingleIdEntity<Long> implements UserDetails {
     @Id
     @GeneratedValue
-    private long nr;
+    protected long nr;
 
     @NotBlank
     @Column(unique=true)
-    private String nutzername;
+    protected String nutzername;
 
     @NotBlank
-    private String passwort;
+    protected String passwort;
 
     public Benutzer() {
     }
