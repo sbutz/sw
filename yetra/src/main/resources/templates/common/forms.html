@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+Putting forms using th:object in a fragment does not work.
+The enclosed input field's th:field and th:value don't work.
+Therefore create fragments for the different parts of a form.
+-->
+
+<div class="mb-3" th:fragment="input(type, field)"
+    th:with="name=${name} ?: ${#strings.capitalize(field)}">
+    <label th:for="${#ids.next(field)}"
+           th:text="${name}"
+           class="form-label">
+    </label>
+    <input th:type="${type}"
+           required
+           th:value="*{__${field}__}"
+           th:field="*{__${field}__}"
+           th:placeholder="${name}"
+           th:minlength="${minlength} ?: ''"
+           th:maxlength="${maxlength} ?: ''"
+           class="form-control">
+</div>
+
+<div class="mb-3" th:fragment="submit(name)">
+    <button type="submit"
+            class="btn btn-success"
+            th:text="${name}"></button>
+</div>
+</body>
+</html>
