@@ -14,6 +14,7 @@ public class SecurityUtilities {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(15, new SecureRandom(salt.getBytes()));
+        //TODO: use more rounds
+        return new BCryptPasswordEncoder(10, new SecureRandom(salt.getBytes()));
     }
 }
