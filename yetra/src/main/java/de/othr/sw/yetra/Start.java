@@ -27,6 +27,6 @@ public class Start implements CommandLineRunner {
 
         //TODO: testnutzer in readme vermerken
         //TODO: min passwort length?
-        benutzerService.benutzerAnlegen(new Angestellter("admin", "123"));
+        benutzerService.angestelltenAnlegen(new Angestellter("admin", "123"));
     }
 }
