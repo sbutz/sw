@@ -14,47 +14,17 @@
           th:object="${wertpapier}"
           th:class="${validiert ? 'was-validated' : ''}">
 
-        <div class="mb-3">
-            <label th:for="${#ids.next('isin')}"
-                   class="form-label">
-                ISIN
-            </label>
-            <input type="text"
-                   required
-                   minlength="12"
-                   maxlength="12"
-                   th:value="*{isin}"
-                   th:field="*{isin}"
-                   placeholder="ISIN"
-                   class="form-control">
-        </div>
-        <div class="mb-3">
-            <label th:for="${#ids.next('name')}"
-                   class="form-label">
-                Name
-            </label>
-            <input type="text"
-                   required
-                   th:value="*{name}"
-                   th:field="*{name}"
-                   placeholder="Name"
-                   class="form-control">
-        </div>
-        <div class="mb-3">
-            <label th:for="${#ids.next('aktuellerPreis')}"
-                   class="form-label">
-                Start-Preis
-            </label>
-            <input type="number"
-                   required
-                   min="0"
-                   step="0.01"
-                   th:value="*{aktuellerPreis}"
-                   th:field="*{aktuellerPreis}"
-                   placeholder="Preis"
-                   class="form-control">
-        </div>
-        <button type="submit" class="btn btn-success">Anlegen</button>
+        <div th:replace="common/forms :: input(type='text',
+                                           field='isin',
+                                           minlength='12',
+                                           maxlength='12')"></div>
+        <div th:replace="common/forms :: input(type='text', field='name')"></div>
+        <div th:replace="common/forms :: input(type='number',
+                                               field='aktuellerPreis',
+                                               name='Aktueller Preis',
+                                               min='0',
+                                               step='0.01')"></div>
+        <div th:replace="common/forms :: submit('Anlegen')"></div>
     </form>
 </section>
 </body>

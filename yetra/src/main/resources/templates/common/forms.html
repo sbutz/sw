@@ -22,6 +22,9 @@ Therefore create fragments for the different parts of a form.
            th:placeholder="${name}"
            th:minlength="${minlength} ?: ''"
            th:maxlength="${maxlength} ?: ''"
+           th:min="${min} ?: ''"
+           th:max="${max} ?: ''"
+           th:step="${step} ?: ''"
            class="form-control">
 </div>
 
