@@ -14,16 +14,19 @@
     </div>
     <table class="table table-hover">
         <thead>
-        <tr>
-            <th>ISIN</th>
-            <th>Name</th>
-        </tr>
+            <tr>
+                <th>#</th>
+                <th>ISIN</th>
+                <th>Name</th>
+            </tr>
         </thead>
         <tbody>
-        <tr th:each="wertpapier: ${wertpapiere}">
-            <td th:text="${wertpapier.getIsin()}"></td>
-            <td th:text="${wertpapier.getName()}"></td>
-        </tr>
+            <!--TODO: handle empty list case-->
+            <tr th:each="wertpapier,index: ${wertpapiere}">
+                <td th:text="${index.count}"></td>
+                <td th:text="${wertpapier.getIsin()}"></td>
+                <td th:text="${wertpapier.getName()}"></td>
+            </tr>
         </tbody>
     </table>
 </section>
