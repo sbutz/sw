@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="mb-3" th:fragment="input(type, field)"
+     th:with="name=${name} ?: ${#strings.capitalize(field)}">
+    <label th:for="${#ids.next(field)}"
+           th:text="${name}"
+           class="form-label">
+    </label>
+    <input th:type="${type}"
+           required
+           th:name="${field}"
+           th:id="${field}"
+           th:placeholder="${name}"
+           th:minlength="${minlength} ?: ''"
+           th:maxlength="${maxlength} ?: ''"
+           th:min="${min} ?: ''"
+           th:max="${max} ?: ''"
+           th:step="${step} ?: ''"
+           class="form-control">
+    <div class="invalid-feedback"
+         th:if="${errorMessage}">
+        <span th:text="${errorMessage}"></span>
+    </div>
+</div>
+</body>
+</html>

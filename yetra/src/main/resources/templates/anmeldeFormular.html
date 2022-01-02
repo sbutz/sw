@@ -13,37 +13,15 @@
           th:action="@{/anmelden}"
           th:class="${validiert ? 'was-validated' : ''}">
 
-        <div class="mb-3">
-            <label for="username"
-                   class="form-label">
-                Nutzername
-            </label>
-            <input type="text"
-                   required
-                   id="username"
-                   name="username"
-                   placeholder="Nutzername"
-                   class="form-control">
-            <div class="invalid-feedback">
-                Nutzername oder Passwort falsch.
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="password"
-                   class="form-label">
-                Passwort
-            </label>
-            <input type="password"
-                   required
-                   id="password"
-                   name="password"
-                   placeholder="Passwort"
-                   class="form-control">
-            <div class="invalid-feedback">
-                Nutzername oder Passwort falsch.
-            </div>
-        </div>
-        <button type="submit" class="btn btn-success">Anmelden</button>
+        <div th:replace="common/form/rawInput :: input(type='text',
+                                                       field='username',
+                                                       name='Nutzername',
+                                                       errorMessage='Nutzername oder Passwort falsch')"></div>
+        <div th:replace="common/form/rawInput :: input(type='password',
+                                                       field='password',
+                                                       name='Passwort',
+                                                       errorMessage='Nutzername oder Passwort falsch')"></div>
+        <div th:replace="common/form/submit :: submit('Anmelden')"></div>
     </form>
 </section>
 </body>
