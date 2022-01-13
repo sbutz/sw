@@ -4,24 +4,24 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{common/layout}">
 <head>
-    <title>Anmelden</title>
+    <title>Login</title>
 </head>
 <body>
 <section layout:fragment="main-content">
-    <h1>Anmelden</h1>
+    <h1>Login</h1>
     <form method="post"
-          th:action="@{/anmelden}"
-          th:class="${validiert ? 'was-validated' : ''}">
+          th:action="@{/login}"
+          th:class="${validated ? 'was-validated' : ''}">
 
         <div th:replace="common/form/rawInput :: input(type='text',
                                                        field='username',
-                                                       name='Nutzername',
-                                                       errorMessage='Nutzername oder Passwort falsch')"></div>
+                                                       name='Username',
+                                                       errorMessage='Username or Password wrong')"></div>
         <div th:replace="common/form/rawInput :: input(type='password',
                                                        field='password',
-                                                       name='Passwort',
-                                                       errorMessage='Nutzername oder Passwort falsch')"></div>
-        <div th:replace="common/form/submit :: submit('Anmelden')"></div>
+                                                       name='Password',
+                                                       errorMessage='Username or Password wrong')"></div>
+        <div th:replace="common/form/submit :: submit('Login')"></div>
     </form>
 </section>
 </body>

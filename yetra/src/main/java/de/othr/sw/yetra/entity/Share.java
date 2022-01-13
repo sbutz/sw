@@ -10,7 +10,7 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Wertpapier extends SingleIdEntity<String> {
+public class Share extends SingleIdEntity<String> {
     @Id
     @NotNull
     @Size(min = 12, max = 12)
@@ -20,20 +20,16 @@ public class Wertpapier extends SingleIdEntity<String> {
     private String name;
 
     @PositiveOrZero
-    private float aktuellerPreis;
+    private float currentPrice;
 
-    public Wertpapier() {
+    public Share() {
 
     }
 
-    public Wertpapier(String isin) {
-        this.isin = isin;
-    }
-
-    public Wertpapier(String isin, String name, float aktuellerPreis) {
+    public Share(String isin, String name, float currentPrice) {
         this.isin = isin;
         this.name = name;
-        this.aktuellerPreis = aktuellerPreis;
+        this.currentPrice = currentPrice;
     }
 
     public String getIsin() {
@@ -52,16 +48,16 @@ public class Wertpapier extends SingleIdEntity<String> {
         this.name = name;
     }
 
-    public float getAktuellerPreis() {
-        return aktuellerPreis;
+    public float getCurrentPrice() {
+        return currentPrice;
     }
 
-    public void setAktuellerPreis(float aktuellerPreis) {
-        this.aktuellerPreis = aktuellerPreis;
+    public void setCurrentPrice(float aktuellerPreis) {
+        this.currentPrice = aktuellerPreis;
     }
 
     @Override
-    protected String getID() {
+    protected String getId() {
         return this.isin;
     }
 }

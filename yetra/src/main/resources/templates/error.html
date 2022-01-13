@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="de"
+<html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Fehler</title>
+    <title>Error</title>
 </head>
 <body>
-<h1>Oops, ein Fehler ist passiert.</h1>
+<h1>Oops, an error occured.</h1>
 <p th:text="${status} + ' - ' + ${error}"></p>
 <p>
-    <a th:href="${path}">Zurück zur letzten Seite</a>
+    <a th:href="${path}">Back to the last page</a>
 </p>
 <p>
-    <a href="/">Zurück zur Startseite</a>
+    <a href="/">Back to the homepage</a>
 </p>
 </body>
 </html>

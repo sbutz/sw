@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de"
+<html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
@@ -16,30 +16,30 @@
                         <a class="nav-link"
                            th:href="@{/}"
                            th:classappend="${#request.getRequestURI() == '/'} ? 'active' : ''">
-                            Startseite
+                            Home
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link"
-                           th:href="@{/wertpapiere}"
-                           th:classappend="${#request.getRequestURI() == '/wertpapiere'? 'active' : ''}">
-                            Wertpapiere
+                           th:href="@{/shares}"
+                           th:classappend="${#request.getRequestURI() == '/shares'? 'active' : ''}">
+                            Shares
                         </a>
                     </li>
 
                     <!--TODO: has role admin-->
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link"
-                           th:href="@{/handelspartner}"
-                           th:classappend="${#request.getRequestURI() == '/handelspartner'? 'active' : ''}">
-                            Handelspartner
+                           th:href="@{/trading-partners}"
+                           th:classappend="${#request.getRequestURI() == '/trading-partners'? 'active' : ''}">
+                            Trading Partners
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link"
-                           th:href="@{/angestellte}"
-                           th:classappend="${#request.getRequestURI() == '/angestellte'? 'active' : ''}">
-                            Angestellte
+                           th:href="@{/employees}"
+                           th:classappend="${#request.getRequestURI() == '/employees'? 'active' : ''}">
+                            Employees
                         </a>
                     </li>
                 </ul>
@@ -56,15 +56,15 @@
                             Dropdown
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" th:href="@{/abmelden}">Abmelden</a></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                         </ul>
                     </li>
                     <li class="nav-item"
                         sec:authorize="isAnonymous()">
                         <a class="nav-link"
-                           th:href="@{/anmelden}"
-                           th:classappend="${#request.getRequestURI() == '/anmelden'? 'active' : ''}">
-                            Anmelden
+                           th:href="@{/login}"
+                           th:classappend="${#request.getRequestURI() == '/login'? 'active' : ''}">
+                            Login
                         </a>
                     </li>
                 </ul>

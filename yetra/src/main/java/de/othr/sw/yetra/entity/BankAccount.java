@@ -6,16 +6,16 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
 
 @Embeddable
-public class Konto {
+public class BankAccount {
     @NotNull
     @Size(min = 4, max = 34)
     private String iban;
 
-    public Konto() {
+    public BankAccount() {
 
     }
 
-    public Konto(String iban) {
+    public BankAccount(String iban) {
         this.iban = iban;
     }
 

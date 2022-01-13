@@ -10,65 +10,53 @@ import java.util.Collection;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Benutzer extends SingleIdEntity<Long> implements UserDetails {
+public abstract class User extends SingleIdEntity<Long> implements UserDetails {
     @Id
     @GeneratedValue
-    protected long nr;
+    protected long id;
 
     @NotBlank
     @Column(unique=true)
-    protected String nutzername;
+    protected String username;
 
     @NotBlank
-    protected String passwort;
+    protected String password;
 
-    public Benutzer() {
+    public User() {
     }
 
-    public Benutzer(String nutzername, String passwort) {
-        this.nutzername = nutzername;
-        this.passwort = passwort;
-    }
-
-    public String getNutzername() {
-        return nutzername;
-    }
-
-    public void setNutzername(String nutzername) {
-        this.nutzername = nutzername;
-    }
-
-    public String getPasswort() {
-        return passwort;
-    }
-
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
+    public User(String username, String passwort) {
+        this.username = username;
+        this.password = passwort;
     }
 
     @Override
-    protected Long getID() {
-        return this.getNr();
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String nutzername) {
+        this.username = nutzername;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String passwort) {
+        this.password = passwort;
+    }
+
+    @Override
+    public Long getId() {
+        return this.id;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //TODO: implement
         return null;
-    }
-
-    public Long getNr() {
-        return this.nr;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.getPasswort();
-    }
-
-    @Override
-    public String getUsername() {
-        return this.getNutzername();
     }
 
     @Override

@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] ALLOW_ACCESS_WITHOUT_AUTHENTICATION = {
             "/",
-            "/anmelden",
+            "/login",
     };
 
     @Override
@@ -38,11 +38,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(ALLOW_ACCESS_WITHOUT_AUTHENTICATION)
                 .permitAll().anyRequest().authenticated();
         http.formLogin()
-                .loginPage("/anmelden").permitAll()
-                .defaultSuccessUrl("/wertpapiere")
-                .failureUrl("/anmelden?fehler=true")
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/shares")
+                .failureUrl("/login?error=true")
             .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/abmelden"))
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 //TODO: warning in console: missusing same site attribute
                 //TODO: understand remeberMe()

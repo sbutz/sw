@@ -4,15 +4,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{common/layout}">
 <head>
-    <title>Wertpapier anlegen</title>
+    <title>Create share</title>
 </head>
 <body>
 <section layout:fragment="main-content">
-    <h1>Wertpapier anlegen</h1>
+    <h1>Create share</h1>
     <form method="post"
-          th:action="@{/wertpapiere/anlegen}"
-          th:object="${wertpapier}"
-          th:class="${validiert ? 'was-validated' : ''}">
+          th:action="@{/shares/create}"
+          th:object="${share}"
+          th:class="${validated ? 'was-validated' : ''}">
 
         <div th:replace="common/form/input :: input(type='text',
                                                     field='isin',
@@ -20,11 +20,11 @@
                                                     maxlength='12')"></div>
         <div th:replace="common/form/input :: input(type='text', field='name')"></div>
         <div th:replace="common/form/input :: input(type='number',
-                                                    field='aktuellerPreis',
-                                                    name='Aktueller Preis',
+                                                    field='currentPrice',
+                                                    name='Current price',
                                                     min='0',
                                                     step='0.01')"></div>
-        <div th:replace="common/form/submit :: submit('Anlegen')"></div>
+        <div th:replace="common/form/submit :: submit('Create')"></div>
     </form>
 </section>
 </body>

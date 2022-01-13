@@ -7,7 +7,7 @@ import java.io.Serializable;
 //TODO: comparable interface
 public abstract class SingleIdEntity<T> implements Serializable {
 
-    protected abstract T getID();
+    protected abstract T getId();
 
     @Override
     public boolean equals(Object o) {
@@ -16,11 +16,11 @@ public abstract class SingleIdEntity<T> implements Serializable {
 
         SingleIdEntity<T> that = (SingleIdEntity<T>) o;
 
-        return this.getID().equals(that.getID());
+        return this.getId().equals(that.getId());
     }
 
     @Override
     public int hashCode() {
-        return this.getID().hashCode();
+        return this.getId().hashCode();
     }
 }
