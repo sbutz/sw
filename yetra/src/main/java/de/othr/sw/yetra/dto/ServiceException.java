@@ -1,5 +1,6 @@
 package de.othr.sw.yetra.dto;
 
+//TODO: Checked or Unchecked (unchecked = subclass of RuntimeException)
 public class ServiceException extends RuntimeException {
     private int code;
     private String description;
