@@ -36,10 +36,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(ALLOW_ACCESS_WITHOUT_AUTHENTICATION)
-                .permitAll().anyRequest().authenticated()
-
-                .and().httpBasic();
-        http.formLogin()
+                .permitAll().anyRequest().authenticated();
+        http.httpBasic()
+            .and()
+                .formLogin()
                 .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/shares")
                 .failureUrl("/login?error=true")
