@@ -36,29 +36,29 @@ public class Order extends SingleIdEntity<Long> {
     private OrderStatus status;
 
     @ManyToOne
-    private User auftraggeber;
+    private User client;
 
     @NotNull
     @PastOrPresent
-    private Date datum;
+    private Date date;
 
     @Embedded
     @Valid
     @NotNull
-    private BankAccount clientBankAccount;
+    private BankAccount bankAccount;
 
     public Order() {
     }
 
-    public Order(OrderType type, Share share, int quantity, float unitPrice, User auftraggeber, BankAccount clientBankAccount) {
+    public Order(OrderType type, Share share, int quantity, float unitPrice, User client, BankAccount bankAccount) {
         this.type = type;
         this.share = share;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.status = OrderStatus.OPEN;
-        this.auftraggeber = auftraggeber;
-        this.datum = new Date();
-        this.clientBankAccount = clientBankAccount;
+        this.client = client;
+        this.date = new Date();
+        this.bankAccount = bankAccount;
     }
 
     @Override
@@ -98,8 +98,8 @@ public class Order extends SingleIdEntity<Long> {
         return unitPrice;
     }
 
-    public void setUnitPrice(float stueckPreis) {
-        this.unitPrice = stueckPreis;
+    public void setUnitPrice(float unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     public OrderStatus getStatus() {
@@ -110,27 +110,27 @@ public class Order extends SingleIdEntity<Long> {
         this.status = status;
     }
 
-    public User getAuftraggeber() {
-        return auftraggeber;
+    public User getClient() {
+        return client;
     }
 
-    public void setAuftraggeber(User auftraggeber) {
-        this.auftraggeber = auftraggeber;
+    public void setClient(User client) {
+        this.client = client;
     }
 
-    public Date getDatum() {
-        return datum;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDatum(Date datum) {
-        this.datum = datum;
+    public void setDate(Date datum) {
+        this.date = datum;
     }
 
-    public BankAccount getClientBankAccount() {
-        return clientBankAccount;
+    public BankAccount getBankAccount() {
+        return bankAccount;
     }
 
-    public void setClientBankAccount(BankAccount clientBankAccount) {
-        this.clientBankAccount = clientBankAccount;
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 }
