@@ -9,10 +9,11 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface OrderRepository extends CrudRepository<Order, Long> {
-    Optional<Order> findOrderByStatusAndTypeAndShareAndQuantity(
+    Optional<Order> findOrderByStatusAndTypeAndShareAndQuantityAndUnitPrice(
             OrderStatus status,
             OrderType type,
             Share share,
-            int quantity
+            int quantity,
+            float unitPrice
     );
 }
