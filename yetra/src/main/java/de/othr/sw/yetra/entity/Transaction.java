@@ -37,7 +37,7 @@ public class Transaction extends SingleIdEntity<Long> {
     public Transaction() {
     }
 
-    public Transaction(float unitPrice, Share share, Order buyOrder, Order sellOrder) {
+    public Transaction(Share share, float unitPrice, Order buyOrder, Order sellOrder) {
         this.date = new Date();
         this.unitPrice = unitPrice;
         this.share = share;
