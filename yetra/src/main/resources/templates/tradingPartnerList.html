@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>Trading Partners</title>
+</head>
+<body>
+<section layout:fragment="main-content">
+    <h1>Trading Partners</h1>
+    <div class="d-flex flex-row-reverse">
+        <a class="btn btn-success" th:href="@{/trading-partners/create}">
+            <i class="bi-building"></i>
+            Create Trading Partner
+        </a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Billing Account</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="t,index: ${tradingPartners}">
+                <td th:text="${index.count}"></td>
+                <td th:text="${t.getUsername()}"></td>
+                <td th:text="${t.getBillingBankAccount().getIban()}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

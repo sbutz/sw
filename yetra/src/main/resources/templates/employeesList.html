@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>Employees</title>
+</head>
+<body>
+<section layout:fragment="main-content">
+    <h1>Employees</h1>
+    <div class="d-flex flex-row-reverse">
+        <a class="btn btn-success" th:href="@{/employees/create}">
+            <i class="bi-building"></i>
+            Create Employee
+        </a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="e,index: ${employees}">
+                <td th:text="${index.count}"></td>
+                <td th:text="${e.getUsername()}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>
