@@ -66,10 +66,6 @@ public class Order extends SingleIdEntity<Long> {
         return id;
     }
 
-    public void setId(Long nr) {
-        this.id = nr;
-    }
-
     public OrderType getType() {
         return type;
     }

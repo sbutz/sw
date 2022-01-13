@@ -50,10 +50,6 @@ public class Transaction extends SingleIdEntity<Long> {
         return id;
     }
 
-    public void setId(Long nr) {
-        this.id = nr;
-    }
-
     public Date getDate() {
         return date;
     }

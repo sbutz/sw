@@ -8,10 +8,6 @@ public class Employee extends User {
     public Employee() {
     }
 
-    public Employee(long nr) {
-        this.id = nr;
-    }
-
     public Employee(String nutzername, String passwort) {
         super(nutzername, passwort);
     }
