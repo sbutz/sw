@@ -19,4 +19,7 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     Optional<Order> findOrderByIdAndClient(long id, User client);
 
     Iterable<Order> findOrdersByClient(User client);
+
+    @Query("SELECT o FROM ShareOrder o WHERE o.status = de.othr.sw.yetra.entity.OrderStatus.OPEN")
+    Iterable<Order> findOpenOrders();
 }

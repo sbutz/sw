@@ -10,8 +10,7 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
-@Entity
-@Table(name="orders")
+@Entity(name = "ShareOrder")
 public class Order extends SingleIdEntity<Long> {
     @Id
     @GeneratedValue
