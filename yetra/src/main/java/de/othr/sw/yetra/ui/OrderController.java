@@ -48,8 +48,6 @@ public class OrderController {
     public String getOrderForm(Model model, @AuthenticationPrincipal User user) {
         OrderDTO order = new OrderDTO();
         order.setQuantity(1);
-        //TODO: every user should have a bank account connected to it
-        //--> only one user class is required
         SortedMap<String, String> shares = new TreeMap<>();
         for (Share s : shareService.getShares())
             shares.put(s.getIsin(), s.getName() + " (" + s.getIsin() + ")");
