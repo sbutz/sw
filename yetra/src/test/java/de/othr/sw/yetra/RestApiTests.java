@@ -1,5 +1,7 @@
 package de.othr.sw.yetra;
 
+import de.othr.sw.yetra.dto.OrderDTO;
+import de.othr.sw.yetra.entity.OrderType;
 import de.othr.sw.yetra.entity.Share;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,6 +38,19 @@ public class RestApiTests {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Share.class).hasSize(3);
+
+        OrderDTO order = new OrderDTO();
+        order.setType(OrderType.BUY);
+        order.setIsin("DE0005190003");
+        order.setQuantity(1);
+        order.setUnitPrice(1.00f);
+        order.setIban("DE0123456789");
+        webClient
+                .post().uri("/api/orders")
+                .header("Content-Type", "application/json")
+                .bodyValue(order)
+                .exchange()
+                .expectStatus().isOk();
     }
 
 }
