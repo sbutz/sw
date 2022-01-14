@@ -2,7 +2,6 @@ package de.othr.sw.yetra.service;
 
 import de.othr.sw.yetra.entity.Order;
 import de.othr.sw.yetra.entity.User;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 public interface OrderServiceIF {
     Order createOrder(Order order);
