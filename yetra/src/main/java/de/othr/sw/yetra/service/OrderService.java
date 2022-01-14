@@ -49,7 +49,10 @@ public class OrderService implements OrderServiceIF {
             );
             order.setStatus(OrderStatus.CLOSED);
             matchingOrder.get().setStatus(OrderStatus.CLOSED);
+            order.getShare().setCurrentPrice(order.getUnitPrice());
+
             //TODO: geld ueberweisen
+            //falls error -> rollback changes
             //TODO: falls trading partner, trade gebühr verlangen
             //TODO: notify via jms channel
         }
