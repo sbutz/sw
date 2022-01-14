@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-//TODO: add to diagram
 @Entity
 public class UserRole extends SingleIdEntity<String> {
     @Id
