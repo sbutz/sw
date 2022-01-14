@@ -31,9 +31,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // TODO: remember-me
-        // https://www.baeldung.com/spring-security-remember-me
         http
+            //TODO: enable csrf in production
+            // see: https://www.baeldung.com/csrf-stateless-rest-api
+            .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/" ).permitAll()
                 .antMatchers(HttpMethod.GET, "/orders/**", "/api/orders/**").hasAuthority("ORDERS_READ")
