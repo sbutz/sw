@@ -10,14 +10,8 @@
 <body>
 <section layout:fragment="main-content">
     <h1>Orders</h1>
-    <!-- TODO: add link button fragment -->
     <div sec:authorize="hasAuthority('ORDERS_WRITE')"
-         class="d-flex flex-row-reverse">
-        <a class="btn btn-success" th:href="@{/orders/create}">
-            <i class="bi bi-plus-lg"></i>
-            Create Order
-        </a>
-    </div>
+         th:insert="common/table :: createLink('Create Order', '/orders/create')"></div>
     <table class="table table-hover">
         <thead>
             <tr>

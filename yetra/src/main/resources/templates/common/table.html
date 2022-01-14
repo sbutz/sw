@@ -2,9 +2,17 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <body>
+<div th:fragment="createLink(text, url)"
+     class="d-flex flex-row-reverse">
+    <a class="btn btn-success" th:href="@{__${url}__}">
+        <i class="bi bi-plus-lg"></i>
+        <span th:text="${text}"></span>
+    </a>
+</div>
+
 <table>
     <tbody>
-        <tr th:fragment="empty(list, msg)">
+    <tr th:fragment="empty(list, msg)">
             <td th:if="${#lists.isEmpty(__${list}__)}"
                 th:text="${msg}"
                 colspan="100"
