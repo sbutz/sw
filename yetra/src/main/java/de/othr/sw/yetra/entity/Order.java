@@ -25,11 +25,9 @@ public class Order extends SingleIdEntity<Long> {
     @NotNull
     private Share share;
 
-    @NotNull
     @Positive
     private int quantity;
 
-    @NotNull
     @PositiveOrZero
     private float unitPrice;
 
@@ -67,6 +65,10 @@ public class Order extends SingleIdEntity<Long> {
     @Override
     public Long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public OrderType getType() {
