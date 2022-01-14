@@ -1,12 +1,14 @@
 package de.othr.sw.yetra.repo;
 
 import de.othr.sw.yetra.entity.*;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
 public interface OrderRepository extends CrudRepository<Order, Long> {
-    Optional<Order> findOrderByStatusAndTypeAndShareAndQuantityAndUnitPrice(
+
+    Optional<Order> findFirstByStatusAndTypeAndShareAndQuantityAndUnitPriceOrderByDateAsc(
             OrderStatus status,
             OrderType type,
             Share share,

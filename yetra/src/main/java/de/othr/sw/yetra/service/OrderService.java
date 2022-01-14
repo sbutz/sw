@@ -87,7 +87,7 @@ public class OrderService implements OrderServiceIF {
     }
 
     private Optional<Order> findMatchingOrder(Order order) {
-        return orderRepo.findOrderByStatusAndTypeAndShareAndQuantityAndUnitPrice(
+        return orderRepo.findFirstByStatusAndTypeAndShareAndQuantityAndUnitPriceOrderByDateAsc(
                 OrderStatus.OPEN,
                 order.getType() == OrderType.BUY ? OrderType.SELL : OrderType.BUY,
                 order.getShare(),
