@@ -4,7 +4,6 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @MappedSuperclass
-//TODO: comparable interface
 public abstract class SingleIdEntity<T> implements Serializable {
 
     protected abstract T getId();
