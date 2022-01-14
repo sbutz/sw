@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
-//TODO: all actions only as admin
 @Controller
 public class UserController {
 
@@ -22,21 +23,20 @@ public class UserController {
     UserServiceIF userService;
 
     //TODO: pagination
-    //TODO: @Get/PostMapping() verwenden
-    @RequestMapping(value = "/trading-partners", method = RequestMethod.GET)
+    @GetMapping(value = "/trading-partners")
     public String getTradingPartners(Model model) {
         model.addAttribute("tradingPartners", userService.getTradingPartners());
         return "tradingPartnerList";
     }
 
-    @RequestMapping(value = "/trading-partners/create", method = RequestMethod.GET)
+    @GetMapping(value = "/trading-partners/create")
     public String getTradingPartnerForm(Model model) {
         model.addAttribute("tradingPartner", new TradingPartnerDTO());
         model.addAttribute("validated", false);
         return "tradingPartnerForm";
     }
 
-    @RequestMapping(value = "/trading-partners/create", method = RequestMethod.POST)
+    @PostMapping(value = "/trading-partners/create")
     public String handelspartnerAnlegen(Model model,
                                       @Valid @ModelAttribute("tradingPartner") TradingPartnerDTO tradingPartner,
                                       BindingResult bindingResult)
@@ -58,20 +58,20 @@ public class UserController {
     }
 
     //TODO: pagination
-    @RequestMapping(value = "/employees", method = RequestMethod.GET)
+    @GetMapping(value = "/employees")
     public String angestellteAnzeigen(Model model) {
         model.addAttribute("employees", userService.getEmployees());
         return "employeesList";
     }
 
-    @RequestMapping(value = "/employees/create", method = RequestMethod.GET)
+    @GetMapping(value = "/employees/create")
     public String angestellteAnlegen(Model model) {
         model.addAttribute("employee", new UserDTO());
         model.addAttribute("validated", false);
         return "employeeForm";
     }
 
-    @RequestMapping(value = "/employees/create", method = RequestMethod.POST)
+    @PostMapping(value = "/employees/create")
     public String angestellteAnlegen(Model model,
                                      @Valid @ModelAttribute("employee") UserDTO employee,
                                      BindingResult bindingResult)
