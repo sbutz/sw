@@ -31,6 +31,7 @@
                 <td th:text="${t.getUsername()}"></td>
                 <td th:text="${t.getBillingBankAccount().getIban()}"></td>
             </tr>
+            <tr th:replace="common/table :: empty(tradingPartners, 'There are no trading partners yet.')"></tr>
         </tbody>
     </table>
 </section>

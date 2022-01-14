@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<table>
+    <tbody>
+        <tr th:fragment="empty(list, msg)">
+            <td th:if="${#lists.isEmpty(__${list}__)}"
+                th:text="${msg}"
+                colspan="100"
+                class="text-center">
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

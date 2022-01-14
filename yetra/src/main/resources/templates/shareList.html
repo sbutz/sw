@@ -27,13 +27,13 @@
             </tr>
         </thead>
         <tbody>
-            <!--TODO: handle empty list case-->
             <tr th:each="share,index: ${shares}">
                 <td th:text="${index.count}"></td>
                 <td th:text="${share.getIsin()}"></td>
                 <td th:text="${share.getName()}"></td>
                 <td th:text="${share.getCurrentPrice()} + ' EUR'"></td>
             </tr>
+            <tr th:replace="common/table :: empty(shares, 'There are no shares yet.')"></tr>
         </tbody>
     </table>
 </section>

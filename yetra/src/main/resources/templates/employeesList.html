@@ -29,6 +29,7 @@
                 <td th:text="${index.count}"></td>
                 <td th:text="${e.getUsername()}"></td>
             </tr>
+            <tr th:replace="common/table :: empty(employees, 'There are no employees yet.')"></tr>
         </tbody>
     </table>
 </section>

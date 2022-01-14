@@ -33,7 +33,6 @@
             </tr>
         </thead>
         <tbody>
-            <!-- TODO: handle empty list case -->
             <tr th:each="o,index: ${orders}">
                 <td th:text="${o.getId()}"></td>
                 <td th:text="${o.getClient().getUsername()}"></td>
@@ -45,6 +44,7 @@
                 <td th:text="${#dates.format(o.getDate(), 'dd-MM-yyyy HH:mm:ss')}"></td>
                 <td th:text="${#strings.capitalize(#strings.toLowerCase(o.getStatus()))}"></td>
             </tr>
+            <tr th:replace="common/table :: empty(orders, 'There are no orders yet.')"></tr>
         </tbody>
     </table>
 </section>
