@@ -4,16 +4,16 @@ import de.othr.sw.yetra.entity.Share;
 
 import java.util.Collection;
 
-public class ShareDetails {
+public class ShareDetailsDTO {
     private String isin;
 
     private String name;
 
     private float currentPrice;
 
-    private Collection<MarketValue> marketValues;
+    private Collection<MarketValueDTO> marketValues;
 
-    public ShareDetails(Share share, Collection<MarketValue> marketValues) {
+    public ShareDetailsDTO(Share share, Collection<MarketValueDTO> marketValues) {
         this.isin = share.getIsin();
         this.name = share.getName();
         this.currentPrice = share.getCurrentPrice();
@@ -44,11 +44,11 @@ public class ShareDetails {
         this.currentPrice = currentPrice;
     }
 
-    public Collection<MarketValue> getMarketValues() {
+    public Collection<MarketValueDTO> getMarketValues() {
         return marketValues;
     }
 
-    public void setMarketValues(Collection<MarketValue> marketValues) {
+    public void setMarketValues(Collection<MarketValueDTO> marketValues) {
         this.marketValues = marketValues;
     }
 }

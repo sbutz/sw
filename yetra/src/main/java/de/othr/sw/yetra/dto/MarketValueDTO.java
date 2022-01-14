@@ -2,12 +2,12 @@ package de.othr.sw.yetra.dto;
 
 import java.util.Date;
 
-public class MarketValue {
+public class MarketValueDTO {
     private Date timestamp;
 
     private float unitPrice;
 
-    public MarketValue(Date timestamp, float unitPrice) {
+    public MarketValueDTO(Date timestamp, float unitPrice) {
         this.timestamp = timestamp;
         this.unitPrice = unitPrice;
     }

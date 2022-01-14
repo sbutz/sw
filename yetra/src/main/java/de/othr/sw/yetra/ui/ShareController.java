@@ -39,6 +39,7 @@ public class ShareController {
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("share", share);
             model.addAttribute("validated", true);
             return "shareForm";
         } else {

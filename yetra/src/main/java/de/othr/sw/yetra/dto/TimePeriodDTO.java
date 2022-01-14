@@ -1,6 +1,6 @@
 package de.othr.sw.yetra.dto;
 
-public enum TimePeriod {
+public enum TimePeriodDTO {
     DAY,
     WEEK,
     MONTH,

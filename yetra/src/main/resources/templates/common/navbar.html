@@ -19,7 +19,7 @@
                             Home
                         </a>
                     </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAuthority('SHARES_READ')">
                         <a class="nav-link"
                            th:href="@{/shares}"
                            th:classappend="${#request.getRequestURI() == '/shares'? 'active' : ''}">
@@ -27,15 +27,14 @@
                         </a>
                     </li>
 
-                    <!--TODO: has role admin-->
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAuthority('USERS_READ')">
                         <a class="nav-link"
                            th:href="@{/trading-partners}"
                            th:classappend="${#request.getRequestURI() == '/trading-partners'? 'active' : ''}">
                             Trading Partners
                         </a>
                     </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAuthority('USERS_READ')">
                         <a class="nav-link"
                            th:href="@{/employees}"
                            th:classappend="${#request.getRequestURI() == '/employees'? 'active' : ''}">

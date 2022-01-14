@@ -8,7 +8,7 @@ public interface ShareServiceIF {
 
     Iterable<Share> getShares(Iterable<String> isins) throws ServiceException;
 
-    ShareDetails getShareDetails(String isin, TimePeriod timePeriod) throws ServiceException;
+    ShareDetailsDTO getShareDetails(String isin, TimePeriodDTO timePeriod) throws ServiceException;
 
     //TODO: seperates Interface fuer nicht oeffentliche Methoden?
     Share createShare(Share share) throws ServiceException;

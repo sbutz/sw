@@ -1,11 +1,11 @@
 package de.othr.sw.yetra.service;
 
-import de.othr.sw.yetra.dto.ServiceException;
 import de.othr.sw.yetra.entity.Employee;
 import de.othr.sw.yetra.entity.TradingPartner;
 import de.othr.sw.yetra.repo.EmployeeRepository;
 import de.othr.sw.yetra.repo.UserRepository;
 import de.othr.sw.yetra.repo.TradingPartnerRepository;
+import de.othr.sw.yetra.repo.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,6 +25,9 @@ public class UserService implements UserServiceIF, UserDetailsService {
     private TradingPartnerRepository tradingPartnerRepository;
 
     @Autowired
+    private UserRoleRepository userRoleRepository;
+
+    @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -35,6 +38,7 @@ public class UserService implements UserServiceIF, UserDetailsService {
             throw new ServiceException(409, "User already exists");
 
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
+        employee.setRole(userRoleRepository.findById("ROLE_ADMIN").get());
         return employeeRepo.save(employee);
     }
 
@@ -60,6 +64,7 @@ public class UserService implements UserServiceIF, UserDetailsService {
             throw new ServiceException(409, "Trading Partner already exists");
 
         tradingPartner.setPassword(passwordEncoder.encode(tradingPartner.getPassword()));
+        tradingPartner.setRole(userRoleRepository.findById("ROLE_TRADING_PARTNER").get());
         return tradingPartnerRepository.save(tradingPartner);
     }
 

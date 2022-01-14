@@ -40,7 +40,7 @@ public class ShareService implements ShareServiceIF {
     }
 
     @Override
-    public ShareDetails getShareDetails(String isin, TimePeriod timePeriod) {
+    public ShareDetailsDTO getShareDetails(String isin, TimePeriodDTO timePeriod) {
         //TODO: implement
         throw new UnsupportedOperationException();
     }

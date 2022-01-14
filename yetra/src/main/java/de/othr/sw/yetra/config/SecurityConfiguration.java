@@ -2,6 +2,7 @@ package de.othr.sw.yetra.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+//TODO: should one use @Secured annotation?
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -27,31 +29,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return securityUtilities.passwordEncoder();
     }
 
-    private static final String[] ALLOW_ACCESS_WITHOUT_AUTHENTICATION = {
-            "/",
-            "/login",
-    };
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(ALLOW_ACCESS_WITHOUT_AUTHENTICATION)
-                .permitAll().anyRequest().authenticated();
-        http.httpBasic()
-            .and()
-                .formLogin()
+        // TODO: remember-me
+        // https://www.baeldung.com/spring-security-remember-me
+        http
+            .authorizeRequests()
+                .antMatchers("/" ).permitAll()
+                .antMatchers(HttpMethod.GET, "/orders/**", "/api/orders/**").hasAuthority("ORDERS_READ")
+                .antMatchers(HttpMethod.POST, "/orders/**", "/api/orders/**").hasAuthority("ORDERS_WRITE")
+                .antMatchers(HttpMethod.GET, "/shares/**", "/api/shares/**").hasAuthority("SHARES_READ")
+                .antMatchers(HttpMethod.POST, "/shares/**").hasAuthority("SHARES_WRITE")
+                .antMatchers(HttpMethod.GET, "/employees/**", "/trading-partners/**").hasAuthority("USERS_READ")
+                .antMatchers(HttpMethod.POST, "/employees/**", "/trading-partners/**").hasAuthority("USERS_WRITE")
+                .antMatchers(HttpMethod.GET, "/transactions/**").hasAuthority("TRANSACTIONS_READ")
+                .anyRequest().denyAll()
+                .and()
+            .formLogin()
                 .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/shares")
-                .failureUrl("/login?error=true")
-            .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
-                //TODO: warning in console: missusing same site attribute
-                //TODO: understand remeberMe()
-                .deleteCookies("remember-me")
-                .permitAll()
-            .and()
-                .rememberMe();
+                .and()
+            .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .and()
+            .httpBasic();
     }
 
     @Autowired

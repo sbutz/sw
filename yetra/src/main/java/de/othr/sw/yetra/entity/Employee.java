@@ -3,12 +3,9 @@ package de.othr.sw.yetra.entity;
 import javax.persistence.Entity;
 
 @Entity
+//TODO: one empty class here?
 public class Employee extends User {
-    //TODO: add privileges
-    public Employee() {
-    }
 
-    public Employee(String nutzername, String passwort) {
-        super(nutzername, passwort);
+    public Employee() {
     }
 }

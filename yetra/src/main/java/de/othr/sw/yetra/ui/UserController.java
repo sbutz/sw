@@ -1,8 +1,11 @@
 package de.othr.sw.yetra.ui;
 
+import de.othr.sw.yetra.dto.TradingPartnerDTO;
+import de.othr.sw.yetra.dto.UserDTO;
 import de.othr.sw.yetra.entity.Employee;
 import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.TradingPartner;
+import de.othr.sw.yetra.entity.UserRole;
 import de.othr.sw.yetra.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,16 +32,14 @@ public class UserController {
 
     @RequestMapping(value = "/trading-partners/create", method = RequestMethod.GET)
     public String getTradingPartnerForm(Model model) {
-        TradingPartner tradingPartner = new TradingPartner();
-        tradingPartner.setBillingBankAccount(new BankAccount());
-        model.addAttribute("tradingPartner", tradingPartner);
+        model.addAttribute("tradingPartner", new TradingPartnerDTO());
         model.addAttribute("validated", false);
         return "tradingPartnerForm";
     }
 
     @RequestMapping(value = "/trading-partners/create", method = RequestMethod.POST)
     public String handelspartnerAnlegen(Model model,
-                                      @Valid @ModelAttribute("tradingPartner") TradingPartner tradingPartner,
+                                      @Valid @ModelAttribute("tradingPartner") TradingPartnerDTO tradingPartner,
                                       BindingResult bindingResult)
     {
         if (bindingResult.hasErrors()) {
@@ -46,8 +47,13 @@ public class UserController {
             model.addAttribute("validated", true);
             return "tradingPartnerForm";
         } else {
+            //TODO: factory method TradingPartner.fromDTO()
+            TradingPartner tp = new TradingPartner();
+            tp.setUsername(tradingPartner.getUsername());
+            tp.setPassword(tradingPartner.getPassword());
+            tp.setBillingBankAccount(new BankAccount(tradingPartner.getIban()));
             //TODO: methode anders benennen
-            userService.createTradingPartner(tradingPartner);
+            userService.createTradingPartner(tp);
             return "redirect:/trading-partners";
         }
     }
@@ -61,14 +67,14 @@ public class UserController {
 
     @RequestMapping(value = "/employees/create", method = RequestMethod.GET)
     public String angestellteAnlegen(Model model) {
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employee", new UserDTO());
         model.addAttribute("validated", false);
         return "employeeForm";
     }
 
     @RequestMapping(value = "/employees/create", method = RequestMethod.POST)
     public String angestellteAnlegen(Model model,
-                                     @Valid @ModelAttribute("employee") Employee employee,
+                                     @Valid @ModelAttribute("employee") UserDTO employee,
                                      BindingResult bindingResult)
     {
         if (bindingResult.hasErrors()) {
@@ -76,8 +82,12 @@ public class UserController {
             model.addAttribute("validated", true);
             return "employeeForm";
         } else {
+            //TODO: factory method Employe.fromDTO()
+            Employee e = new Employee();
+            e.setUsername(employee.getUsername());
+            e.setPassword(employee.getPassword());
             //TODO: methode anders benennen
-            userService.createEmployee(employee);
+            userService.createEmployee(e);
             return "redirect:/employees";
         }
     }

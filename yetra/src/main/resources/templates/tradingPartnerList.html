@@ -2,6 +2,7 @@
 <html lang="de"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{common/layout}">
 <head>
     <title>Trading Partners</title>
@@ -9,7 +10,8 @@
 <body>
 <section layout:fragment="main-content">
     <h1>Trading Partners</h1>
-    <div class="d-flex flex-row-reverse">
+    <div sec:authorize="hasAuthority('USERS_WRITE')"
+         class="d-flex flex-row-reverse">
         <a class="btn btn-success" th:href="@{/trading-partners/create}">
             <i class="bi-building"></i>
             Create Trading Partner
