@@ -24,7 +24,7 @@ public class TransactionService implements TransactionServiceIF {
             throw new ServiceException(422, "Wrong order type");
         if (sellOrder.getType() != OrderType.SELL)
             throw new ServiceException(422, "Wrong order type");
-        if (buyOrder.getShare() != sellOrder.getShare())
+        if (! buyOrder.getShare().equals(sellOrder.getShare()))
             throw new ServiceException(422, "Different shares specified");
         if (buyOrder.getQuantity() != sellOrder.getQuantity())
             throw new ServiceException(422, "Different quantities specified");
