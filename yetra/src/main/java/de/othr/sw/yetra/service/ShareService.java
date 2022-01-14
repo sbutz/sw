@@ -18,6 +18,30 @@ public class ShareService implements ShareServiceIF {
     ShareRepository shareRepo;
 
     @Override
+    public Share createShare(Share share) throws ServiceException {
+        if (shareRepo.existsById(share.getIsin()))
+            throw new ServiceException(409, "Share already exists");
+
+        return shareRepo.save(share);
+    }
+
+    @Override
+    public ShareDetailsDTO getShareDetails(String isin, TimePeriodDTO timePeriod) {
+        //TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Share getShare(String isin) throws ServiceException {
+        return shareRepo
+                .findById(isin)
+                .orElseThrow(()-> {
+                throw new ServiceException(404, "Share not found");
+                });
+    }
+
+
+    @Override
     public Iterable<Share> getShares() {
         return shareRepo.findAll();
     }
@@ -37,19 +61,5 @@ public class ShareService implements ShareServiceIF {
             shares.add(s);
         }
         return shares;
-    }
-
-    @Override
-    public ShareDetailsDTO getShareDetails(String isin, TimePeriodDTO timePeriod) {
-        //TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Share createShare(Share share) throws ServiceException {
-        if (shareRepo.existsById(share.getIsin()))
-            throw new ServiceException(409, "Share already exists");
-
-       return shareRepo.save(share);
     }
 }

@@ -40,7 +40,6 @@ public class Start implements CommandLineRunner {
         UserPrivilege usersRead         = getOrCreatePrivilege("USERS_READ");
         UserPrivilege usersWrite        = getOrCreatePrivilege("USERS_WRITE");
         UserPrivilege transactionsRead  = getOrCreatePrivilege("TRANSACTIONS_WRITE");
-
         UserRole adminRole = getOrCreateRole("ROLE_ADMIN");
         adminRole.addPrivileges(Sets.newHashSet(ordersRead, ordersWrite, sharesRead, sharesWrite, usersRead, usersWrite, transactionsRead));
         UserRole tradingPartnerRole = getOrCreateRole("ROLE_TRADING_PARTNER");

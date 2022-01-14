@@ -12,7 +12,10 @@
     <h1>Shares</h1>
     <div sec:authorize="hasAuthority('SHARES_WRITE')"
          class="d-flex flex-row-reverse">
-        <a class="btn btn-success" th:href="@{/shares/create}">Create Share</a>
+        <a class="btn btn-success" th:href="@{/shares/create}">
+            <i class="bi bi-plus-lg"></i>
+            Create Share
+        </a>
     </div>
     <table class="table table-hover">
         <thead>

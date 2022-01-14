@@ -13,7 +13,9 @@ Therefore create fragments for the different parts of a form.
            th:text="${name}"
            class="form-label">
     </label>
-    <input th:type="${type}"
+
+    <input th:if="${type != 'select'}"
+           th:type="${type}"
            required
            th:value="*{__${field}__}"
            th:field="*{__${field}__}"
@@ -24,6 +26,28 @@ Therefore create fragments for the different parts of a form.
            th:max="${max} ?: ''"
            th:step="${step} ?: ''"
            class="form-control">
+
+    <select th:if="${type == 'select' && enum != null}"
+            th:field="*{__${field}__}"
+            class="form-select">
+        <option th:each="opt : ${T(__${enum}__).values()}"
+                th:value="${opt}"
+                th:text="${#strings.capitalize(#strings.toLowerCase(opt))}">
+        </option>
+    </select>
+
+    <select th:if="${type == 'select' && options != null}"
+            th:field="*{__${field}__}"
+            class="form-select">
+        <!-- TODO: remove or provide for other variables -->
+        <!--@thymesVar id="options" type="java.util.SortedMap<String,String>"-->
+        <!--@thymesVar id="opt" type="java.util.Map.Entry<String,String>"-->
+        <option th:each="opt : ${__${options}__}"
+                th:value="${opt.key}"
+                th:text="${opt.value}">
+        </option>
+    </select>
+
     <div class="invalid-feedback"
          th:if="${errorMessage}">
         <span th:text="${errorMessage}"></span>

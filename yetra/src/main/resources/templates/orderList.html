@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>Orders</title>
+</head>
+<body>
+<section layout:fragment="main-content">
+    <h1>Orders</h1>
+    <!-- TODO: add link button fragment -->
+    <div sec:authorize="hasAuthority('ORDERS_WRITE')"
+         class="d-flex flex-row-reverse">
+        <a class="btn btn-success" th:href="@{/orders/create}">
+            <i class="bi bi-plus-lg"></i>
+            Create Order
+        </a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Client</th>
+                <th>Isin</th>
+                <th>Share name</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- TODO: handle empty list case -->
+            <tr th:each="o,index: ${orders}">
+                <td th:text="${o.getId()}"></td>
+                <td th:text="${o.getClient().getUsername()}"></td>
+                <td th:text="${o.getShare().getIsin()}"></td>
+                <td th:text="${o.getShare().getName()}"></td>
+                <td th:text="${#strings.capitalize(#strings.toLowerCase(o.getType()))}"></td>
+                <td th:text="${o.getQuantity()}"></td>
+                <td th:text="${o.getUnitPrice()} + ' EUR'"></td>
+                <td th:text="${#dates.format(o.getDate(), 'dd-MM-yyyy HH:mm:ss')}"></td>
+                <td th:text="${#strings.capitalize(#strings.toLowerCase(o.getStatus()))}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

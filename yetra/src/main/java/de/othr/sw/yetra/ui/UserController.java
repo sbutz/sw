@@ -5,8 +5,7 @@ import de.othr.sw.yetra.dto.UserDTO;
 import de.othr.sw.yetra.entity.Employee;
 import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.TradingPartner;
-import de.othr.sw.yetra.entity.UserRole;
-import de.othr.sw.yetra.service.UserService;
+import de.othr.sw.yetra.service.UserServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,7 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserServiceIF userService;
 
     //TODO: pagination
     //TODO: @Get/PostMapping() verwenden

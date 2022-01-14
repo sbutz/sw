@@ -1,9 +1,6 @@
 package de.othr.sw.yetra.repo;
 
-import de.othr.sw.yetra.entity.Order;
-import de.othr.sw.yetra.entity.OrderStatus;
-import de.othr.sw.yetra.entity.OrderType;
-import de.othr.sw.yetra.entity.Share;
+import de.othr.sw.yetra.entity.*;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
@@ -16,4 +13,8 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
             int quantity,
             float unitPrice
     );
+
+    Optional<Order> findOrderByIdAndClient(long id, User client);
+
+    Iterable<Order> findOrdersByClient(User client);
 }

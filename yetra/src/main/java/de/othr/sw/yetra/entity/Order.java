@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name="orders")
@@ -29,7 +30,7 @@ public class Order extends SingleIdEntity<Long> {
     private int quantity;
 
     @NotNull
-    @Positive
+    @PositiveOrZero
     private float unitPrice;
 
     @Enumerated(EnumType.STRING)
