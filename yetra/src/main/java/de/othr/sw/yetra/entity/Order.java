@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name="orders")
@@ -20,15 +21,15 @@ public class Order extends SingleIdEntity<Long> {
     private OrderType type;
 
     @ManyToOne
+    @NotNull
     private Share share;
 
     @NotNull
+    @Positive
     private int quantity;
 
     @NotNull
-    //TODO: not zero
-    //@Positive
-    //@Negative
+    @Positive
     private float unitPrice;
 
     @Enumerated(EnumType.STRING)
@@ -36,6 +37,7 @@ public class Order extends SingleIdEntity<Long> {
     private OrderStatus status;
 
     @ManyToOne
+    @NotNull
     private User client;
 
     @NotNull
