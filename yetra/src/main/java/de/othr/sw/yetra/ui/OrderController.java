@@ -1,5 +1,6 @@
 package de.othr.sw.yetra.ui;
 
+import de.othr.sw.yetra.dto.DTOEntityMapper;
 import de.othr.sw.yetra.dto.OrderDTO;
 import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.service.OrderServiceIF;
@@ -26,9 +27,13 @@ public class OrderController {
     @Autowired
     ShareServiceIF shareService;
 
+    @Autowired
+    DTOEntityMapper<Order,OrderDTO> dtoMapper;
+
     @GetMapping("/orders")
     public String getOrders(Model model, @AuthenticationPrincipal User user) {
         //TODO: sort by date descending
+        //TODO: use OrderDTO
         Iterable<Order> orders;
         if (user.hasAuthority("ROLE_ADMIN"))
             orders = orderService.getOrders();
@@ -66,14 +71,8 @@ public class OrderController {
             model.addAttribute("validated", true);
             return "orderForm";
         } else {
-            //TODO: factory method Order.fromDTO()
-            Order o = new Order();
-            o.setType(order.getType());
-            o.setShare(shareService.getShare(order.getIsin()));
-            o.setQuantity(order.getQuantity());
-            o.setUnitPrice(order.getUnitPrice());
+            Order o = dtoMapper.fromDTO(order);
             o.setClient(user);
-            o.setBankAccount(new BankAccount(order.getIban()));
             //TODO: methode anders benennen
             orderService.createOrder(o);
             return "redirect:/orders";
