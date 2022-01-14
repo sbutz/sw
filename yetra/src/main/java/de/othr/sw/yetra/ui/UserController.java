@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/trading-partners/create")
-    public String handelspartnerAnlegen(Model model,
+    public String createTradingPartner(Model model,
                                       @Valid @ModelAttribute("tradingPartner") TradingPartnerDTO tradingPartner,
                                       BindingResult bindingResult)
     {
@@ -59,20 +59,20 @@ public class UserController {
 
     //TODO: pagination
     @GetMapping(value = "/employees")
-    public String angestellteAnzeigen(Model model) {
+    public String getEmployees(Model model) {
         model.addAttribute("employees", userService.getEmployees());
         return "employeesList";
     }
 
     @GetMapping(value = "/employees/create")
-    public String angestellteAnlegen(Model model) {
+    public String getEmployeeForm(Model model) {
         model.addAttribute("employee", new UserDTO());
         model.addAttribute("validated", false);
         return "employeeForm";
     }
 
     @PostMapping(value = "/employees/create")
-    public String angestellteAnlegen(Model model,
+    public String createEmployee(Model model,
                                      @Valid @ModelAttribute("employee") UserDTO employee,
                                      BindingResult bindingResult)
     {
