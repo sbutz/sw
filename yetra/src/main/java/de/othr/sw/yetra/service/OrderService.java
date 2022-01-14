@@ -37,8 +37,6 @@ public class OrderService implements OrderServiceIF {
         order.setStatus(OrderStatus.OPEN);
         order.setDate(new Date());
 
-        //TODO: set client to logged in user
-
         order = orderRepo.save(order);
 
         Optional<Order> matchingOrder = this.findMatchingOrder(order);
