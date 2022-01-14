@@ -36,6 +36,10 @@ public class Share extends SingleIdEntity<String> {
         return isin;
     }
 
+    public void setIsin(String isin) {
+        this.isin = isin;
+    }
+
     public String getName() {
         return name;
     }
