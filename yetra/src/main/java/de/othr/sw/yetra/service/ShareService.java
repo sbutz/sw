@@ -36,7 +36,7 @@ public class ShareService implements ShareServiceIF {
         return shareRepo
                 .findById(isin)
                 .orElseThrow(()-> {
-                throw new ServiceException(404, "Share not found");
+                    throw new ServiceException(404, "Share not found");
                 });
     }
 
