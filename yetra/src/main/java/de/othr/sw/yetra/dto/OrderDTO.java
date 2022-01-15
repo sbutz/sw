@@ -7,6 +7,9 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+//TODO: replace with records?
+//make fields final/immutable
+//use constructor to construct from order
 public class OrderDTO implements Serializable {
 
     private long id;
