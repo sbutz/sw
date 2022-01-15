@@ -7,8 +7,6 @@ import de.othr.sw.yetra.service.ShareServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping(path = "/api/shares")
 public class ShareServiceRestController {
@@ -30,10 +28,5 @@ public class ShareServiceRestController {
             @RequestParam(name = "timePeriod", required = false, defaultValue = "DAY") TimePeriodDTO timePeriod
     ) throws ServiceException {
         return shareService.getShareDetails(isin, timePeriod);
-    }
-
-    @PostMapping("")
-    public Share wertpapierAnlegen(@Valid @RequestBody Share share) throws ServiceException {
-        return shareService.createShare(share);
     }
 }
