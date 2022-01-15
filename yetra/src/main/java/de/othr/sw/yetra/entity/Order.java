@@ -50,17 +50,6 @@ public class Order extends SingleIdEntity<Long> {
     public Order() {
     }
 
-    public Order(OrderType type, Share share, int quantity, float unitPrice, User client, BankAccount bankAccount) {
-        this.type = type;
-        this.share = share;
-        this.quantity = quantity;
-        this.unitPrice = unitPrice;
-        this.status = OrderStatus.OPEN;
-        this.client = client;
-        this.timestamp = LocalDateTime.now();
-        this.bankAccount = bankAccount;
-    }
-
     @Override
     public Long getId() {
         return id;
