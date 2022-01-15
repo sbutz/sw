@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import javax.validation.constraints.PastOrPresent;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Transaction extends SingleIdEntity<Long> {
@@ -16,7 +16,7 @@ public class Transaction extends SingleIdEntity<Long> {
 
     @NotNull
     @PastOrPresent
-    private Date date;
+    private LocalDateTime timestamp;
 
     @NotNull
     private float unitPrice;
@@ -37,7 +37,7 @@ public class Transaction extends SingleIdEntity<Long> {
     }
 
     public Transaction(Share share, float unitPrice, Order buyOrder, Order sellOrder) {
-        this.date = new Date();
+        this.timestamp = LocalDateTime.now();
         this.unitPrice = unitPrice;
         this.share = share;
         this.buyOrder = buyOrder;
@@ -49,12 +49,12 @@ public class Transaction extends SingleIdEntity<Long> {
         return id;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date datum) {
-        this.date = datum;
+    public void setTimestamp(LocalDateTime datum) {
+        this.timestamp = datum;
     }
 
     public float getUnitPrice() {

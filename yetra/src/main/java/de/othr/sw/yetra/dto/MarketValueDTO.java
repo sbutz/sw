@@ -1,22 +1,22 @@
 package de.othr.sw.yetra.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class MarketValueDTO {
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
     private float unitPrice;
 
-    public MarketValueDTO(Date timestamp, float unitPrice) {
+    public MarketValueDTO(LocalDateTime timestamp, float unitPrice) {
         this.timestamp = timestamp;
         this.unitPrice = unitPrice;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 

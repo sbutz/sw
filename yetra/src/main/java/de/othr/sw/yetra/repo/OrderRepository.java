@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface OrderRepository extends CrudRepository<Order, Long> {
 
-    Optional<Order> findFirstByStatusAndTypeAndShareAndQuantityAndUnitPriceOrderByDateAsc(
+    Optional<Order> findFirstByStatusAndTypeAndShareAndQuantityAndUnitPriceOrderByTimestampAsc(
             OrderStatus status,
             OrderType type,
             Share share,

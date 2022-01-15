@@ -2,7 +2,7 @@ package de.othr.sw.yetra.entity;
 
 import de.othr.sw.yetra.entity.util.SingleIdEntity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -40,7 +40,7 @@ public class Order extends SingleIdEntity<Long> {
 
     @NotNull
     @PastOrPresent
-    private Date date;
+    private LocalDateTime timestamp;
 
     @Embedded
     @Valid
@@ -57,7 +57,7 @@ public class Order extends SingleIdEntity<Long> {
         this.unitPrice = unitPrice;
         this.status = OrderStatus.OPEN;
         this.client = client;
-        this.date = new Date();
+        this.timestamp = LocalDateTime.now();
         this.bankAccount = bankAccount;
     }
 
@@ -118,12 +118,12 @@ public class Order extends SingleIdEntity<Long> {
         this.client = client;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date datum) {
-        this.date = datum;
+    public void setTimestamp(LocalDateTime datum) {
+        this.timestamp = datum;
     }
 
     public BankAccount getBankAccount() {

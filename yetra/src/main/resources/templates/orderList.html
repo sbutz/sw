@@ -35,7 +35,7 @@
                 <td th:text="${#strings.capitalize(#strings.toLowerCase(o.getType()))}"></td>
                 <td th:text="${o.getQuantity()}"></td>
                 <td th:text="${o.getUnitPrice()} + ' EUR'"></td>
-                <td th:text="${#dates.format(o.getDate(), 'dd-MM-yyyy HH:mm:ss')}"></td>
+                <td th:text="${#temporals.format(o.getTimestamp(), 'dd-MM-yyyy HH:mm:ss')}"></td>
                 <td th:text="${#strings.capitalize(#strings.toLowerCase(o.getStatus()))}"></td>
             </tr>
             <tr th:replace="common/table :: empty(orders, 'There are no orders yet.')"></tr>

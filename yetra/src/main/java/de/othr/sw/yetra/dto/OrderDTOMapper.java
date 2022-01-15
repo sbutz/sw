@@ -20,7 +20,7 @@ public class OrderDTOMapper implements DTOEntityMapper<Order, OrderDTO> {
         order.setQuantity(o.getQuantity());
         order.setUnitPrice(o.getUnitPrice());
         order.setStatus(o.getStatus());
-        order.setDate(o.getDate());
+        order.setTimestamp(o.getTimestamp());
         order.setIban(o.getBankAccount().getIban());
         return order;
     }
@@ -34,7 +34,7 @@ public class OrderDTOMapper implements DTOEntityMapper<Order, OrderDTO> {
         order.setQuantity(dto.getQuantity());
         order.setUnitPrice(dto.getUnitPrice());
         order.setStatus(dto.getStatus());
-        order.setDate(dto.getDate());
+        order.setTimestamp(dto.getTimestamp());
         order.setBankAccount(new BankAccount(dto.getIban()));
         return order;
     }

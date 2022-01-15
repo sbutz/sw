@@ -5,7 +5,7 @@ import de.othr.sw.yetra.entity.OrderType;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class OrderDTO implements Serializable {
 
@@ -26,7 +26,7 @@ public class OrderDTO implements Serializable {
 
     private OrderStatus status;
 
-    private Date date;
+    private LocalDateTime timestamp;
 
     @NotBlank
     @Size(min = 4, max = 34)
@@ -84,12 +84,12 @@ public class OrderDTO implements Serializable {
         this.status = status;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getIban() {

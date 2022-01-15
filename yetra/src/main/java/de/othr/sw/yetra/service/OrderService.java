@@ -6,12 +6,10 @@ import de.othr.sw.yetra.entity.OrderType;
 import de.othr.sw.yetra.entity.User;
 import de.othr.sw.yetra.repo.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -35,7 +33,7 @@ public class OrderService implements OrderServiceIF {
         shareService.getShare(order.getShare().getIsin());
 
         order.setStatus(OrderStatus.OPEN);
-        order.setDate(new Date());
+        order.setTimestamp(LocalDateTime.now());
 
         order = orderRepo.save(order);
 
@@ -87,7 +85,7 @@ public class OrderService implements OrderServiceIF {
     }
 
     private Optional<Order> findMatchingOrder(Order order) {
-        return orderRepo.findFirstByStatusAndTypeAndShareAndQuantityAndUnitPriceOrderByDateAsc(
+        return orderRepo.findFirstByStatusAndTypeAndShareAndQuantityAndUnitPriceOrderByTimestampAsc(
                 OrderStatus.OPEN,
                 order.getType() == OrderType.BUY ? OrderType.SELL : OrderType.BUY,
                 order.getShare(),
