@@ -1,14 +1,12 @@
 package de.othr.sw.yetra.service;
 
-import de.othr.sw.yetra.entity.Order;
-import de.othr.sw.yetra.entity.OrderStatus;
-import de.othr.sw.yetra.entity.OrderType;
-import de.othr.sw.yetra.entity.Transaction;
+import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.repo.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @Service
 public class TransactionService implements TransactionServiceIF {
@@ -33,5 +31,13 @@ public class TransactionService implements TransactionServiceIF {
 
         Transaction transaction = new Transaction(sellOrder.getShare(), sellOrder.getUnitPrice(), buyOrder, sellOrder);
         return transactionRepo.save(transaction);
+    }
+
+    @Override
+    public Transaction getLastTransaction(Share share, LocalDateTime start, LocalDateTime end) throws ServiceException {
+        return transactionRepo.getFirstByShareAndTimestampBetweenOrderByTimestampDesc(share, start, end)
+                .orElseThrow(()-> {
+                    throw new ServiceException(404, "Transaction not found");
+                });
     }
 }

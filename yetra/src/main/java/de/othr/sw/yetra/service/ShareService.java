@@ -3,10 +3,14 @@ package de.othr.sw.yetra.service;
 import com.google.common.collect.Iterables;
 import de.othr.sw.yetra.dto.*;
 import de.othr.sw.yetra.entity.Share;
+import de.othr.sw.yetra.entity.Transaction;
 import de.othr.sw.yetra.repo.ShareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,6 +21,9 @@ public class ShareService implements ShareServiceIF {
     @Autowired
     ShareRepository shareRepo;
 
+    @Autowired
+    TransactionService transactionService;
+
     @Override
     public Share createShare(Share share) throws ServiceException {
         if (shareRepo.existsById(share.getIsin()))
@@ -26,9 +33,44 @@ public class ShareService implements ShareServiceIF {
     }
 
     @Override
-    public ShareDetailsDTO getShareDetails(String isin, TimePeriodDTO timePeriod) {
-        //TODO: implement
-        throw new UnsupportedOperationException();
+    public ShareDetailsDTO getShareDetails(String isin, TimePeriodDTO timePeriod) throws ServiceException {
+        Share share = this.getShare(isin);
+        Collection<MarketValueDTO> marketValues = new ArrayList<>();
+        int values;
+        TemporalUnit unit;
+        switch (timePeriod) {
+            case DAY -> {
+                values = 24;
+                unit = ChronoUnit.HOURS;
+            }
+            case WEEK -> {
+                values = 14;
+                unit = ChronoUnit.HALF_DAYS;
+            }
+            case MONTH -> {
+                values = 30;
+                unit = ChronoUnit.DAYS;
+            }
+            case YEAR -> {
+                values = 12;
+                unit = ChronoUnit.MONTHS;
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + timePeriod);
+        }
+        /*
+         * This could have been implemented easier using SQL Rank, but JPQL does not provide analytic functions.
+         * Native SQL is forbidden by the requirements. Emulating SQL Rank with subqueries is ugly and not performant.
+         */
+        for (int i = values; i > 0; i--) {
+            try {
+                LocalDateTime start = LocalDateTime.now().minus(i, unit);
+                LocalDateTime end = LocalDateTime.now().minus(i-1, unit);
+                Transaction t = transactionService.getLastTransaction(share, start, end);
+                marketValues.add(new MarketValueDTO(t.getTimestamp(), t.getUnitPrice()));
+            } catch (ServiceException ignored) { }
+        }
+
+        return new ShareDetailsDTO(this.getShare(isin), marketValues);
     }
 
     @Override
