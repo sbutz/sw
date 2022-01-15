@@ -13,7 +13,6 @@ public class ShareServiceRestController {
     @Autowired
     private ShareServiceIF shareService;
 
-    //TODO: Doku aendern oder Konstrukur entfernen
     @GetMapping("")
     public Iterable<Share> getShares(
             @RequestParam(name= "filter", required = false) Iterable<String> filter
@@ -21,9 +20,8 @@ public class ShareServiceRestController {
         return shareService.getShares(filter);
     }
 
-    //TODO: Doku aendern oder Konstrukur entfernen
     @GetMapping("/{isin}")
-    public ShareDetailsDTO wertpapierDetailsAbfragen(
+    public ShareDetailsDTO getShareDetails(
             @PathVariable(name = "isin") String isin,
             @RequestParam(name = "timePeriod", required = false, defaultValue = "DAY") TimePeriodDTO timePeriod
     ) throws ServiceException {
