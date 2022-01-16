@@ -86,7 +86,7 @@ public class OrderService implements OrderServiceIF {
 
     @Override
     public Page<Order> getOrders(User user, Pageable pageable) {
-        return orderRepo.findOrdersByClient(user, pageable);
+        return orderRepo.findOrdersByClientOrderByTimestampDesc(user, pageable);
     }
 
     private Optional<Order> findMatchingOrder(Order order) {

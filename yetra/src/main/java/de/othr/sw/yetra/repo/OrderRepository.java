@@ -20,7 +20,7 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
 
     Optional<Order> findOrderByIdAndClient(long id, User client);
 
-    Page<Order> findOrdersByClient(User client, Pageable pageable);
+    Page<Order> findOrdersByClientOrderByTimestampDesc(User client, Pageable pageable);
 
     @Query("SELECT o FROM ShareOrder o WHERE o.status = de.othr.sw.yetra.entity.OrderStatus.OPEN")
     Iterable<Order> findOpenOrders();
