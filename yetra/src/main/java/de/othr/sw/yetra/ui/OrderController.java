@@ -36,7 +36,6 @@ public class OrderController {
                             @AuthenticationPrincipal User user,
                             @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
-        //TODO: sort by date descending
         //TODO: use OrderDTO
         //TODO: page size as RequestParam or @Value everywhere
         model.addAttribute("orders", orderService.getOrders(user, PageRequest.of(page, 20)));
