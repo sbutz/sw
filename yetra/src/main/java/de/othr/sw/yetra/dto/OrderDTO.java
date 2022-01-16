@@ -25,7 +25,7 @@ public class OrderDTO implements Serializable {
     private int quantity;
 
     @PositiveOrZero
-    private float unitPrice;
+    private double unitPrice;
 
     private OrderStatus status;
 
@@ -71,11 +71,11 @@ public class OrderDTO implements Serializable {
         this.quantity = quantity;
     }
 
-    public float getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(float unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 

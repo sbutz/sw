@@ -20,13 +20,13 @@ public class Share extends SingleIdEntity<String> {
     private String name;
 
     @PositiveOrZero
-    private float currentPrice;
+    private double currentPrice;
 
     public Share() {
 
     }
 
-    public Share(String isin, String name, float currentPrice) {
+    public Share(String isin, String name, double currentPrice) {
         this.isin = isin;
         this.name = name;
         this.currentPrice = currentPrice;
@@ -48,11 +48,11 @@ public class Share extends SingleIdEntity<String> {
         this.name = name;
     }
 
-    public float getCurrentPrice() {
+    public double getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(float aktuellerPreis) {
+    public void setCurrentPrice(double aktuellerPreis) {
         this.currentPrice = aktuellerPreis;
     }
 

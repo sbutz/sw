@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 public class MarketValueDTO {
     private LocalDateTime timestamp;
 
-    private float unitPrice;
+    private double unitPrice;
 
-    public MarketValueDTO(LocalDateTime timestamp, float unitPrice) {
+    public MarketValueDTO(LocalDateTime timestamp, double unitPrice) {
         this.timestamp = timestamp;
         this.unitPrice = unitPrice;
     }
@@ -20,11 +20,11 @@ public class MarketValueDTO {
         this.timestamp = timestamp;
     }
 
-    public float getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(float unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 }

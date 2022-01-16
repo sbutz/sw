@@ -15,7 +15,7 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
             OrderType type,
             Share share,
             int quantity,
-            float unitPrice
+            double unitPrice
     );
 
     Optional<Order> findOrderByIdAndClient(long id, User client);

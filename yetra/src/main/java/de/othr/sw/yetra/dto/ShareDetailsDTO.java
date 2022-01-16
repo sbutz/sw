@@ -9,7 +9,7 @@ public class ShareDetailsDTO {
 
     private String name;
 
-    private float currentPrice;
+    private double currentPrice;
 
     private Collection<MarketValueDTO> marketValues;
 
@@ -36,11 +36,11 @@ public class ShareDetailsDTO {
         this.name = name;
     }
 
-    public float getCurrentPrice() {
+    public double getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(float currentPrice) {
+    public void setCurrentPrice(double currentPrice) {
         this.currentPrice = currentPrice;
     }
 

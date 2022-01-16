@@ -28,7 +28,7 @@ public class Order extends SingleIdEntity<Long> {
     private int quantity;
 
     @PositiveOrZero
-    private float unitPrice;
+    private double unitPrice;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -83,11 +83,11 @@ public class Order extends SingleIdEntity<Long> {
         this.quantity = menge;
     }
 
-    public float getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(float unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
