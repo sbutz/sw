@@ -1,7 +1,7 @@
 package de.othr.sw.yetra.controller.mvc;
 
 import de.othr.sw.yetra.entity.Share;
-import de.othr.sw.yetra.service.ShareService;
+import de.othr.sw.yetra.service.impl.ShareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;

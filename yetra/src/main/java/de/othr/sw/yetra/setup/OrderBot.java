@@ -35,6 +35,7 @@ public class OrderBot {
         bot = userRepository.findUserByUsername("bot").get();
     }
 
+    //TODO: inject value
     @Scheduled(fixedDelay = 10*1000, initialDelay = 5*1000)
     public void completeOpenOrders() {
         for (Order order : orderRepository.findOpenOrders()) {

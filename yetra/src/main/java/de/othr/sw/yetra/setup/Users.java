@@ -4,7 +4,7 @@ import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.Employee;
 import de.othr.sw.yetra.entity.TradingPartner;
 import de.othr.sw.yetra.repository.UserRepository;
-import de.othr.sw.yetra.service.UserService;
+import de.othr.sw.yetra.service.impl.UserService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;

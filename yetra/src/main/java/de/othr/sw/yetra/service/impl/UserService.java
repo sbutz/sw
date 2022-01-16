@@ -1,4 +1,4 @@
-package de.othr.sw.yetra.service;
+package de.othr.sw.yetra.service.impl;
 
 import de.othr.sw.yetra.entity.Employee;
 import de.othr.sw.yetra.entity.TradingPartner;
@@ -6,6 +6,8 @@ import de.othr.sw.yetra.repository.EmployeeRepository;
 import de.othr.sw.yetra.repository.UserRepository;
 import de.othr.sw.yetra.repository.TradingPartnerRepository;
 import de.othr.sw.yetra.repository.UserRoleRepository;
+import de.othr.sw.yetra.service.ServiceException;
+import de.othr.sw.yetra.service.UserServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
