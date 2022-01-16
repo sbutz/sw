@@ -14,6 +14,10 @@ public class ShareDetailsDTO implements Serializable {
 
     private Collection<MarketValueDTO> marketValues;
 
+    public ShareDetailsDTO() {
+
+    }
+
     public ShareDetailsDTO(Share share, Collection<MarketValueDTO> marketValues) {
         this.isin = share.getIsin();
         this.name = share.getName();
