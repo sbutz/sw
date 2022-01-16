@@ -6,6 +6,9 @@ import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.service.OrderServiceIF;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -31,14 +34,18 @@ public class OrderController {
     DTOEntityMapper<Order,OrderDTO> dtoMapper;
 
     @GetMapping("/orders")
-    public String getOrders(Model model, @AuthenticationPrincipal User user) {
+    public String getOrders(Model model,
+                            @AuthenticationPrincipal User user,
+                            @RequestParam(value = "page", required = false, defaultValue = "0") int page) {
         //TODO: sort by date descending
         //TODO: use OrderDTO
-        Iterable<Order> orders;
+        //TODO: page size as RequestParam or @Value
+        Pageable pageable = PageRequest.of(page, 20);
+        Page<Order> orders;
         if (user.hasAuthority("ROLE_ADMIN"))
-            orders = orderService.getOrders();
+            orders = orderService.getOrders(pageable);
         else
-            orders = orderService.getOrders(user);
+            orders = orderService.getOrders(user, pageable);
 
         model.addAttribute("orders", orders);
         return "orderList";

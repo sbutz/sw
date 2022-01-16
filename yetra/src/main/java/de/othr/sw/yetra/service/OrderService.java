@@ -6,6 +6,8 @@ import de.othr.sw.yetra.entity.OrderType;
 import de.othr.sw.yetra.entity.User;
 import de.othr.sw.yetra.repo.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -75,13 +77,13 @@ public class OrderService implements OrderServiceIF {
     }
 
     @Override
-    public Iterable<Order> getOrders() {
-        return orderRepo.findAll();
+    public Page<Order> getOrders(Pageable pageable) {
+        return orderRepo.findAll(pageable);
     }
 
     @Override
-    public Iterable<Order> getOrders(User user) {
-        return orderRepo.findOrdersByClient(user);
+    public Page<Order> getOrders(User user, Pageable pageable) {
+        return orderRepo.findOrdersByClient(user, pageable);
     }
 
     private Optional<Order> findMatchingOrder(Order order) {
