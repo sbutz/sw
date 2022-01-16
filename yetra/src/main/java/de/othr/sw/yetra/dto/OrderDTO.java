@@ -1,5 +1,6 @@
 package de.othr.sw.yetra.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import de.othr.sw.yetra.entity.OrderStatus;
 import de.othr.sw.yetra.entity.OrderType;
 
@@ -29,6 +30,7 @@ public class OrderDTO implements Serializable {
 
     private OrderStatus status;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
 
     @NotBlank

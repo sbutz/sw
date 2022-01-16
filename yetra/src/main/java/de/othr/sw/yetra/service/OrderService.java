@@ -1,13 +1,13 @@
 package de.othr.sw.yetra.service;
 
-import de.othr.sw.yetra.entity.Order;
-import de.othr.sw.yetra.entity.OrderStatus;
-import de.othr.sw.yetra.entity.OrderType;
-import de.othr.sw.yetra.entity.User;
+import de.othr.sw.yetra.dto.DTOEntityMapper;
+import de.othr.sw.yetra.dto.OrderDTO;
+import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.repo.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,6 +28,9 @@ public class OrderService implements OrderServiceIF {
     @Autowired
     private JmsTemplate jmsTemplate;
 
+    @Autowired
+    private DTOEntityMapper<Order, OrderDTO> dtoMapper;
+
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
     public Order createOrder(Order order) throws ServiceException {
@@ -42,20 +45,25 @@ public class OrderService implements OrderServiceIF {
 
         order = orderRepo.save(order);
 
-        Optional<Order> matchingOrder = this.findMatchingOrder(order);
-        if (matchingOrder.isPresent()) {
+        Optional<Order> o = this.findMatchingOrder(order);
+        if (o.isPresent()) {
+            Order matchingOrder = o.get();
             transactionService.createTransaction(
-                    order.getType() == OrderType.BUY ? order : matchingOrder.get(),
-                    order.getType() == OrderType.BUY ? matchingOrder.get() : order
+                    order.getType() == OrderType.BUY ? order : matchingOrder,
+                    order.getType() == OrderType.BUY ? matchingOrder : order
             );
             order.setStatus(OrderStatus.CLOSED);
-            matchingOrder.get().setStatus(OrderStatus.CLOSED);
+            matchingOrder.setStatus(OrderStatus.CLOSED);
             order.getShare().setCurrentPrice(order.getUnitPrice());
 
             //TODO: geld ueberweisen
-            //falls error -> rollback changes
             //TODO: falls trading partner, trade gebühr verlangen
-            //TODO: notify via jms channel
+            //falls error -> abort and rollback changes
+
+            if (order.getClient() instanceof TradingPartner partner && partner.getNotifyChannelName() != null)
+                    jmsTemplate.convertAndSend(partner.getNotifyChannelName(), dtoMapper.toDTO(order));
+            if (matchingOrder.getClient() instanceof TradingPartner partner && partner.getNotifyChannelName() != null)
+                jmsTemplate.convertAndSend(partner.getNotifyChannelName(), dtoMapper.toDTO(matchingOrder));
         }
 
         return order;
