@@ -89,7 +89,7 @@ public class UserService implements UserServiceIF, UserDetailsService {
         return userRepo
                 .findUserByUsername(username)
                 .orElseThrow(() -> {
-                    throw new ServiceException(404, "User not found");
+                    throw new UsernameNotFoundException("User (name=" + username + ") not found");
                 });
     }
 }
