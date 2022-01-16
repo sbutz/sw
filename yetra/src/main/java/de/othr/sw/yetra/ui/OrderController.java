@@ -13,16 +13,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 @Controller
+@RequestMapping(path = "/orders")
 public class OrderController {
     @Autowired
     OrderServiceIF orderService;
@@ -33,7 +31,7 @@ public class OrderController {
     @Autowired
     DTOEntityMapper<Order,OrderDTO> dtoMapper;
 
-    @GetMapping("/orders")
+    @GetMapping("")
     public String getOrders(Model model,
                             @AuthenticationPrincipal User user,
                             @RequestParam(value = "page", required = false, defaultValue = "0") int page)
@@ -52,7 +50,7 @@ public class OrderController {
         return "orderList";
     }
 
-    @GetMapping("/orders/create")
+    @GetMapping("/create")
     public String getOrderForm(Model model) {
         OrderDTO order = new OrderDTO();
         order.setQuantity(1);
@@ -66,7 +64,7 @@ public class OrderController {
         return "orderForm";
     }
 
-    @PostMapping("/orders/create")
+    @PostMapping("/create")
     public String createOrder(Model model,
                               @Valid @ModelAttribute("order") OrderDTO order,
                               @AuthenticationPrincipal User user,

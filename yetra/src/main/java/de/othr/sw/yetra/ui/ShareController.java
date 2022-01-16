@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping(path = "/shares")
 public class ShareController {
 
     @Autowired
     ShareService shareService;
 
-    @GetMapping(value = "/shares")
+    @GetMapping(value = "")
     public String getShares(Model model,
                             @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
@@ -25,14 +26,14 @@ public class ShareController {
         return "shareList";
     }
 
-    @GetMapping(value = "/shares/create")
+    @GetMapping(value = "/create")
     public String getShareForm(Model model) {
         model.addAttribute("share", new Share());
         model.addAttribute("validated", false);
         return "shareForm";
     }
 
-    @PostMapping(value = "/shares/create")
+    @PostMapping(value = "/create")
     public String createShare(
             Model model,
             @Valid @ModelAttribute("wertpapier") Share share,
