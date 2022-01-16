@@ -53,7 +53,7 @@ public class OrderController {
     }
 
     @GetMapping("/orders/create")
-    public String getOrderForm(Model model, @AuthenticationPrincipal User user) {
+    public String getOrderForm(Model model) {
         OrderDTO order = new OrderDTO();
         order.setQuantity(1);
         SortedMap<String, String> shares = new TreeMap<>();
