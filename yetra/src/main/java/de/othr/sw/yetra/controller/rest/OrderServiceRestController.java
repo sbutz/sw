@@ -7,6 +7,7 @@ import de.othr.sw.yetra.service.OrderServiceIF;
 import de.othr.sw.yetra.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class OrderServiceRestController {
     private DTOMapper<Order,OrderDTO> mapper;
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('ORDERS_WRITE')")
     OrderDTO createOrder(@Valid @RequestBody OrderDTO order, @AuthenticationPrincipal User user) {
         Order o = mapper.fromDTO(order);
         o.setClient(user);
@@ -33,6 +35,7 @@ public class OrderServiceRestController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('ORDERS_READ')")
     OrderDTO getOrder(@PathVariable(name = "id", required = true) long id,
                       @AuthenticationPrincipal User user
     ) throws ServiceException {

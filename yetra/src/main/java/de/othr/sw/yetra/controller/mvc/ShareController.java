@@ -5,6 +5,7 @@ import de.othr.sw.yetra.service.impl.ShareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,7 @@ public class ShareController {
     private ShareService shareService;
 
     @GetMapping(value = "")
+    @PreAuthorize("hasAuthority('SHARES_READ')")
     public String getShares(Model model,
                             @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
@@ -31,6 +33,7 @@ public class ShareController {
     }
 
     @GetMapping(value = "/create")
+    @PreAuthorize("hasAuthority('SHARES_WRITE')")
     public String getShareForm(Model model) {
         model.addAttribute("share", new Share());
         model.addAttribute("validated", false);
@@ -38,6 +41,7 @@ public class ShareController {
     }
 
     @PostMapping(value = "/create")
+    @PreAuthorize("hasAuthority('SHARES_WRITE')")
     public String createShare(
             Model model,
             @Valid @ModelAttribute("wertpapier") Share share,

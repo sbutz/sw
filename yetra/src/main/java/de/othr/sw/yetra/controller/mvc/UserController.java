@@ -9,6 +9,7 @@ import de.othr.sw.yetra.service.UserServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 
 @Controller
 @Scope(SCOPE_SINGLETON)
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class UserController {
 
     @Autowired

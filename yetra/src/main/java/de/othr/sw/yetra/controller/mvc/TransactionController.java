@@ -4,6 +4,7 @@ import de.othr.sw.yetra.service.TransactionServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ public class TransactionController {
     private TransactionServiceIF transactionService;
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('TRANSACTIONS_READ')")
     public String getTransactions(Model model,
                                   @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {

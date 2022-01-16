@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,7 @@ public class OrderController {
     private DTOMapper<Order,OrderDTO> dtoMapper;
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('ORDERS_READ')")
     public String getOrders(Model model,
                             @AuthenticationPrincipal User user,
                             @RequestParam(value = "page", required = false, defaultValue = "0") int page)
@@ -46,6 +48,7 @@ public class OrderController {
     }
 
     @GetMapping("/create")
+    @PreAuthorize("hasAuthority('ORDERS_WRITE')")
     public String getOrderForm(Model model) {
         OrderDTO order = new OrderDTO();
         order.setQuantity(1);
@@ -60,6 +63,7 @@ public class OrderController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAuthority('ORDERS_WRITE')")
     public String createOrder(Model model,
                               @Valid @ModelAttribute("order") OrderDTO order,
                               @AuthenticationPrincipal User user,

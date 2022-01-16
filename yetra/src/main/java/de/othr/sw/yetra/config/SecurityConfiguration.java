@@ -16,7 +16,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-//TODO: should one use @Secured annotation?
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
