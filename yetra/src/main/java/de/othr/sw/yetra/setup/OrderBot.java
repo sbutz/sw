@@ -25,7 +25,7 @@ public class OrderBot {
     @Autowired
     private OrderRepository orderRepository;
 
-   @Scheduled(fixedDelay = 10*1000, initialDelay = 5*1000)
+    @Scheduled(fixedDelay = 10*1000, initialDelay = 5*1000)
     public void completeOpenOrders() {
         for (Order order : orderRepository.findOpenOrders()) {
             Order o = new Order();
