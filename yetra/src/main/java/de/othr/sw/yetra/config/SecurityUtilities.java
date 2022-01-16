@@ -1,5 +1,6 @@
 package de.othr.sw.yetra.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,12 +10,14 @@ import java.security.SecureRandom;
 @Configuration
 public class SecurityUtilities {
 
-    //TODO: inject from extern (siehe Folien)
-    private String salt = "XXX";
+    @Value("${user-password-rounds}")
+    private int rounds;
+
+    @Value("${user-password-salt}")
+    private String salt;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        //TODO: use more rounds
-        return new BCryptPasswordEncoder(10, new SecureRandom(salt.getBytes()));
+        return new BCryptPasswordEncoder(rounds, new SecureRandom(salt.getBytes()));
     }
 }
