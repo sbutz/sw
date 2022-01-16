@@ -26,7 +26,6 @@ public class Users {
     UserService userService;
 
     @PostConstruct
-    @Transactional
     public void createUsers() {
         createEmployee("admin", "123");
         createTradingPartner("import", "123", "DE0123456789", null);

@@ -1,13 +1,18 @@
 package de.othr.sw.yetra.entity;
 
 import de.othr.sw.yetra.entity.util.SingleIdEntity;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 @Entity
 public class UserRole extends SingleIdEntity<String> {
@@ -33,16 +38,17 @@ public class UserRole extends SingleIdEntity<String> {
         return this.name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Set<UserPrivilege> getPrivileges() {
         return this.privileges;
     }
 
-    public void addPrivileges(Collection<UserPrivilege> privileges) {
+    public void setPrivileges(Set<UserPrivilege> privileges) {
+        this.privileges.clear();
         this.privileges.addAll(privileges);
-    }
-
-    public void removePrivileges(Collection<UserPrivilege> privileges) {
-        this.privileges.removeAll(privileges);
     }
 
     @Override

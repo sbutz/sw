@@ -56,7 +56,11 @@ public class Transactions {
     private DateTimeFormatter timestampFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @PostConstruct
-    @Transactional
+    /*
+     * @Transactional does not work on @PostConstruct, because the interceptor proxy starts working after
+     * the bean is fully initialized.
+     * As a result some manual calls to save() are necessary.
+     */
     public void createTransactions() {
         if (!Iterables.isEmpty(transactionRepo.findAll(PageRequest.of(0,1)))) {
             //TODO: logger: import has already run
@@ -107,6 +111,7 @@ public class Transactions {
 
             Share s = getOrCreateShare(isin, name);
             s.setCurrentPrice(price);
+            shareRepo.save(s);
 
             Order buy = new Order();
             buy.setType(OrderType.BUY);

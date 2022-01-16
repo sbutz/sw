@@ -24,7 +24,11 @@ public class UserRoles {
     private UserPrivilegeRepository userPrivilegeRepository;
 
     @PostConstruct
-    @Transactional
+    /*
+     * @Transactional does not work on @PostConstruct, because the interceptor proxy starts working after
+     * the bean is fully initialized.
+     * As a result some manual calls to save() are necessary.
+     */
     public void createUserRoles() {
         UserPrivilege ordersRead        = getOrCreatePrivilege("ORDERS_READ");
         UserPrivilege ordersWrite       = getOrCreatePrivilege("ORDERS_WRITE");
@@ -35,12 +39,12 @@ public class UserRoles {
         UserPrivilege transactionsRead  = getOrCreatePrivilege("TRANSACTIONS_READ");
 
         UserRole adminRole = getOrCreateRole("ROLE_ADMIN");
-        adminRole.removePrivileges(adminRole.getPrivileges());
-        adminRole.addPrivileges(Sets.newHashSet(ordersRead, ordersWrite, sharesRead, sharesWrite, usersRead, usersWrite, transactionsRead));
+        adminRole.setPrivileges(Sets.newHashSet(ordersRead, ordersWrite, sharesRead, sharesWrite, usersRead, usersWrite, transactionsRead));
+        userRoleRepository.save(adminRole);
 
         UserRole tradingPartnerRole = getOrCreateRole("ROLE_TRADING_PARTNER");
-        tradingPartnerRole.removePrivileges(tradingPartnerRole.getPrivileges());
-        tradingPartnerRole.addPrivileges(Sets.newHashSet(ordersRead, ordersWrite, sharesRead));
+        tradingPartnerRole.setPrivileges(Sets.newHashSet(ordersRead, ordersWrite, sharesRead));
+        userRoleRepository.save(tradingPartnerRole);
     }
 
     private UserPrivilege getOrCreatePrivilege(String name) {
