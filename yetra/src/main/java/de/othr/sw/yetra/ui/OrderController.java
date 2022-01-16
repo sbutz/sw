@@ -36,10 +36,11 @@ public class OrderController {
     @GetMapping("/orders")
     public String getOrders(Model model,
                             @AuthenticationPrincipal User user,
-                            @RequestParam(value = "page", required = false, defaultValue = "0") int page) {
+                            @RequestParam(value = "page", required = false, defaultValue = "0") int page)
+    {
         //TODO: sort by date descending
         //TODO: use OrderDTO
-        //TODO: page size as RequestParam or @Value
+        //TODO: page size as RequestParam or @Value everywhere
         Pageable pageable = PageRequest.of(page, 20);
         Page<Order> orders;
         if (user.hasAuthority("ROLE_ADMIN"))
@@ -56,7 +57,7 @@ public class OrderController {
         OrderDTO order = new OrderDTO();
         order.setQuantity(1);
         SortedMap<String, String> shares = new TreeMap<>();
-        for (Share s : shareService.getShares())
+        for (Share s : shareService.getShares(Pageable.unpaged()))
             shares.put(s.getIsin(), s.getName() + " (" + s.getIsin() + ")");
 
         model.addAttribute("order", order);

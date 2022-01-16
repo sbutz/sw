@@ -7,6 +7,8 @@ import de.othr.sw.yetra.repo.UserRepository;
 import de.othr.sw.yetra.repo.TradingPartnerRepository;
 import de.othr.sw.yetra.repo.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -52,8 +54,8 @@ public class UserService implements UserServiceIF, UserDetailsService {
     }
 
     @Override
-    public Iterable<Employee> getEmployees() {
-        return employeeRepo.findAll();
+    public Page<Employee> getEmployees(Pageable pageable) {
+        return employeeRepo.findAll(pageable);
     }
 
     @Override
@@ -78,8 +80,8 @@ public class UserService implements UserServiceIF, UserDetailsService {
     }
 
     @Override
-    public Iterable<TradingPartner> getTradingPartners() {
-        return tradingPartnerRepository.findAll();
+    public Page<TradingPartner> getTradingPartners(Pageable pageable) {
+        return tradingPartnerRepository.findAll(pageable);
     }
 
     @Override

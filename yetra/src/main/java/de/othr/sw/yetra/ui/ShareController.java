@@ -3,6 +3,7 @@ package de.othr.sw.yetra.ui;
 import de.othr.sw.yetra.entity.Share;
 import de.othr.sw.yetra.service.ShareService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,10 +17,11 @@ public class ShareController {
     @Autowired
     ShareService shareService;
 
-    //TODO: pagination
     @GetMapping(value = "/shares")
-    public String getShares(Model model) {
-        model.addAttribute("shares", shareService.getShares());
+    public String getShares(Model model,
+                            @RequestParam(value = "page", required = false, defaultValue = "0") int page)
+    {
+        model.addAttribute("shares", shareService.getShares(PageRequest.of(page, 20)));
         return "shareList";
     }
 

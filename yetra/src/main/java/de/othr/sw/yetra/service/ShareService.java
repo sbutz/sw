@@ -5,7 +5,10 @@ import de.othr.sw.yetra.dto.*;
 import de.othr.sw.yetra.entity.Share;
 import de.othr.sw.yetra.entity.Transaction;
 import de.othr.sw.yetra.repo.ShareRepository;
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -84,14 +87,14 @@ public class ShareService implements ShareServiceIF {
 
 
     @Override
-    public Iterable<Share> getShares() {
-        return shareRepo.findAll();
+    public Page<Share> getShares(Pageable pageable) {
+        return shareRepo.findAll(pageable);
     }
 
     @Override
     public Iterable<Share> getShares(Iterable<String> filter) throws ServiceException {
         if (filter == null || Iterables.isEmpty(filter))
-            return this.getShares();
+            throw new IllegalArgumentException("filter must not be null or empty");
 
         Collection<Share> shares  = new ArrayList<>();
         for (String isin : filter) {

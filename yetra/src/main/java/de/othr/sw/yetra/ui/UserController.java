@@ -7,12 +7,14 @@ import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.TradingPartner;
 import de.othr.sw.yetra.service.UserServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -22,10 +24,11 @@ public class UserController {
     @Autowired
     UserServiceIF userService;
 
-    //TODO: pagination
     @GetMapping(value = "/trading-partners")
-    public String getTradingPartners(Model model) {
-        model.addAttribute("tradingPartners", userService.getTradingPartners());
+    public String getTradingPartners(Model model,
+                                     @RequestParam(value = "page", required = false, defaultValue = "0") int page)
+    {
+            model.addAttribute("tradingPartners", userService.getTradingPartners(PageRequest.of(page, 20)));
         return "tradingPartnerList";
     }
 
@@ -57,10 +60,11 @@ public class UserController {
         }
     }
 
-    //TODO: pagination
     @GetMapping(value = "/employees")
-    public String getEmployees(Model model) {
-        model.addAttribute("employees", userService.getEmployees());
+    public String getEmployees(Model model,
+                               @RequestParam(value = "page", required = false, defaultValue = "0") int page)
+    {
+        model.addAttribute("employees", userService.getEmployees(PageRequest.of(page, 20)));
         return "employeesList";
     }
 

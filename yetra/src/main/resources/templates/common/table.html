@@ -24,7 +24,8 @@
 
 <nav th:fragment="pagination(page)"
     th:with="baseUrl=${#request.getRequestURI()}">
-    <ul class="pagination justify-content-center">
+    <ul th:if="${__${page}__.getTotalPages() > 1}"
+        class="pagination justify-content-center">
         <!-- previous -->
         <li class="page-item">
             <a th:href="@{${baseUrl}(page=${__${page}__.getNumber()})}"

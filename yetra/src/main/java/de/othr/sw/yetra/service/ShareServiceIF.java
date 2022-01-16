@@ -2,6 +2,8 @@ package de.othr.sw.yetra.service;
 
 import de.othr.sw.yetra.dto.*;
 import de.othr.sw.yetra.entity.Share;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 //TODO: gleiche Reihenfolge der Methoden bei allen services
 public interface ShareServiceIF {
@@ -12,7 +14,7 @@ public interface ShareServiceIF {
 
     ShareDetailsDTO getShareDetails(String isin, TimePeriodDTO timePeriod) throws ServiceException;
 
-    Iterable<Share> getShares();
+    Page<Share> getShares(Pageable pageable);
 
     Iterable<Share> getShares(Iterable<String> isins) throws ServiceException;
 }

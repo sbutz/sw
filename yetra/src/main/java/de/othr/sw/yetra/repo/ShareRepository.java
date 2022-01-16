@@ -1,7 +1,7 @@
 package de.othr.sw.yetra.repo;
 
 import de.othr.sw.yetra.entity.Share;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface ShareRepository extends CrudRepository<Share, String> {
+public interface ShareRepository extends PagingAndSortingRepository<Share, String> {
 }
