@@ -3,7 +3,7 @@ package de.othr.sw.yetra.service;
 import de.othr.sw.yetra.dto.util.DTOMapper;
 import de.othr.sw.yetra.dto.OrderDTO;
 import de.othr.sw.yetra.entity.*;
-import de.othr.sw.yetra.repo.OrderRepository;
+import de.othr.sw.yetra.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

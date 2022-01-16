@@ -1,7 +1,7 @@
 package de.othr.sw.yetra.service;
 
 import de.othr.sw.yetra.entity.*;
-import de.othr.sw.yetra.repo.TransactionRepository;
+import de.othr.sw.yetra.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

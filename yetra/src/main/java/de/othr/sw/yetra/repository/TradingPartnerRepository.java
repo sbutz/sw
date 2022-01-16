@@ -1,4 +1,4 @@
-package de.othr.sw.yetra.repo;
+package de.othr.sw.yetra.repository;
 
 import de.othr.sw.yetra.entity.TradingPartner;
 import org.springframework.data.repository.PagingAndSortingRepository;
