@@ -130,7 +130,6 @@
                             <includes>
                                 <include>**/entity/**</include>
                                 <include>**/dto/*DTO.class</include>
-                                <include>**/service/*ServiceIF.class</include>
                             </includes>
                         </configuration>
                     </plugin>
