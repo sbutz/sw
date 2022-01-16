@@ -11,7 +11,7 @@
 <section layout:fragment="main-content">
     <h1>Shares</h1>
     <div sec:authorize="hasAuthority('SHARES_WRITE')"
-         th:insert="common/table :: createLink('Create Share', '/shares/create')"></div>
+         th:replace="common/table :: createLink('Create Share', '/shares/create')"></div>
     <table class="table table-hover">
         <thead>
             <tr>

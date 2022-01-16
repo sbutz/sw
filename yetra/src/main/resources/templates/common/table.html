@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="createLink(text, url)"
-     class="d-flex flex-row-reverse">
+     class="d-flex flex-row-reverse my-3">
     <a class="btn btn-primary" th:href="@{__${url}__}">
         <i class="bi bi-plus-lg"></i>
         <span th:text="${text}"></span>
