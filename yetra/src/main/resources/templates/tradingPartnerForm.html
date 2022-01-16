@@ -20,6 +20,10 @@
                                                     name='Billing Account (IBAN)',
                                                     minlength='4',
                                                     maxlength='34')"></div>
+        <div th:replace="common/form/input :: input(type='text',
+                                                    field='notifyChannelName',
+                                                    name='Notification Channel Name (ActiveMQ)',
+                                                    required='false')"></div>
         <div th:replace="common/form/submit :: submit('Create')"></div>
     </form>
 </section>

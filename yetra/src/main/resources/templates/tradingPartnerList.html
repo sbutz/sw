@@ -18,6 +18,7 @@
                 <th>#</th>
                 <th>Username</th>
                 <th>Billing Account</th>
+                <th>Notification Channel</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,7 @@
                 <td th:text="${index.count}"></td>
                 <td th:text="${t.getUsername()}"></td>
                 <td th:text="${t.getBillingBankAccount().getIban()}"></td>
+                <td th:text="${t.getNotifyChannelName()}"></td>
             </tr>
             <tr th:replace="common/table :: empty(tradingPartners, 'There are no trading partners yet.')"></tr>
         </tbody>

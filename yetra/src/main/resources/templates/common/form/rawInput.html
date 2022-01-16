@@ -9,7 +9,7 @@
            class="form-label">
     </label>
     <input th:type="${type}"
-           required
+           th:required="${required == null || required} ? 'required' : null"
            th:name="${field}"
            th:id="${field}"
            th:placeholder="${name}"

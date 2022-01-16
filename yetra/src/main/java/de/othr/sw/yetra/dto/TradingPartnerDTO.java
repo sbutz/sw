@@ -10,6 +10,8 @@ public class TradingPartnerDTO extends UserDTO implements Serializable {
     @Size(min = 4, max = 34)
     private String iban;
 
+    private String notifyChannelName;
+
     public TradingPartnerDTO() {
 
     }
@@ -21,4 +23,13 @@ public class TradingPartnerDTO extends UserDTO implements Serializable {
     public void setIban(String iban) {
         this.iban = iban;
     }
+
+    public String getNotifyChannelName() {
+        return notifyChannelName;
+    }
+
+    public void setNotifyChannelName(String notifyChannelName) {
+        this.notifyChannelName = notifyChannelName;
+    }
+
 }

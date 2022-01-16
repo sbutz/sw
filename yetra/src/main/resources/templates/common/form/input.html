@@ -16,7 +16,7 @@ Therefore create fragments for the different parts of a form.
 
     <input th:if="${type != 'select'}"
            th:type="${type}"
-           required
+           th:required="${required == null || required} ? 'required' : null"
            th:value="*{__${field}__}"
            th:field="*{__${field}__}"
            th:placeholder="${name}"
