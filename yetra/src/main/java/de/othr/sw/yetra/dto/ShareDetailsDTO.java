@@ -2,9 +2,10 @@ package de.othr.sw.yetra.dto;
 
 import de.othr.sw.yetra.entity.Share;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public class ShareDetailsDTO {
+public class ShareDetailsDTO implements Serializable {
     private String isin;
 
     private String name;

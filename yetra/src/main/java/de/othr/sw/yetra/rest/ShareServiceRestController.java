@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/api/shares")
 public class ShareServiceRestController {
+
     @Autowired
     private ShareServiceIF shareService;
 

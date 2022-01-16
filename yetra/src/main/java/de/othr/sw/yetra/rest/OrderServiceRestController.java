@@ -1,6 +1,6 @@
 package de.othr.sw.yetra.rest;
 
-import de.othr.sw.yetra.dto.DTOEntityMapper;
+import de.othr.sw.yetra.dto.util.DTOMapper;
 import de.othr.sw.yetra.dto.OrderDTO;
 import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.service.OrderServiceIF;
@@ -18,7 +18,7 @@ public class OrderServiceRestController {
     private OrderServiceIF orderService;
 
     @Autowired
-    private DTOEntityMapper<Order,OrderDTO> mapper;
+    private DTOMapper<Order,OrderDTO> mapper;
 
     @PostMapping("")
     OrderDTO createOrder(@Valid @RequestBody OrderDTO order, @AuthenticationPrincipal User user) {

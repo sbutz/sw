@@ -1,11 +1,16 @@
 package de.othr.sw.yetra.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class MarketValueDTO {
+public class MarketValueDTO implements Serializable {
     private LocalDateTime timestamp;
 
     private double unitPrice;
+
+    public MarketValueDTO() {
+
+    }
 
     public MarketValueDTO(LocalDateTime timestamp, double unitPrice) {
         this.timestamp = timestamp;

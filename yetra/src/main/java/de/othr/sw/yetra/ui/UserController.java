@@ -2,8 +2,8 @@ package de.othr.sw.yetra.ui;
 
 import de.othr.sw.yetra.dto.TradingPartnerDTO;
 import de.othr.sw.yetra.dto.UserDTO;
+import de.othr.sw.yetra.dto.util.DTOMapper;
 import de.othr.sw.yetra.entity.Employee;
-import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.TradingPartner;
 import de.othr.sw.yetra.service.UserServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,12 @@ public class UserController {
 
     @Autowired
     private UserServiceIF userService;
+
+    @Autowired
+    private DTOMapper<TradingPartner, TradingPartnerDTO> tradingPartnerMapper;
+
+    @Autowired
+    private DTOMapper<Employee, UserDTO> employeeMapper;
 
     @GetMapping(value = "/trading-partners")
     public String getTradingPartners(Model model,
@@ -49,13 +55,7 @@ public class UserController {
             model.addAttribute("validated", true);
             return "tradingPartnerForm";
         } else {
-            //TODO: factory method TradingPartner.fromDTO()
-            TradingPartner tp = new TradingPartner();
-            tp.setUsername(tradingPartner.getUsername());
-            tp.setPassword(tradingPartner.getPassword());
-            tp.setBillingBankAccount(new BankAccount(tradingPartner.getIban()));
-            //TODO: methode anders benennen
-            userService.createTradingPartner(tp);
+            userService.createTradingPartner(tradingPartnerMapper.fromDTO(tradingPartner));
             return "redirect:/trading-partners";
         }
     }
@@ -85,12 +85,7 @@ public class UserController {
             model.addAttribute("validated", true);
             return "employeeForm";
         } else {
-            //TODO: factory method Employe.fromDTO()
-            Employee e = new Employee();
-            e.setUsername(employee.getUsername());
-            e.setPassword(employee.getPassword());
-            //TODO: methode anders benennen
-            userService.createEmployee(e);
+            userService.createEmployee(employeeMapper.fromDTO(employee));
             return "redirect:/employees";
         }
     }

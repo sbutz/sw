@@ -1,6 +1,6 @@
 package de.othr.sw.yetra.service;
 
-import de.othr.sw.yetra.dto.DTOEntityMapper;
+import de.othr.sw.yetra.dto.util.DTOMapper;
 import de.othr.sw.yetra.dto.OrderDTO;
 import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.repo.OrderRepository;
@@ -29,7 +29,7 @@ public class OrderService implements OrderServiceIF {
     private JmsTemplate jmsTemplate;
 
     @Autowired
-    private DTOEntityMapper<Order, OrderDTO> dtoMapper;
+    private DTOMapper<Order, OrderDTO> dtoMapper;
 
     @Override
     @Transactional(Transactional.TxType.REQUIRED)

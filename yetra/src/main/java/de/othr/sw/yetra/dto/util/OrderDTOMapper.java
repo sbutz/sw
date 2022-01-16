@@ -1,5 +1,6 @@
-package de.othr.sw.yetra.dto;
+package de.othr.sw.yetra.dto.util;
 
+import de.othr.sw.yetra.dto.OrderDTO;
 import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.Order;
 import de.othr.sw.yetra.service.ShareServiceIF;
@@ -7,22 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderDTOMapper implements DTOEntityMapper<Order, OrderDTO> {
+public class OrderDTOMapper implements DTOMapper<Order, OrderDTO> {
     @Autowired
     ShareServiceIF shareService;
 
     @Override
-    public OrderDTO toDTO(Order o) {
-        OrderDTO order = new OrderDTO();
-        order.setId(o.getId());
-        order.setType(o.getType());
-        order.setIsin(o.getShare().getIsin());
-        order.setQuantity(o.getQuantity());
-        order.setUnitPrice(o.getUnitPrice());
-        order.setStatus(o.getStatus());
-        order.setTimestamp(o.getTimestamp());
-        order.setIban(o.getBankAccount().getIban());
-        return order;
+    public OrderDTO toDTO(Order order) {
+        OrderDTO dto = new OrderDTO();
+        dto.setId(order.getId());
+        dto.setType(order.getType());
+        dto.setIsin(order.getShare().getIsin());
+        dto.setQuantity(order.getQuantity());
+        dto.setUnitPrice(order.getUnitPrice());
+        dto.setStatus(order.getStatus());
+        dto.setTimestamp(order.getTimestamp());
+        dto.setIban(order.getBankAccount().getIban());
+        return dto;
     }
 
     @Override

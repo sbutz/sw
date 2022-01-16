@@ -1,12 +1,11 @@
 package de.othr.sw.yetra.ui;
 
-import de.othr.sw.yetra.dto.DTOEntityMapper;
+import de.othr.sw.yetra.dto.util.DTOMapper;
 import de.othr.sw.yetra.dto.OrderDTO;
 import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.service.OrderServiceIF;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +28,7 @@ public class OrderController {
     private ShareServiceIF shareService;
 
     @Autowired
-    private DTOEntityMapper<Order,OrderDTO> dtoMapper;
+    private DTOMapper<Order,OrderDTO> dtoMapper;
 
     @GetMapping("")
     public String getOrders(Model model,
