@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TransactionController {
 
     @Autowired
-    TransactionServiceIF transactionService;
+    private TransactionServiceIF transactionService;
 
     @GetMapping("")
     public String getTransactions(Model model,

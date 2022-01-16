@@ -18,10 +18,13 @@ import java.util.Optional;
 public class Start implements CommandLineRunner {
 
     @Autowired
-    UserRoleRepository userRoleRepository;
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
-    UserPrivilegeRepository userPrivilegeRepository;
+    private UserPrivilegeRepository userPrivilegeRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     UserService userService;

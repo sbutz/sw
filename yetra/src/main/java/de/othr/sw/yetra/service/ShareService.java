@@ -22,10 +22,10 @@ import java.util.Collection;
 @Service
 public class ShareService implements ShareServiceIF {
     @Autowired
-    ShareRepository shareRepo;
+    private ShareRepository shareRepo;
 
     @Autowired
-    TransactionService transactionService;
+    private TransactionService transactionService;
 
     @Override
     public Share createShare(Share share) throws ServiceException {

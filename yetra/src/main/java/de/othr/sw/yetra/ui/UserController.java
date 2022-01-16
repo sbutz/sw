@@ -22,7 +22,7 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    UserServiceIF userService;
+    private UserServiceIF userService;
 
     @GetMapping(value = "/trading-partners")
     public String getTradingPartners(Model model,

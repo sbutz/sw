@@ -15,10 +15,10 @@ import javax.validation.Valid;
 @RequestMapping(path = "/api/orders")
 public class OrderServiceRestController {
     @Autowired
-    OrderServiceIF orderService;
+    private OrderServiceIF orderService;
 
     @Autowired
-    DTOEntityMapper<Order,OrderDTO> mapper;
+    private DTOEntityMapper<Order,OrderDTO> mapper;
 
     @PostMapping("")
     OrderDTO createOrder(@Valid @RequestBody OrderDTO order, @AuthenticationPrincipal User user) {

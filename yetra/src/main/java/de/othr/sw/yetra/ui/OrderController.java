@@ -23,13 +23,13 @@ import java.util.TreeMap;
 @RequestMapping(path = "/orders")
 public class OrderController {
     @Autowired
-    OrderServiceIF orderService;
+    private OrderServiceIF orderService;
 
     @Autowired
-    ShareServiceIF shareService;
+    private ShareServiceIF shareService;
 
     @Autowired
-    DTOEntityMapper<Order,OrderDTO> dtoMapper;
+    private DTOEntityMapper<Order,OrderDTO> dtoMapper;
 
     @GetMapping("")
     public String getOrders(Model model,

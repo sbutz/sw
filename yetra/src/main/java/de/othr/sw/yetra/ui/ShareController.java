@@ -16,7 +16,7 @@ import javax.validation.Valid;
 public class ShareController {
 
     @Autowired
-    ShareService shareService;
+    private ShareService shareService;
 
     @GetMapping(value = "")
     public String getShares(Model model,

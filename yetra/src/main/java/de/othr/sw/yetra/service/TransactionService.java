@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Service
 public class TransactionService implements TransactionServiceIF {
     @Autowired
-    TransactionRepository transactionRepo;
+    private TransactionRepository transactionRepo;
 
     @Override
     @Transactional(Transactional.TxType.MANDATORY)

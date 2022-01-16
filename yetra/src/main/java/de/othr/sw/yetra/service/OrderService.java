@@ -17,13 +17,16 @@ import java.util.Optional;
 @Service
 public class OrderService implements OrderServiceIF {
     @Autowired
-    OrderRepository orderRepo;
+    private OrderRepository orderRepo;
 
     @Autowired
-    ShareServiceIF shareService;
+    private ShareServiceIF shareService;
 
     @Autowired
-    TransactionServiceIF transactionService;
+    private TransactionServiceIF transactionService;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
 
     @Override
     @Transactional(Transactional.TxType.REQUIRED)

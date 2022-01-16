@@ -30,7 +30,7 @@ public class UserService implements UserServiceIF, UserDetailsService {
     private UserRoleRepository userRoleRepository;
 
     @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Employee createEmployee(Employee employee) {
