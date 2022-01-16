@@ -7,3 +7,5 @@
 *.png
 *.synctex.gz
 software_ideas_modeler/
+*.simp.user
+*.simp.bak
