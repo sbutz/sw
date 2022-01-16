@@ -60,10 +60,16 @@ public class OrderService implements OrderServiceIF {
             //TODO: falls trading partner, trade gebühr verlangen
             //falls error -> abort and rollback changes
 
-            if (order.getClient() instanceof TradingPartner partner && partner.getNotifyChannelName() != null)
+            if (order.getClient() instanceof TradingPartner) {
+                TradingPartner partner = (TradingPartner) order.getClient();
+                if (partner.getNotifyChannelName() != null)
                     jmsTemplate.convertAndSend(partner.getNotifyChannelName(), dtoMapper.toDTO(order));
-            if (matchingOrder.getClient() instanceof TradingPartner partner && partner.getNotifyChannelName() != null)
-                jmsTemplate.convertAndSend(partner.getNotifyChannelName(), dtoMapper.toDTO(matchingOrder));
+            }
+            if (matchingOrder.getClient() instanceof TradingPartner) {
+                TradingPartner partner = (TradingPartner) matchingOrder.getClient();
+                if (partner.getNotifyChannelName() != null)
+                    jmsTemplate.convertAndSend(partner.getNotifyChannelName(), dtoMapper.toDTO(matchingOrder));
+            }
         }
 
         return order;
