@@ -5,10 +5,15 @@ import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.Order;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Component
+@Scope(SCOPE_SINGLETON)
 public class OrderDTOMapper implements DTOMapper<Order, OrderDTO> {
+
     @Autowired
     ShareServiceIF shareService;
 

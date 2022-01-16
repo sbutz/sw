@@ -1,12 +1,16 @@
 package de.othr.sw.yetra.controller.mvc;
 
-import de.othr.sw.yetra.entity.Employee;
+import de.othr.sw.yetra.dto.UserDTO;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Controller
+@Scope(SCOPE_SINGLETON)
 public class BasisController {
     @GetMapping(value = "/")
     public String getHomepage() {
@@ -14,11 +18,11 @@ public class BasisController {
     }
 
     @GetMapping(value = "/login")
-    public String anmeldeFormularAnzeigen(
+    public String getLoginForm(
             Model model,
             @RequestParam(name = "error", defaultValue = "false") boolean error
     ) {
-        model.addAttribute("user", new Employee());
+        model.addAttribute("user", new UserDTO());
         model.addAttribute("validated", error);
         return "loginForm";
     }

@@ -8,6 +8,7 @@ import de.othr.sw.yetra.repository.ShareRepository;
 import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,12 @@ import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 
-//TODO: add transactional/scope
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
+//TODO: add transactional
 
 @Service
+@Scope(SCOPE_SINGLETON)
 public class ShareService implements ShareServiceIF {
     @Autowired
     private ShareRepository shareRepo;

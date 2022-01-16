@@ -3,6 +3,7 @@ package de.othr.sw.yetra.controller.mvc;
 import de.othr.sw.yetra.entity.Share;
 import de.othr.sw.yetra.service.impl.ShareService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Controller
 @RequestMapping(path = "/shares")
+@Scope(SCOPE_SINGLETON)
 public class ShareController {
 
     @Autowired

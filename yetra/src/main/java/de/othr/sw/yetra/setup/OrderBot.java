@@ -9,14 +9,18 @@ import de.othr.sw.yetra.repository.UserRepository;
 import de.othr.sw.yetra.service.OrderServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 
 @Component
 @DependsOn(Users.component)
+@Scope(SCOPE_SINGLETON)
 public class OrderBot {
 
     @Autowired

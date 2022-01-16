@@ -9,6 +9,7 @@ import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import de.othr.sw.yetra.service.TransactionServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jms.core.JmsTemplate;
@@ -18,7 +19,10 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Service
+@Scope(SCOPE_SINGLETON)
 public class OrderService implements OrderServiceIF {
     @Autowired
     private OrderRepository orderRepo;

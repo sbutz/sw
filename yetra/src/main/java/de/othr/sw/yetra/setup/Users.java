@@ -8,13 +8,17 @@ import de.othr.sw.yetra.service.impl.UserService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Component(value = Users.component)
 @DependsOn(UserRoles.component)
+@Scope(SCOPE_SINGLETON)
 public class Users {
 
     public static final String component = "UserSetup";

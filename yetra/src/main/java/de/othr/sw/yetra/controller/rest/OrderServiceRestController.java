@@ -6,12 +6,16 @@ import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.service.OrderServiceIF;
 import de.othr.sw.yetra.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @RestController
+@Scope(SCOPE_SINGLETON)
 @RequestMapping(path = "/api/orders")
 public class OrderServiceRestController {
     @Autowired

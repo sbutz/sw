@@ -6,11 +6,14 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
+
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
 @Configuration
 @EnableJms
@@ -20,6 +23,7 @@ public class JmsConfiguration {
     private String brokerUrl;
 
     @Bean
+    @Scope(SCOPE_SINGLETON)
     public ActiveMQConnectionFactory connectionFactory() {
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
         factory.setBrokerURL(brokerUrl);
@@ -27,6 +31,7 @@ public class JmsConfiguration {
     }
 
     @Bean
+    @Scope(SCOPE_SINGLETON)
     public JsonMapper jsonMapper() {
         return JsonMapper.builder()
             .addModule(new JavaTimeModule())
@@ -34,6 +39,7 @@ public class JmsConfiguration {
     }
 
     @Bean
+    @Scope(SCOPE_SINGLETON)
     public MessageConverter jacksonJmsMessageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setObjectMapper(jsonMapper());
@@ -43,6 +49,7 @@ public class JmsConfiguration {
     }
 
     @Bean
+    @Scope(SCOPE_SINGLETON)
     public JmsTemplate jmsTemplate() {
         JmsTemplate template = new JmsTemplate(connectionFactory());
         template.setMessageConverter(jacksonJmsMessageConverter());

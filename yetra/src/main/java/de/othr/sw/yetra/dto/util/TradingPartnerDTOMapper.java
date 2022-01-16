@@ -3,9 +3,13 @@ package de.othr.sw.yetra.dto.util;
 import de.othr.sw.yetra.dto.TradingPartnerDTO;
 import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.TradingPartner;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Component
+@Scope(SCOPE_SINGLETON)
 public class TradingPartnerDTOMapper implements DTOMapper<TradingPartner, TradingPartnerDTO> {
 
     @Override

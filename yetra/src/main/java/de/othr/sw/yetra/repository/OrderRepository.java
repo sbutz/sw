@@ -1,6 +1,7 @@
 package de.othr.sw.yetra.repository;
 
 import de.othr.sw.yetra.entity.*;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +9,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
+@Scope(SCOPE_SINGLETON)
 public interface OrderRepository extends PagingAndSortingRepository<Order, Long> {
 
     Optional<Order> findFirstByStatusAndTypeAndShareAndQuantityAndUnitPriceOrderByTimestampAsc(

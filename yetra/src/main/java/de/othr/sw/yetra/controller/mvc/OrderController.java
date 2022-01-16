@@ -6,6 +6,7 @@ import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.service.OrderServiceIF;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,8 +19,11 @@ import javax.validation.Valid;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Controller
 @RequestMapping(path = "/orders")
+@Scope(SCOPE_SINGLETON)
 public class OrderController {
     @Autowired
     private OrderServiceIF orderService;

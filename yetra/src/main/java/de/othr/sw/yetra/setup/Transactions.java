@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -28,8 +29,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Component
 @DependsOn(Users.component)
+@Scope(SCOPE_SINGLETON)
 public class Transactions {
 
     @Autowired

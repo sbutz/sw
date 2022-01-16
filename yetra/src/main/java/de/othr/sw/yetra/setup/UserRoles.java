@@ -7,12 +7,16 @@ import de.othr.sw.yetra.repository.UserPrivilegeRepository;
 import de.othr.sw.yetra.repository.UserRoleRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Optional;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Component(value = UserRoles.component)
+@Scope(SCOPE_SINGLETON)
 public class UserRoles {
 
     public static final String component = "UserRoleSetup";

@@ -9,6 +9,7 @@ import de.othr.sw.yetra.repository.UserRoleRepository;
 import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.service.UserServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +18,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
+
 @Service
+@Scope(SCOPE_SINGLETON)
 public class UserService implements UserServiceIF, UserDetailsService {
     @Autowired
     private UserRepository userRepo;
