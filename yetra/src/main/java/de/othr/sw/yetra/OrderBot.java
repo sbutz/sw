@@ -1,7 +1,6 @@
 package de.othr.sw.yetra;
 
 import de.othr.sw.yetra.entity.BankAccount;
-import de.othr.sw.yetra.entity.Employee;
 import de.othr.sw.yetra.entity.Order;
 import de.othr.sw.yetra.entity.OrderType;
 import de.othr.sw.yetra.repo.OrderRepository;
@@ -26,7 +25,7 @@ public class OrderBot {
     @Autowired
     private OrderRepository orderRepository;
 
-    @Scheduled(fixedDelay = 3*1000, initialDelay = 5*1000)
+   @Scheduled(fixedDelay = 10*1000, initialDelay = 5*1000)
     public void completeOpenOrders() {
         for (Order order : orderRepository.findOpenOrders()) {
             Order o = new Order();
