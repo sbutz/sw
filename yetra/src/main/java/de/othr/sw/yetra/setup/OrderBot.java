@@ -3,27 +3,37 @@ package de.othr.sw.yetra.setup;
 import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.Order;
 import de.othr.sw.yetra.entity.OrderType;
+import de.othr.sw.yetra.entity.User;
 import de.othr.sw.yetra.repository.OrderRepository;
 import de.othr.sw.yetra.repository.UserRepository;
 import de.othr.sw.yetra.service.OrderServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 
 @Component
-//TODO: create sepearte bot user
+@DependsOn(Users.component)
 public class OrderBot {
 
     @Autowired
     private UserRepository userRepository;
 
-    //TODO: implement getOrderByStatus in service?
     @Autowired
     private OrderServiceIF orderService;
     
     @Autowired
     private OrderRepository orderRepository;
+
+    private User bot;
+
+    @PostConstruct
+    public void init() {
+        bot = userRepository.findUserByUsername("bot").get();
+    }
 
     @Scheduled(fixedDelay = 10*1000, initialDelay = 5*1000)
     public void completeOpenOrders() {
@@ -35,7 +45,7 @@ public class OrderBot {
             o.setUnitPrice(order.getUnitPrice());
             //TODO: inject value
             o.setBankAccount(new BankAccount("DE0123456789"));
-            o.setClient(userRepository.findUserByUsername("admin").get());
+            o.setClient(bot);
             orderService.createOrder(o);
         }
     }

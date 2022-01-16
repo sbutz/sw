@@ -33,6 +33,7 @@ public class Users {
         logger.info("Creating users...");
         createEmployee("admin", "123");
         createTradingPartner("import", "123", "DE0123456789", null);
+        createTradingPartner("bot", "123", "DE0123456789", null);
     }
 
     public void createEmployee(String username, String password) {
