@@ -14,6 +14,12 @@ Therefore create fragments for the different parts of a form.
            class="form-label">
     </label>
 
+    <!--/*@thymesVar id="required" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="minlength" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="maxlength" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="min" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="max" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="step" type="java.lang.String"*/-->
     <input th:if="${type != 'select'}"
            th:type="${type}"
            th:required="${required == null || required} ? 'required' : null"
@@ -27,9 +33,11 @@ Therefore create fragments for the different parts of a form.
            th:step="${step} ?: ''"
            class="form-control">
 
+    <!--/*@thymesVar id="enum" type="java.lang.String"*/-->
     <select th:if="${type == 'select' && enum != null}"
             th:field="*{__${field}__}"
             class="form-select">
+        <!--/*@thymesVar id="opt" type="java.lang.String"*/-->
         <option th:each="opt : ${T(__${enum}__).values()}"
                 th:value="${opt}"
                 th:text="${#strings.capitalize(#strings.toLowerCase(opt))}">
@@ -39,15 +47,15 @@ Therefore create fragments for the different parts of a form.
     <select th:if="${type == 'select' && options != null}"
             th:field="*{__${field}__}"
             class="form-select">
-        <!-- TODO: remove or provide for other variables -->
-        <!--@thymesVar id="options" type="java.util.SortedMap<String,String>"-->
-        <!--@thymesVar id="opt" type="java.util.Map.Entry<String,String>"-->
+        <!--/*@thymesVar id="options" type="java.util.SortedMap<String,String>"*/-->
+        <!--/*@thymesVar id="opt" type="java.util.Map.Entry<String,String>"*/-->
         <option th:each="opt : ${__${options}__}"
                 th:value="${opt.key}"
                 th:text="${opt.value}">
         </option>
     </select>
 
+    <!--/*@thymesVar id="errorMessage" type="java.lang.String"*/-->
     <div class="invalid-feedback"
          th:if="${errorMessage}">
         <span th:text="${errorMessage}"></span>

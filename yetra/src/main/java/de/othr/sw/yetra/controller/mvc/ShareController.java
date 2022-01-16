@@ -27,7 +27,7 @@ public class ShareController {
                             @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
         model.addAttribute("shares", shareService.getShares(PageRequest.of(page, 20)));
-        return "shareList";
+        return "shareTable";
     }
 
     @GetMapping(value = "/create")

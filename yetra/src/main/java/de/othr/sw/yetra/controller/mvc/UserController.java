@@ -39,7 +39,7 @@ public class UserController {
                                      @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
             model.addAttribute("tradingPartners", userService.getTradingPartners(PageRequest.of(page, 20)));
-        return "tradingPartnerList";
+        return "tradingPartnerTable";
     }
 
     @GetMapping(value = "/trading-partners/create")
@@ -69,7 +69,7 @@ public class UserController {
                                @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
         model.addAttribute("employees", userService.getEmployees(PageRequest.of(page, 20)));
-        return "employeesList";
+        return "employeesTablehtml";
     }
 
     @GetMapping(value = "/employees/create")

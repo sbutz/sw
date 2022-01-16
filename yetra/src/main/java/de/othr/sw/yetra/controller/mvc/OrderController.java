@@ -42,7 +42,7 @@ public class OrderController {
         //TODO: use OrderDTO
         //TODO: page size as RequestParam or @Value everywhere
         model.addAttribute("orders", orderService.getOrders(user, PageRequest.of(page, 20)));
-        return "orderList";
+        return "orderTable";
     }
 
     @GetMapping("/create")

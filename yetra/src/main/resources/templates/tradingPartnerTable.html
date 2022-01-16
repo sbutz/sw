@@ -28,7 +28,7 @@
                 <td th:text="${t.getBillingBankAccount().getIban()}"></td>
                 <td th:text="${t.getNotifyChannelName()}"></td>
             </tr>
-            <tr th:replace="common/table :: empty(tradingPartners, 'There are no trading partners yet.')"></tr>
+            <tr th:replace="common/table :: emptyTable(tradingPartners, 'There are no trading partners yet.')"></tr>
         </tbody>
     </table>
     <nav th:replace="common/table :: pagination(tradingPartners)"></nav>

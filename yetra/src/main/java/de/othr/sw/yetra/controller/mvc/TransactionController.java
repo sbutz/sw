@@ -25,6 +25,6 @@ public class TransactionController {
                                   @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
         model.addAttribute("transactions", transactionService.getTransactions(PageRequest.of(page, 20)));
-        return "transactionList";
+        return "transactionTable";
     }
 }

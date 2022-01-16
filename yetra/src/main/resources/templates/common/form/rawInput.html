@@ -8,6 +8,13 @@
            th:text="${name}"
            class="form-label">
     </label>
+
+    <!--/*@thymesVar id="required" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="minlength" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="maxlength" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="min" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="max" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="step" type="java.lang.String"*/-->
     <input th:type="${type}"
            th:required="${required == null || required} ? 'required' : null"
            th:name="${field}"
@@ -19,6 +26,8 @@
            th:max="${max} ?: ''"
            th:step="${step} ?: ''"
            class="form-control">
+
+    <!--/*@thymesVar id="errorMessage" type="java.lang.String"*/-->
     <div class="invalid-feedback"
          th:if="${errorMessage}">
         <span th:text="${errorMessage}"></span>

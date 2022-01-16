@@ -28,7 +28,7 @@
                 <td th:text="${share.getName()}"></td>
                 <td th:text="${share.getCurrentPrice()} + ' EUR'"></td>
             </tr>
-            <tr th:replace="common/table :: empty(shares, 'There are no shares yet.')"></tr>
+            <tr th:replace="common/table :: emptyTable(shares, 'There are no shares yet.')"></tr>
         </tbody>
     </table>
     <nav th:replace="common/table :: pagination(shares)"></nav>

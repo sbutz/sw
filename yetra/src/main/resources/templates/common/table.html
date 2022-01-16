@@ -12,7 +12,7 @@
 
 <table>
     <tbody>
-    <tr th:fragment="empty(list, msg)">
+    <tr th:fragment="emptyTable(list, msg)">
             <td th:if="${#lists.isEmpty(__${list}__)}"
                 th:text="${msg}"
                 colspan="100"
