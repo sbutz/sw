@@ -9,6 +9,7 @@ import de.othr.sw.yetra.repository.UserRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.DependsOn;
@@ -30,6 +31,9 @@ import java.util.Iterator;
 @Component
 @DependsOn(Users.component)
 public class Transactions {
+
+    @Autowired
+    private Logger logger;
 
     @Autowired
     private UserRepository userRepo;
@@ -63,9 +67,10 @@ public class Transactions {
      */
     public void createTransactions() {
         if (!Iterables.isEmpty(transactionRepo.findAll(PageRequest.of(0,1)))) {
-            //TODO: logger: import has already run
+            logger.info("Transactions repo not empty. Skipping import...");
             return;
         }
+        logger.info("Creating Transactions...");
         importUser = userRepo.findUserByUsername("import").get();
 
         CSVFormat csvFormat = CSVFormat.Builder.create()
@@ -81,18 +86,17 @@ public class Transactions {
             int i =0;
             for (CSVRecord record : parser) {
                 records.add(record);
-                i++;
                 if (records.size() == batchSize) {
                     createTransactions(records);
-                    //TODO: use logger
-                    System.out.println(i);
+                    i += batchSize;
+                    logger.debug("Imported " + batchSize + " transactions so far");
                     records = new ArrayList<>();
                 }
             }
             if (!records.isEmpty())
                 createTransactions(records);
         } catch (IOException e) {
-            //TODO: logger import failed
+            logger.error("Failed to read " + data.getDescription());
             e.printStackTrace();
         }
     }

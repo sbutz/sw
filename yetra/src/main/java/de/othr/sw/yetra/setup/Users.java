@@ -5,13 +5,13 @@ import de.othr.sw.yetra.entity.Employee;
 import de.othr.sw.yetra.entity.TradingPartner;
 import de.othr.sw.yetra.repository.UserRepository;
 import de.othr.sw.yetra.service.UserService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 
 @Component(value = Users.component)
 @DependsOn(UserRoles.component)
@@ -20,17 +20,19 @@ public class Users {
     public static final String component = "UserSetup";
 
     @Autowired
-    UserRepository userRepository;
+    private Logger logger;
 
     @Autowired
-    UserService userService;
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @PostConstruct
     public void createUsers() {
+        logger.info("Creating users...");
         createEmployee("admin", "123");
         createTradingPartner("import", "123", "DE0123456789", null);
-        //TODO: remove
-        createTradingPartner("ynvest", "123", "DE0123456789", "sw_andreas_huber_queue_ynvest_orders");
     }
 
     public void createEmployee(String username, String password) {

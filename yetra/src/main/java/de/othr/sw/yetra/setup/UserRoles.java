@@ -5,17 +5,20 @@ import de.othr.sw.yetra.entity.UserPrivilege;
 import de.othr.sw.yetra.entity.UserRole;
 import de.othr.sw.yetra.repository.UserPrivilegeRepository;
 import de.othr.sw.yetra.repository.UserRoleRepository;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Component(value = UserRoles.component)
 public class UserRoles {
 
     public static final String component = "UserRoleSetup";
+
+    @Autowired
+    private Logger logger;
 
     @Autowired
     private UserRoleRepository userRoleRepository;
@@ -30,6 +33,8 @@ public class UserRoles {
      * As a result some manual calls to save() are necessary.
      */
     public void createUserRoles() {
+        logger.info("Creating user roles...");
+
         UserPrivilege ordersRead        = getOrCreatePrivilege("ORDERS_READ");
         UserPrivilege ordersWrite       = getOrCreatePrivilege("ORDERS_WRITE");
         UserPrivilege sharesRead        = getOrCreatePrivilege("SHARES_READ");
