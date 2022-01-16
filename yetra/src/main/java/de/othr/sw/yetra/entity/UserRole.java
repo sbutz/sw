@@ -41,6 +41,10 @@ public class UserRole extends SingleIdEntity<String> {
         this.privileges.addAll(privileges);
     }
 
+    public void removePrivileges(Collection<UserPrivilege> privileges) {
+        this.privileges.removeAll(privileges);
+    }
+
     @Override
     protected String getId() {
         return this.name;

@@ -1,21 +1,21 @@
-package de.othr.sw.yetra;
+package de.othr.sw.yetra.setup;
 
 import com.google.common.collect.Sets;
-import de.othr.sw.yetra.entity.*;
-import de.othr.sw.yetra.repo.ShareRepository;
-
-import de.othr.sw.yetra.repo.UserPrivilegeRepository;
-import de.othr.sw.yetra.repo.UserRoleRepository;
-import de.othr.sw.yetra.service.UserService;
+import de.othr.sw.yetra.entity.UserPrivilege;
+import de.othr.sw.yetra.entity.UserRole;
+import de.othr.sw.yetra.repository.UserPrivilegeRepository;
+import de.othr.sw.yetra.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Component
-public class Start implements CommandLineRunner {
+@Component(value = UserRoles.component)
+public class UserRoles {
+
+    public static final String component = "UserRoleSetup";
 
     @Autowired
     private UserRoleRepository userRoleRepository;
@@ -23,18 +23,9 @@ public class Start implements CommandLineRunner {
     @Autowired
     private UserPrivilegeRepository userPrivilegeRepository;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    ShareRepository shareRepo;
-
-    @Override
+    @PostConstruct
     @Transactional
-    public void run(String... args) {
+    public void createUserRoles() {
         UserPrivilege ordersRead        = getOrCreatePrivilege("ORDERS_READ");
         UserPrivilege ordersWrite       = getOrCreatePrivilege("ORDERS_WRITE");
         UserPrivilege sharesRead        = getOrCreatePrivilege("SHARES_READ");
@@ -42,27 +33,14 @@ public class Start implements CommandLineRunner {
         UserPrivilege usersRead         = getOrCreatePrivilege("USERS_READ");
         UserPrivilege usersWrite        = getOrCreatePrivilege("USERS_WRITE");
         UserPrivilege transactionsRead  = getOrCreatePrivilege("TRANSACTIONS_READ");
+
         UserRole adminRole = getOrCreateRole("ROLE_ADMIN");
+        adminRole.removePrivileges(adminRole.getPrivileges());
         adminRole.addPrivileges(Sets.newHashSet(ordersRead, ordersWrite, sharesRead, sharesWrite, usersRead, usersWrite, transactionsRead));
+
         UserRole tradingPartnerRole = getOrCreateRole("ROLE_TRADING_PARTNER");
+        tradingPartnerRole.removePrivileges(tradingPartnerRole.getPrivileges());
         tradingPartnerRole.addPrivileges(Sets.newHashSet(ordersRead, ordersWrite, sharesRead));
-
-        //TODO: testnutzer in readme vermerken
-        //TODO: min passwort length?
-        Employee e = new Employee();
-        e.setUsername("admin");
-        e.setPassword("123");
-        userService.createEmployee(e);
-        TradingPartner t = new TradingPartner();
-        t.setUsername("eBank");
-        t.setPassword("123");
-        t.setBillingBankAccount(new BankAccount("DE0123456789"));
-        userService.createTradingPartner(t);
-
-        //TODO: Mit ordentlichem Aktienimport ersetzen
-        shareRepo.save(new Share("DE0005190003", "BMW AG", 58.55f));
-        shareRepo.save(new Share("DE0007664039", "Volkswagen Group", 180.0f));
-        shareRepo.save(new Share("US88160R1014", "Telsa, Inc.", 832.90f));
     }
 
     private UserPrivilege getOrCreatePrivilege(String name) {
@@ -70,7 +48,7 @@ public class Start implements CommandLineRunner {
         if (p.isPresent())
             return p.get();
         else
-           return userPrivilegeRepository.save(new UserPrivilege(name));
+            return userPrivilegeRepository.save(new UserPrivilege(name));
     }
 
     private UserRole getOrCreateRole(String name) {

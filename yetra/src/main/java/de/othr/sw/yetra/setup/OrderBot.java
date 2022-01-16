@@ -1,10 +1,10 @@
-package de.othr.sw.yetra;
+package de.othr.sw.yetra.setup;
 
 import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.Order;
 import de.othr.sw.yetra.entity.OrderType;
-import de.othr.sw.yetra.repo.OrderRepository;
-import de.othr.sw.yetra.repo.UserRepository;
+import de.othr.sw.yetra.repository.OrderRepository;
+import de.othr.sw.yetra.repository.UserRepository;
 import de.othr.sw.yetra.service.OrderServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
