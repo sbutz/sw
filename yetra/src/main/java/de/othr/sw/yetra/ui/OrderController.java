@@ -39,14 +39,7 @@ public class OrderController {
         //TODO: sort by date descending
         //TODO: use OrderDTO
         //TODO: page size as RequestParam or @Value everywhere
-        Pageable pageable = PageRequest.of(page, 20);
-        Page<Order> orders;
-        if (user.hasAuthority("ROLE_ADMIN"))
-            orders = orderService.getOrders(pageable);
-        else
-            orders = orderService.getOrders(user, pageable);
-
-        model.addAttribute("orders", orders);
+        model.addAttribute("orders", orderService.getOrders(user, PageRequest.of(page, 20)));
         return "orderList";
     }
 
@@ -77,7 +70,6 @@ public class OrderController {
         } else {
             Order o = dtoMapper.fromDTO(order);
             o.setClient(user);
-            //TODO: methode anders benennen
             orderService.createOrder(o);
             return "redirect:/orders";
         }

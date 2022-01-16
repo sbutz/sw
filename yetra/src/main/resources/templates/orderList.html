@@ -16,7 +16,6 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Client</th>
                 <th>Isin</th>
                 <th>Share name</th>
                 <th>Type</th>
@@ -29,7 +28,6 @@
         <tbody>
             <tr th:each="o,index: ${orders}">
                 <td th:text="${o.getId()}"></td>
-                <td th:text="${o.getClient().getUsername()}"></td>
                 <td th:text="${o.getShare().getIsin()}"></td>
                 <td th:text="${o.getShare().getName()}"></td>
                 <td th:text="${#strings.capitalize(#strings.toLowerCase(o.getType()))}"></td>

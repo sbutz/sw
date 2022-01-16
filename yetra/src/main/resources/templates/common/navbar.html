@@ -48,6 +48,13 @@
                             Orders
                         </a>
                     </li>
+                    <li class="nav-item" sec:authorize="hasAuthority('TRANSACTIONS_READ')">
+                        <a class="nav-link"
+                           th:href="@{/transactions}"
+                           th:classappend="${#request.getRequestURI() == '/transactions'? 'active' : ''}">
+                            Transactions
+                        </a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item dropdown">

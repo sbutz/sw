@@ -3,6 +3,8 @@ package de.othr.sw.yetra.service;
 import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.repo.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,6 +33,11 @@ public class TransactionService implements TransactionServiceIF {
 
         Transaction transaction = new Transaction(sellOrder.getShare(), sellOrder.getUnitPrice(), buyOrder, sellOrder);
         return transactionRepo.save(transaction);
+    }
+
+    @Override
+    public Page<Transaction> getTransactions(Pageable pageable) {
+        return transactionRepo.findAll(pageable);
     }
 
     @Override
