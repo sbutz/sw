@@ -1,4 +1,4 @@
-package de.othr.sw.yetra.ui;
+package de.othr.sw.yetra.controller.mvc;
 
 import de.othr.sw.yetra.service.TransactionServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;

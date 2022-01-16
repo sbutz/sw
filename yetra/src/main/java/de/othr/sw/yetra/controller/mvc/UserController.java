@@ -1,4 +1,4 @@
-package de.othr.sw.yetra.ui;
+package de.othr.sw.yetra.controller.mvc;
 
 import de.othr.sw.yetra.dto.TradingPartnerDTO;
 import de.othr.sw.yetra.dto.UserDTO;

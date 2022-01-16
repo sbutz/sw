@@ -1,4 +1,4 @@
-package de.othr.sw.yetra.rest;
+package de.othr.sw.yetra.controller.rest;
 
 import de.othr.sw.yetra.dto.*;
 import de.othr.sw.yetra.entity.Share;
