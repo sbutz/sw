@@ -31,8 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            //TODO: enable csrf in production
-            // see: https://www.baeldung.com/csrf-stateless-rest-api
+            // disable csrf for rest apis
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/" ).permitAll()
