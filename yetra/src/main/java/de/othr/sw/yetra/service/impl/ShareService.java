@@ -21,8 +21,6 @@ import java.util.Collection;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
-//TODO: add transactional
-
 @Service
 @Scope(SCOPE_SINGLETON)
 public class ShareService implements ShareServiceIF {
