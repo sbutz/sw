@@ -2,8 +2,8 @@ package de.othr.sw.yetra.service.impl;
 
 import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.repository.TransactionRepository;
-import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.service.TransactionServiceIF;
+import de.othr.sw.yetra.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
@@ -26,17 +26,17 @@ public class TransactionService implements TransactionServiceIF {
     @Transactional(Transactional.TxType.MANDATORY)
     public Transaction createTransaction(Order buyOrder, Order sellOrder) throws ServiceException {
         if (buyOrder.getStatus() != OrderStatus.OPEN || sellOrder.getStatus() != OrderStatus.OPEN)
-            throw new ServiceException(422, "Order already closed");
+            throw new InvalidEntityException("Order already closed");
         if (buyOrder.getType() != OrderType.BUY)
-            throw new ServiceException(422, "Wrong order type");
+            throw new InvalidEntityException("Wrong order type");
         if (sellOrder.getType() != OrderType.SELL)
-            throw new ServiceException(422, "Wrong order type");
+            throw new InvalidEntityException("Wrong order type");
         if (! buyOrder.getShare().equals(sellOrder.getShare()))
-            throw new ServiceException(422, "Different shares specified");
+            throw new InvalidEntityException("Different shares specified");
         if (buyOrder.getQuantity() != sellOrder.getQuantity())
-            throw new ServiceException(422, "Different quantities specified");
+            throw new InvalidEntityException("Different quantities specified");
         if (buyOrder.getUnitPrice() != sellOrder.getUnitPrice())
-            throw new ServiceException(422, "Different unit prices specified");
+            throw new InvalidEntityException("Different unit prices specified");
 
         Transaction transaction = new Transaction(sellOrder.getShare(), sellOrder.getUnitPrice(), buyOrder, sellOrder);
         return transactionRepo.save(transaction);
@@ -51,7 +51,7 @@ public class TransactionService implements TransactionServiceIF {
     public Transaction getLastTransaction(Share share, LocalDateTime start, LocalDateTime end) throws ServiceException {
         return transactionRepo.getFirstByShareAndTimestampBetweenOrderByTimestampDesc(share, start, end)
                 .orElseThrow(()-> {
-                    throw new ServiceException(404, "Transaction not found");
+                    throw new NotFoundException("Transaction not found");
                 });
     }
 }

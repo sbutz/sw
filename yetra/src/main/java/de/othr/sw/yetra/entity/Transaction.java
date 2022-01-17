@@ -17,11 +17,11 @@ public class Transaction extends SingleIdEntity<Long> {
     private long id;
 
     @NotNull
-    @PastOrPresent
+    @PastOrPresent(message = "Timestamp must not be in the future.")
     private LocalDateTime timestamp;
 
     @NotNull
-    @PositiveOrZero
+    @PositiveOrZero(message = "Price must be greater or equal zero.")
     private double unitPrice;
 
     @NotNull
@@ -50,6 +50,10 @@ public class Transaction extends SingleIdEntity<Long> {
     @Override
     public Long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public LocalDateTime getTimestamp() {

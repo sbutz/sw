@@ -5,8 +5,8 @@ import de.othr.sw.yetra.dto.*;
 import de.othr.sw.yetra.entity.Share;
 import de.othr.sw.yetra.entity.Transaction;
 import de.othr.sw.yetra.repository.ShareRepository;
-import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.service.ShareServiceIF;
+import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.util.MathUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,11 +14,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
@@ -32,12 +35,18 @@ public class ShareService implements ShareServiceIF {
     @Autowired
     private TransactionService transactionService;
 
+    @Autowired
+    private Validator validator;
+
     @Override
     public Share createShare(Share share) throws ServiceException {
         if (shareRepo.existsById(share.getIsin()))
-            throw new ServiceException(409, "Share already exists");
+            throw new ConflictException("Share already exists");
 
-        //TODO: check price > 0 -> illegal Arrguemtn Exception
+        Set<ConstraintViolation<Share>> errors = validator.validate(share);
+        if (!errors.isEmpty())
+            throw new InvalidEntityException(errors.iterator().next().getMessage());
+
         share.setCurrentPrice(MathUtils.round(share.getCurrentPrice(), 3));
         return shareRepo.save(share);
     }
@@ -47,7 +56,7 @@ public class ShareService implements ShareServiceIF {
         return shareRepo
                 .findById(isin)
                 .orElseThrow(()-> {
-                    throw new ServiceException(404, "Share not found");
+                    throw new NotFoundException("Share not found");
                 });
     }
 
@@ -112,7 +121,7 @@ public class ShareService implements ShareServiceIF {
             Share s = shareRepo
                     .findById(isin)
                     .orElseThrow(()-> {
-                        throw new ServiceException(404, "Share not found");
+                        throw new NotFoundException("Share not found");
                     });
             shares.add(s);
         }

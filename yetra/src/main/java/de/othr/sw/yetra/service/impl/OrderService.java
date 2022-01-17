@@ -4,10 +4,8 @@ import de.othr.sw.yetra.dto.util.DTOMapper;
 import de.othr.sw.yetra.dto.OrderDTO;
 import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.repository.OrderRepository;
-import de.othr.sw.yetra.service.OrderServiceIF;
+import de.othr.sw.yetra.service.*;
 import de.othr.sw.yetra.service.ServiceException;
-import de.othr.sw.yetra.service.ShareServiceIF;
-import de.othr.sw.yetra.service.TransactionServiceIF;
 import de.othr.sw.yetra.util.MathUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -17,8 +15,11 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
@@ -33,6 +34,9 @@ public class OrderService implements OrderServiceIF {
     private ShareServiceIF shareService;
 
     @Autowired
+    private UserServiceIF userService;
+
+    @Autowired
     private TransactionServiceIF transactionService;
 
     @Autowired
@@ -41,18 +45,28 @@ public class OrderService implements OrderServiceIF {
     @Autowired
     private DTOMapper<Order, OrderDTO> dtoMapper;
 
+    @Autowired
+    private Validator validator;
+
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
     public Order createOrder(Order order) throws ServiceException {
-        if (orderRepo.existsById(order.getId()))
-            throw new ServiceException(409, "Order already exists");
-
-        // throws exception if share does not exist
-        shareService.getShare(order.getShare().getIsin());
-
+        order.setId(0);
         order.setStatus(OrderStatus.OPEN);
         order.setTimestamp(LocalDateTime.now());
         order.setUnitPrice(MathUtils.round(order.getUnitPrice(), 3));
+
+        Set<ConstraintViolation<Order>> errors = validator.validate(order);
+        if (!errors.isEmpty())
+            throw new InvalidEntityException(errors.iterator().next().getMessage());
+
+        // throws exception if share does not exist
+        Share share = shareService.getShare(order.getShare().getIsin());
+        order.setShare(share);
+
+        // throws exception if user does not exist
+        User user = userService.getUser(order.getClient().getId());
+        order.setClient(user);
 
         order = orderRepo.save(order);
 
@@ -86,7 +100,7 @@ public class OrderService implements OrderServiceIF {
         return orderRepo
                 .findOrderByIdAndClient(id, user)
                 .orElseThrow(() -> {
-                    throw new ServiceException(404, "Order not found");
+                    throw new NotFoundException("Order not found");
                 });
     }
 

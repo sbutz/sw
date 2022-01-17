@@ -4,8 +4,8 @@ import de.othr.sw.yetra.entity.User;
 import de.othr.sw.yetra.entity.UserRole;
 import de.othr.sw.yetra.repository.UserRepository;
 import de.othr.sw.yetra.repository.UserRoleRepository;
-import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.service.UserServiceIF;
+import de.othr.sw.yetra.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
@@ -33,18 +36,28 @@ public class UserService implements UserServiceIF, UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    Validator validator;
+
     @Override
     public User createUser(User user) throws ServiceException {
         if (userRepo.findUserByUsername(user.getUsername()).isPresent())
-            throw new ServiceException(409, "User already exists");
+            //TODO: specialized excpetions
+            //no http codes in service code
+            throw new ConflictException("User already exists");
+
+        Set<ConstraintViolation<User>> errors = validator.validate(user);
+        if (!errors.isEmpty())
+            throw new InvalidEntityException(errors.iterator().next().getMessage());
 
         Optional<UserRole> role = userRoleRepo.findById(user.getRole().getName());
         if (role.isEmpty())
-            throw new ServiceException(404, "User Role does not exists");
+            throw new NotFoundException("User Role does not exists");
+        else
+            user.setRole(role.get());
 
         user.setId(0);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(role.get());
         return userRepo.save(user);
     }
 
@@ -53,7 +66,7 @@ public class UserService implements UserServiceIF, UserDetailsService {
         return userRepo
                 .findById(id)
                 .orElseThrow(() -> {
-                    throw new ServiceException(404, "User not found");
+                    throw new NotFoundException("User not found");
                 });
     }
 

@@ -25,10 +25,10 @@ public class Order extends SingleIdEntity<Long> {
     @NotNull
     private Share share;
 
-    @Positive
+    @Positive(message = "Quantity must be greater zero.")
     private int quantity;
 
-    @PositiveOrZero
+    @PositiveOrZero(message = "Price must be greater or equal zero.")
     private double unitPrice;
 
     @Enumerated(EnumType.STRING)
@@ -40,7 +40,7 @@ public class Order extends SingleIdEntity<Long> {
     private User client;
 
     @NotNull
-    @PastOrPresent
+    @PastOrPresent(message = "Timestamp must not be in the future.")
     private LocalDateTime timestamp;
 
     public Order() {

@@ -12,18 +12,23 @@
     <form method="post"
           th:action="@{/shares/create}"
           th:object="${share}"
-          th:class="${validated ? 'was-validated' : ''}">
+          class="was-validated">
 
         <div th:replace="common/form/input :: input(type='text',
                                                     field='isin',
+                                                    name='ISIN',
                                                     minlength='12',
-                                                    maxlength='12')"></div>
-        <div th:replace="common/form/input :: input(type='text', field='name')"></div>
+                                                    maxlength='12',
+                                                    errorMessage='A valid ISIN has 12 places.')"></div>
+        <div th:replace="common/form/input :: input(type='text',
+                                                    field='name',
+                                                    errorMessage='Name must no be empty.')"></div>
         <div th:replace="common/form/input :: input(type='number',
                                                     field='currentPrice',
                                                     name='Current price',
                                                     min='0',
-                                                    step='0.01')"></div>
+                                                    step='0.001',
+                                                    errorMessage='Price must be positive and have maximum 3 decimal places.')"></div>
         <div th:replace="common/form/submit :: submit('Create')"></div>
     </form>
 </section>

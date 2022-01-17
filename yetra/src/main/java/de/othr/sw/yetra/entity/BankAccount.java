@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class BankAccount {
     @NotNull
-    @Size(min = 4, max = 34)
+    @Size(min = 4, max = 34, message = "IBAN must consist of 4-34 characters.")
     private String iban;
 
     public BankAccount() {

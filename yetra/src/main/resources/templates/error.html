@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
 <head>
     <title>Error</title>
 </head>
 <body>
-<h1>Oops, an error occured.</h1>
-<p th:text="${status} + ' - ' + ${error}"></p>
-<p>
-    <a th:href="${path}">Back to the last page</a>
-</p>
-<p>
-    <a href="/">Back to the homepage</a>
-</p>
+<section layout:fragment="main-content">
+    <h1>Oops, an error occured.</h1>
+
+    <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+    <p th:text="${message}"></p>
+
+    <p>
+        <!--/*@thymesVar id="lastPage" type="java.lang.String"*/-->
+        <a th:href="${lastPage}">Back to the last page</a>
+    </p>
+    <p>
+        <a href="/">Back to the homepage</a>
+    </p>
+</section>
 </body>
 </html>

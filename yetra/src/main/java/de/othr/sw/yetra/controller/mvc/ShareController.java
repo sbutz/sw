@@ -9,10 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
@@ -41,24 +38,15 @@ public class ShareController {
     @PreAuthorize("hasAuthority('SHARES_WRITE')")
     public String getShareForm(Model model) {
         model.addAttribute("share", new Share());
-        model.addAttribute("validated", false);
         return "shareForm";
     }
 
     @PostMapping(value = "/create")
     @PreAuthorize("hasAuthority('SHARES_WRITE')")
-    public String createShare(
-            Model model,
-            @Valid @ModelAttribute("wertpapier") Share share,
-            BindingResult bindingResult
+    public String createShare(Model model,
+                              @ModelAttribute("wertpapier") Share share
     ) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("share", share);
-            model.addAttribute("validated", true);
-            return "shareForm";
-        } else {
-            shareService.createShare(share);
-            return "redirect:/shares";
-        }
+        shareService.createShare(share);
+        return "redirect:/shares";
     }
 }

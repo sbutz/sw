@@ -19,11 +19,11 @@ public class User extends SingleIdEntity<Long> implements UserDetails {
     @GeneratedValue
     protected long id;
 
-    @NotBlank
+    @NotBlank(message = "Username must not be empty.")
     @Column(unique=true)
     protected String username;
 
-    @NotBlank
+    @NotBlank(message = "Password must not be empty.")
     protected String password;
 
     @ManyToOne

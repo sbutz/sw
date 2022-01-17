@@ -12,17 +12,12 @@ public class OrderDTO implements Serializable {
 
     private long id;
 
-    @NotNull
     private OrderType type;
 
-    @NotBlank
-    @Size(min = 12, max = 12)
     private String isin;
 
-    @Positive
     private int quantity;
 
-    @PositiveOrZero
     private double unitPrice;
 
     private OrderStatus status;

@@ -27,7 +27,7 @@ public class ShareServiceRestController {
     public Iterable<Share> getShares(
             @RequestParam(name= "filter", required = false) Optional<Iterable<String>> filter,
             @RequestParam(name= "name", required = false) Optional<String> name
-    ) throws ServiceException {
+    ) {
         if (filter.isPresent())
             return shareService.getShares(filter.get());
         if (name.isPresent())
@@ -41,7 +41,7 @@ public class ShareServiceRestController {
     public ShareDetailsDTO getShareDetails(
             @PathVariable(name = "isin") String isin,
             @RequestParam(name = "timePeriod", required = false, defaultValue = "DAY") TimePeriodDTO timePeriod
-    ) throws ServiceException {
+    ) {
         return shareService.getShareDetails(isin, timePeriod);
     }
 }

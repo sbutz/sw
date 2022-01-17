@@ -4,23 +4,20 @@ import de.othr.sw.yetra.entity.util.SingleIdEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 public class Share extends SingleIdEntity<String> {
 
     @Id
     @NotNull
-    @Size(min = 12, max = 12)
+    @Size(min = 12, max = 12, message = "ISIN must consist of 12 characters.")
     private String isin;
 
-    @NotBlank
+    @NotBlank(message = "Name must not be empty.")
     private String name;
 
-    @PositiveOrZero
+    @PositiveOrZero(message = "Price must be greater or equal zero.")
     private double currentPrice;
 
     public Share() {

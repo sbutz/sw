@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface OrderServiceIF {
 
-    Order createOrder(Order order);
+    Order createOrder(Order order) throws ServiceException;
 
     Order getOrder(long id, User user) throws ServiceException;
 

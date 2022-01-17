@@ -12,22 +12,26 @@
     <form method="post"
           th:action="@{/orders/create}"
           th:object="${order}"
-          th:class="${validated ? 'was-validated' : ''}">
+          class="was-validated">
 
         <div th:replace="common/form/input :: input(type='select',
                                                     field='type',
-                                                    enum='de.othr.sw.yetra.entity.OrderType')"></div>
+                                                    enum='de.othr.sw.yetra.entity.OrderType',
+                                                    errorMessage='Please select an type.')"></div>
         <div th:replace="common/form/input :: input(type='select',
                                                     field='isin',
-                                                    options='shares')"></div>
+                                                    options='shares',
+                                                    errorMessage='Please select an share.')"></div>
         <div th:replace="common/form/input :: input(type='number',
                                                     field='quantity',
                                                     min='1',
-                                                    step='1')"></div>
+                                                    step='1',
+                                                    errorMessage='Quantity must be integer and greater zero.')"></div>
         <div th:replace="common/form/input :: input(type='number',
                                                     field='unitPrice',
                                                     min='0.01',
-                                                    step='0.01')"></div>
+                                                    step='0.001',
+                                                    errorMessage='Price must be greater zero and have maximum 3 decimal places.')"></div>
         <div th:replace="common/form/submit :: submit('Create')"></div>
     </form>
 </section>

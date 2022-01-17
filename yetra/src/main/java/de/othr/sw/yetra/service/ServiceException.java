@@ -1,14 +1,31 @@
 package de.othr.sw.yetra.service;
 
-//TODO: Checked or Unchecked (unchecked = subclass of RuntimeException)
-//TODO: use SErviceExecpetion from hibernate/spring
-public class ServiceException extends RuntimeException {
+import org.springframework.http.HttpStatus;
 
-    private int code;
-    private String description;
+public abstract class ServiceException extends RuntimeException {
 
-    public ServiceException(int code, String description) {
-        this.code = code;
-        this.description = description;
+    private HttpStatus status;
+
+    private String message;
+
+    public ServiceException(HttpStatus status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

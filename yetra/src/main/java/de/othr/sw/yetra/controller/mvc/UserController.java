@@ -1,5 +1,6 @@
 package de.othr.sw.yetra.controller.mvc;
 
+import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.User;
 import de.othr.sw.yetra.entity.UserRole;
 import de.othr.sw.yetra.service.UserServiceIF;
@@ -10,10 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 import java.util.Map;
 import java.util.SortedMap;
@@ -44,26 +42,19 @@ public class UserController {
 
     @GetMapping(value = "/create")
     public String getUserForm(Model model) {
-        model.addAttribute("user", new User());
+        User user = new User();
+        user.setRole(new UserRole());
+        user.setBankAccount(new BankAccount());
+        model.addAttribute("user", user);
         model.addAttribute("roles", this.getRoleOptions());
         model.addAttribute("validated", false);
         return "userForm";
     }
 
     @PostMapping(value = "/create")
-    public String createUser(Model model,
-                             @Valid @ModelAttribute("user") User user,
-                             BindingResult bindingResult)
-    {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("user", user);
-            model.addAttribute("roles", this.getRoleOptions());
-            model.addAttribute("validated", true);
-            return "userForm";
-        } else {
-            userService.createUser(user);
-            return "redirect:/users";
-        }
+    public String createUser(@ModelAttribute("user") User user) {
+        userService.createUser(user);
+        return "redirect:/users";
     }
 
     private Map<String, String> getRoleOptions() {

@@ -12,19 +12,24 @@
     <form method="post"
           th:action="@{/users/create}"
           th:object="${user}"
-          th:class="${validated? 'was-validated' : ''}">
+          class="was-validated">
         <div th:replace="common/form/input :: input(type='text',
-                                                    field='username')"></div>
+                                                    field='username',
+                                                    errorMessage='Username must not be empty.')"></div>
         <div th:replace="common/form/input :: input(type='password',
-                                                    field='password')"></div>
+                                                    field='password',
+                                                    errorMessage='Password must not be empty.')"></div>
         <div th:replace="common/form/input :: input(type='select',
-                                                    field='role',
-                                                    options='roles')"></div>
+                                                    field='role.name',
+                                                    name='Role',
+                                                    options='roles',
+                                                    errorMessage='Please select a role.')"></div>
         <div th:replace="common/form/input :: input(type='text',
-                                                    field='bankAccount',
+                                                    field='bankAccount.iban',
                                                     name='Bank Account (IBAN)',
                                                     minlength='4',
-                                                    maxlength='34')"></div>
+                                                    maxlength='34',
+                                                    errorMessage='A valid IBAN consists of 4-34 characters.')"></div>
         <div th:replace="common/form/input :: input(type='text',
                                                     field='notifyChannel',
                                                     name='Notification Channel (ActiveMQ Channel Name)',
