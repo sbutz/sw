@@ -48,8 +48,6 @@ public class OrderBot {
             o.setShare(order.getShare());
             o.setQuantity(order.getQuantity());
             o.setUnitPrice(order.getUnitPrice());
-            //TODO: inject value
-            o.setBankAccount(new BankAccount("DE0123456789"));
             o.setClient(bot);
             orderService.createOrder(o);
         }

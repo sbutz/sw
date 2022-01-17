@@ -1,10 +1,7 @@
 package de.othr.sw.yetra.controller.mvc;
 
-import de.othr.sw.yetra.dto.TradingPartnerDTO;
-import de.othr.sw.yetra.dto.UserDTO;
-import de.othr.sw.yetra.dto.util.DTOMapper;
-import de.othr.sw.yetra.entity.Employee;
-import de.othr.sw.yetra.entity.TradingPartner;
+import de.othr.sw.yetra.entity.User;
+import de.othr.sw.yetra.entity.UserRole;
 import de.othr.sw.yetra.service.UserServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -13,16 +10,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
 @Controller
+@RequestMapping("/users")
 @Scope(SCOPE_SINGLETON)
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class UserController {
@@ -30,69 +29,43 @@ public class UserController {
     @Autowired
     private UserServiceIF userService;
 
-    @Autowired
-    private DTOMapper<TradingPartner, TradingPartnerDTO> tradingPartnerMapper;
-
-    @Autowired
-    private DTOMapper<Employee, UserDTO> employeeMapper;
-
-    @GetMapping(value = "/trading-partners")
-    public String getTradingPartners(Model model,
-                                     @RequestParam(value = "page", required = false, defaultValue = "0") int page)
+    @GetMapping(value = "")
+    public String getUsers(Model model,
+                           @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
-            model.addAttribute("tradingPartners", userService.getTradingPartners(PageRequest.of(page, 20)));
-        return "tradingPartnerTable";
+            model.addAttribute("users", userService.getUsers(PageRequest.of(page, 20)));
+        return "userTable";
     }
 
-    @GetMapping(value = "/trading-partners/create")
-    public String getTradingPartnerForm(Model model) {
-        model.addAttribute("tradingPartner", new TradingPartnerDTO());
+    @GetMapping(value = "/create")
+    public String getUserForm(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", this.getRoleOptions());
         model.addAttribute("validated", false);
-        return "tradingPartnerForm";
+        return "userForm";
     }
 
-    @PostMapping(value = "/trading-partners/create")
-    public String createTradingPartner(Model model,
-                                      @Valid @ModelAttribute("tradingPartner") TradingPartnerDTO tradingPartner,
-                                      BindingResult bindingResult)
+    @PostMapping(value = "/create")
+    public String createUser(Model model,
+                             @Valid @ModelAttribute("user") User user,
+                             BindingResult bindingResult)
     {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("tradingPartner", tradingPartner);
+            model.addAttribute("user", user);
+            model.addAttribute("roles", this.getRoleOptions());
             model.addAttribute("validated", true);
-            return "tradingPartnerForm";
+            return "userForm";
         } else {
-            userService.createTradingPartner(tradingPartnerMapper.fromDTO(tradingPartner));
-            return "redirect:/trading-partners";
+            userService.createUser(user);
+            return "redirect:/users";
         }
     }
 
-    @GetMapping(value = "/employees")
-    public String getEmployees(Model model,
-                               @RequestParam(value = "page", required = false, defaultValue = "0") int page)
-    {
-        model.addAttribute("employees", userService.getEmployees(PageRequest.of(page, 20)));
-        return "employeesTablehtml";
-    }
-
-    @GetMapping(value = "/employees/create")
-    public String getEmployeeForm(Model model) {
-        model.addAttribute("employee", new UserDTO());
-        model.addAttribute("validated", false);
-        return "employeeForm";
-    }
-
-    @PostMapping(value = "/employees/create")
-    public String createEmployee(Model model,
-                                     @Valid @ModelAttribute("employee") UserDTO employee,
-                                     BindingResult bindingResult)
-    {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("employee", employee);
-            model.addAttribute("validated", true);
-            return "employeeForm";
-        } else {
-            userService.createEmployee(employeeMapper.fromDTO(employee));
-            return "redirect:/employees";
+    private Map<String, String> getRoleOptions() {
+        SortedMap<String, String> roles = new TreeMap<>();
+        for (UserRole s : userService.getUserRoles()) {
+            roles.put(s.getName(), s.getHumanReadableName());
         }
+        return roles;
     }
 }

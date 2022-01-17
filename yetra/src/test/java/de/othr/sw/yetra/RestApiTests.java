@@ -42,7 +42,6 @@ public class RestApiTests {
         order.setIsin("DE0005190003");
         order.setQuantity(1);
         order.setUnitPrice(1.00f);
-        order.setIban("DE0123456789");
         webClient
                 .post().uri("/api/orders")
                 .header("Content-Type", "application/json")

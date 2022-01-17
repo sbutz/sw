@@ -42,11 +42,6 @@ public class Order extends SingleIdEntity<Long> {
     @PastOrPresent
     private LocalDateTime timestamp;
 
-    @Embedded
-    @Valid
-    @NotNull
-    private BankAccount bankAccount;
-
     public Order() {
     }
 
@@ -113,13 +108,5 @@ public class Order extends SingleIdEntity<Long> {
 
     public void setTimestamp(LocalDateTime datum) {
         this.timestamp = datum;
-    }
-
-    public BankAccount getBankAccount() {
-        return bankAccount;
-    }
-
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
     }
 }

@@ -27,7 +27,6 @@ public class OrderDTOMapper implements DTOMapper<Order, OrderDTO> {
         dto.setUnitPrice(order.getUnitPrice());
         dto.setStatus(order.getStatus());
         dto.setTimestamp(order.getTimestamp());
-        dto.setIban(order.getBankAccount().getIban());
         return dto;
     }
 
@@ -41,7 +40,6 @@ public class OrderDTOMapper implements DTOMapper<Order, OrderDTO> {
         order.setUnitPrice(dto.getUnitPrice());
         order.setStatus(dto.getStatus());
         order.setTimestamp(dto.getTimestamp());
-        order.setBankAccount(new BankAccount(dto.getIban()));
         return order;
     }
 }

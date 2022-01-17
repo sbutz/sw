@@ -1,18 +1,14 @@
 package de.othr.sw.yetra.entity;
 
 import de.othr.sw.yetra.entity.util.SingleIdEntity;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.thymeleaf.expression.Strings;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
-
-import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 @Entity
 public class UserRole extends SingleIdEntity<String> {
@@ -54,5 +50,14 @@ public class UserRole extends SingleIdEntity<String> {
     @Override
     protected String getId() {
         return this.name;
+    }
+
+    public String getHumanReadableName() {
+        Strings util = new Strings(Locale.ENGLISH);
+        String s = this.getName()
+                .substring(5)
+                .replace('_', ' ')
+                .toLowerCase();
+        return util.capitalizeWords(s);
     }
 }

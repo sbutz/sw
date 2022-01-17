@@ -33,10 +33,6 @@ public class OrderDTO implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
 
-    @NotBlank
-    @Size(min = 4, max = 34)
-    private String iban;
-
     public OrderDTO() {
 
     }
@@ -95,13 +91,5 @@ public class OrderDTO implements Serializable {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getIban() {
-        return iban;
-    }
-
-    public void setIban(String iban) {
-        this.iban = iban;
     }
 }

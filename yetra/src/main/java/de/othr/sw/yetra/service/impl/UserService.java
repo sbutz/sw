@@ -1,10 +1,8 @@
 package de.othr.sw.yetra.service.impl;
 
-import de.othr.sw.yetra.entity.Employee;
-import de.othr.sw.yetra.entity.TradingPartner;
-import de.othr.sw.yetra.repository.EmployeeRepository;
+import de.othr.sw.yetra.entity.User;
+import de.othr.sw.yetra.entity.UserRole;
 import de.othr.sw.yetra.repository.UserRepository;
-import de.othr.sw.yetra.repository.TradingPartnerRepository;
 import de.othr.sw.yetra.repository.UserRoleRepository;
 import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.service.UserServiceIF;
@@ -18,6 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
 @Service
@@ -27,67 +27,34 @@ public class UserService implements UserServiceIF, UserDetailsService {
     private UserRepository userRepo;
 
     @Autowired
-    private EmployeeRepository employeeRepo;
-
-    @Autowired
-    private TradingPartnerRepository tradingPartnerRepository;
-
-    @Autowired
-    private UserRoleRepository userRoleRepository;
+    private UserRoleRepository userRoleRepo;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public Employee createEmployee(Employee employee) {
-        //TODO: id should be 0
-        if (userRepo.existsById(employee.getId())
-                || userRepo.findUserByUsername(employee.getUsername()).isPresent())
+    public User createUser(User user) {
+        if (userRepo.findUserByUsername(user.getUsername()).isPresent())
             throw new ServiceException(409, "User already exists");
 
-        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-        employee.setRole(userRoleRepository.findById("ROLE_ADMIN").get());
-        return employeeRepo.save(employee);
+        Optional<UserRole> role = userRoleRepo.findById(user.getRole().getName());
+        if (role.isEmpty())
+            throw new ServiceException(404, "User Role does not exists");
+
+        user.setId(0);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(role.get());
+        return userRepo.save(user);
     }
 
     @Override
-    public Employee getEmployee(long id) {
-        return employeeRepo
-                .findById(id)
-                .orElseThrow(() -> {
-                    throw new ServiceException(404, "Employee not found");
-                });
+    public Page<User> getUsers(Pageable pageable) {
+        return userRepo.findAll(pageable);
     }
 
     @Override
-    public Page<Employee> getEmployees(Pageable pageable) {
-        return employeeRepo.findAll(pageable);
-    }
-
-    @Override
-    public TradingPartner createTradingPartner(TradingPartner tradingPartner) {
-        //TODO: id should be 0
-        if (userRepo.existsById(tradingPartner.getId())
-                || userRepo.findUserByUsername(tradingPartner.getUsername()).isPresent())
-            throw new ServiceException(409, "Trading Partner already exists");
-
-        tradingPartner.setPassword(passwordEncoder.encode(tradingPartner.getPassword()));
-        tradingPartner.setRole(userRoleRepository.findById("ROLE_TRADING_PARTNER").get());
-        return tradingPartnerRepository.save(tradingPartner);
-    }
-
-    @Override
-    public TradingPartner getTradingPartner(long id) {
-        return tradingPartnerRepository
-                .findById(id)
-                .orElseThrow(() -> {
-                    throw new ServiceException(404, "Trading Partner not found");
-                });
-    }
-
-    @Override
-    public Page<TradingPartner> getTradingPartners(Pageable pageable) {
-        return tradingPartnerRepository.findAll(pageable);
+    public Iterable<UserRole> getUserRoles() {
+        return userRoleRepo.findAll();
     }
 
     @Override

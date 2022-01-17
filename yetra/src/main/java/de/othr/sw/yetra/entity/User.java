@@ -6,14 +6,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User extends SingleIdEntity<Long> implements UserDetails {
+public class User extends SingleIdEntity<Long> implements UserDetails {
     @Id
     @GeneratedValue
     protected long id;
@@ -28,6 +28,13 @@ public abstract class User extends SingleIdEntity<Long> implements UserDetails {
     @ManyToOne
     @NotNull
     private UserRole role;
+
+    @Embedded
+    @NotNull
+    @Valid
+    private BankAccount bankAccount;
+
+    private String notifyChannel;
 
     public User() {
     }
@@ -64,9 +71,29 @@ public abstract class User extends SingleIdEntity<Long> implements UserDetails {
         this.role = role;
     }
 
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    public String getNotifyChannel() {
+        return notifyChannel;
+    }
+
+    public void setNotifyChannel(String notifyChannel) {
+        this.notifyChannel = notifyChannel;
+    }
+
     @Override
     public Long getId() {
         return this.id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public boolean hasAuthority(String name) {

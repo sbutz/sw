@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <title>Create User</title>
+</head>
+<body>
+<section layout:fragment="main-content">
+    <h1>Create User</h1>
+    <form method="post"
+          th:action="@{/users/create}"
+          th:object="${user}"
+          th:class="${validated? 'was-validated' : ''}">
+        <div th:replace="common/form/input :: input(type='text',
+                                                    field='username')"></div>
+        <div th:replace="common/form/input :: input(type='password',
+                                                    field='password')"></div>
+        <div th:replace="common/form/input :: input(type='select',
+                                                    field='role',
+                                                    options='roles')"></div>
+        <div th:replace="common/form/input :: input(type='text',
+                                                    field='bankAccount',
+                                                    name='Bank Account (IBAN)',
+                                                    minlength='4',
+                                                    maxlength='34')"></div>
+        <div th:replace="common/form/input :: input(type='text',
+                                                    field='notifyChannel',
+                                                    name='Notification Channel (ActiveMQ Channel Name)',
+                                                    required='false')"></div>
+        <div th:replace="common/form/submit :: submit('Create')"></div>
+    </form>
+</section>
+</body>
+</html>

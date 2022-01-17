@@ -28,11 +28,6 @@
                                                     field='unitPrice',
                                                     min='0.01',
                                                     step='0.01')"></div>
-        <div th:replace="common/form/input :: input(type='text',
-                                                    field='iban',
-                                                    name='Bank account (iban)',
-                                                    minlength='4',
-                                                    maxlength='34')"></div>
         <div th:replace="common/form/submit :: submit('Create')"></div>
     </form>
 </section>

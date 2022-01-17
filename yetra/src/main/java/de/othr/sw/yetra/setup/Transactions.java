@@ -19,7 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
@@ -129,7 +128,6 @@ public class Transactions {
             buy.setStatus(OrderStatus.CLOSED);
             buy.setClient(importUser);
             buy.setTimestamp(timestamp);
-            buy.setBankAccount(account);
             buyOrders.add(buy);
 
             Order sell = new Order();
@@ -140,7 +138,6 @@ public class Transactions {
             sell.setStatus(OrderStatus.CLOSED);
             sell.setClient(importUser);
             sell.setTimestamp(timestamp);
-            sell.setBankAccount(account);
             sellOrders.add(sell);
         }
 

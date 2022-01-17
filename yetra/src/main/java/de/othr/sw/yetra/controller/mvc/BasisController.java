@@ -1,6 +1,5 @@
 package de.othr.sw.yetra.controller.mvc;
 
-import de.othr.sw.yetra.dto.UserDTO;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,6 @@ public class BasisController {
             Model model,
             @RequestParam(name = "error", defaultValue = "false") boolean error
     ) {
-        model.addAttribute("user", new UserDTO());
         model.addAttribute("validated", error);
         return "loginForm";
     }
