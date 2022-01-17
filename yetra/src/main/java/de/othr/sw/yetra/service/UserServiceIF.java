@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserServiceIF {
 
-    User createUser(User user);
+    User createUser(User user) throws ServiceException;
+
+    User getUser(long id) throws ServiceException;
 
     Page<User> getUsers(Pageable pageable);
 

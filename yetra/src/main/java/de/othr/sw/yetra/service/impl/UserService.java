@@ -34,7 +34,7 @@ public class UserService implements UserServiceIF, UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public User createUser(User user) {
+    public User createUser(User user) throws ServiceException {
         if (userRepo.findUserByUsername(user.getUsername()).isPresent())
             throw new ServiceException(409, "User already exists");
 
@@ -46,6 +46,15 @@ public class UserService implements UserServiceIF, UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(role.get());
         return userRepo.save(user);
+    }
+
+    @Override
+    public User getUser(long id) {
+        return userRepo
+                .findById(id)
+                .orElseThrow(() -> {
+                    throw new ServiceException(404, "User not found");
+                });
     }
 
     @Override
