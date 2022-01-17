@@ -74,6 +74,7 @@ public class Transactions {
             return;
         }
         logger.info("Creating Transactions...");
+
         importUser = userRepo.findUserByUsername("import").get();
 
         CSVFormat csvFormat = CSVFormat.Builder.create()

@@ -1,6 +1,5 @@
 package de.othr.sw.yetra.setup;
 
-import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.Order;
 import de.othr.sw.yetra.entity.OrderType;
 import de.othr.sw.yetra.entity.User;
@@ -23,6 +22,10 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 @Scope(SCOPE_SINGLETON)
 public class OrderBot {
 
+    private static final int interval = 15;
+
+    private static final int delay = 5;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -39,8 +42,7 @@ public class OrderBot {
         bot = userRepository.findUserByUsername("bot").get();
     }
 
-    //TODO: inject value
-    @Scheduled(fixedDelay = 10*1000, initialDelay = 5*1000)
+    @Scheduled(fixedDelay = interval*1000, initialDelay = delay*1000)
     public void completeOpenOrders() {
         for (Order order : orderRepository.findOpenOrders()) {
             Order o = new Order();

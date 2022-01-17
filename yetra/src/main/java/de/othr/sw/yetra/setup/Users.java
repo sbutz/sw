@@ -1,10 +1,10 @@
 package de.othr.sw.yetra.setup;
 
 import de.othr.sw.yetra.entity.*;
-import de.othr.sw.yetra.repository.UserRepository;
 import de.othr.sw.yetra.service.impl.UserService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,14 +27,19 @@ public class Users {
     @Autowired
     private UserService userService;
 
+    @Value("${yetra.bank.account}")
+    private String iban;
+
+    @Value("${yetra.admin.password")
+    private String adminPassword;
+
     @PostConstruct
     public void createUsers() {
         logger.info("Creating users...");
-        //TODO: inject iban
-        //TODO: inject admin credentials?
-        createUser("admin", "123", "ROLE_ADMIN", "DE0123456789");
-        createUser("import", "123", "ROLE_TRADING_PARTNER", "DE0123456789");
-        createUser("bot", "123", "ROLE_TRADING_PARTNER", "DE0123456789");
+
+        createUser("admin", adminPassword, "ROLE_ADMIN", iban);
+        createUser("import", "secret123", "ROLE_TRADING_PARTNER", iban);
+        createUser("bot", "secret123", "ROLE_TRADING_PARTNER", iban);
     }
 
     public void createUser(String username, String password, String role, String iban) {
