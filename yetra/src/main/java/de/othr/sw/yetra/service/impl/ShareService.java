@@ -26,6 +26,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 @Service
 @Scope(SCOPE_SINGLETON)
 public class ShareService implements ShareServiceIF {
+
     @Autowired
     private ShareRepository shareRepo;
 

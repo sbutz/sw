@@ -18,6 +18,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 @Service
 @Scope(SCOPE_SINGLETON)
 public class TransactionService implements TransactionServiceIF {
+
     @Autowired
     private TransactionRepository transactionRepo;
 

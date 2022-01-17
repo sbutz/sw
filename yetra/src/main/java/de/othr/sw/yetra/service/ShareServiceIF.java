@@ -6,8 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 //TODO: gleiche Reihenfolge der Methoden bei allen services
+//TODO: seperates Interface fuer nicht oeffentliche Methoden?
 public interface ShareServiceIF {
-    //TODO: seperates Interface fuer nicht oeffentliche Methoden?
+
     Share createShare(Share share) throws ServiceException;
 
     Share getShare(String isin) throws ServiceException;

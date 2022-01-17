@@ -9,7 +9,10 @@ import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 
 public interface TransactionServiceIF {
+
     Transaction createTransaction(Order sellOrder, Order buyOrder) throws ServiceException;
+
     Page<Transaction> getTransactions(Pageable pageable);
+
     Transaction getLastTransaction(Share share, LocalDateTime start, LocalDateTime end) throws ServiceException;
 }

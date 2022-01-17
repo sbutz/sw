@@ -23,6 +23,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 @Service
 @Scope(SCOPE_SINGLETON)
 public class UserService implements UserServiceIF, UserDetailsService {
+
     @Autowired
     private UserRepository userRepo;
 

@@ -1,7 +1,6 @@
 package de.othr.sw.yetra.dto.util;
 
 import de.othr.sw.yetra.dto.OrderDTO;
-import de.othr.sw.yetra.entity.BankAccount;
 import de.othr.sw.yetra.entity.Order;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;

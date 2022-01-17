@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Share extends SingleIdEntity<String> {
+
     @Id
     @NotNull
     @Size(min = 12, max = 12)

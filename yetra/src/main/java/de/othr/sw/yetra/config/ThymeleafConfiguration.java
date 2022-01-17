@@ -9,6 +9,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 
 @Configuration
 public class ThymeleafConfiguration {
+
     @Bean
     @Scope(SCOPE_SINGLETON)
     public LayoutDialect layoutDialect() {

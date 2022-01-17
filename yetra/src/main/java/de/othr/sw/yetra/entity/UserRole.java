@@ -12,6 +12,7 @@ import java.util.Set;
 
 @Entity
 public class UserRole extends SingleIdEntity<String> {
+
     @Id
     @Column(length = 64)
     @Pattern(regexp = "^ROLE_.+")

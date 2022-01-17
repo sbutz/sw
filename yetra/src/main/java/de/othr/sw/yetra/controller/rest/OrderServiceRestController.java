@@ -19,6 +19,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 @Scope(SCOPE_SINGLETON)
 @RequestMapping(path = "/api/orders")
 public class OrderServiceRestController {
+
     @Autowired
     private OrderServiceIF orderService;
 

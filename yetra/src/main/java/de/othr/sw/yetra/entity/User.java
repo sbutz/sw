@@ -14,6 +14,7 @@ import java.util.HashSet;
 
 @Entity
 public class User extends SingleIdEntity<Long> implements UserDetails {
+
     @Id
     @GeneratedValue
     protected long id;

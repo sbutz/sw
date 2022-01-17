@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class MarketValueDTO implements Serializable {
+
     private LocalDateTime timestamp;
 
     private double unitPrice;

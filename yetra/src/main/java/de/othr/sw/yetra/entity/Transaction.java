@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Transaction extends SingleIdEntity<Long> {
+
     @Id
     @GeneratedValue
     private long id;

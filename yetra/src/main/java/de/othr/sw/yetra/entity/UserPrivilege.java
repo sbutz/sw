@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class UserPrivilege extends SingleIdEntity<String> {
+
     @Id
     @Column(length = 64)
     @Pattern(regexp = "^(?!ROLE_).+")

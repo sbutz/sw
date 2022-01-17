@@ -12,5 +12,6 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 
 @Scope(SCOPE_SINGLETON)
 public interface TransactionRepository extends PagingAndSortingRepository<Transaction, Long> {
+
     Optional<Transaction> getFirstByShareAndTimestampBetweenOrderByTimestampDesc(Share share, LocalDateTime start, LocalDateTime end);
 }

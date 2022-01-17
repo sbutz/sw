@@ -26,6 +26,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 @RequestMapping(path = "/orders")
 @Scope(SCOPE_SINGLETON)
 public class OrderController {
+
     @Autowired
     private OrderServiceIF orderService;
 

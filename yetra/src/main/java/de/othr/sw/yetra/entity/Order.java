@@ -12,6 +12,7 @@ import javax.validation.constraints.PositiveOrZero;
 
 @Entity(name = "ShareOrder")
 public class Order extends SingleIdEntity<Long> {
+
     @Id
     @GeneratedValue
     private long id;

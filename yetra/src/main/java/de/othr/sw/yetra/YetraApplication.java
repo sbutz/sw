@@ -11,5 +11,4 @@ public class YetraApplication {
     public static void main(String[] args) {
         SpringApplication.run(YetraApplication.class, args);
     }
-
 }

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 public class ShareDetailsDTO implements Serializable {
+
     private String isin;
 
     private String name;

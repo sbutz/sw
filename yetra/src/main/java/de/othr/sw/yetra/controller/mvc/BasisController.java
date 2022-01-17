@@ -11,6 +11,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 @Controller
 @Scope(SCOPE_SINGLETON)
 public class BasisController {
+
     @GetMapping(value = "/")
     public String getHomepage() {
         return "homepage";
