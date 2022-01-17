@@ -25,7 +25,6 @@
         <tbody>
             <tr th:each="u,index: ${users}">
                 <td th:text="${index.count}"></td>
-                <!--TODO: ROLE_ wegschneiden, split at _, to lower und capitalize-->
                 <td th:text="${u.getUsername()}"></td>
                 <td th:text="${#strings.capitalizeWords(#strings.toLowerCase(#strings.replace(#strings.substring(u.getRole().getName(), 5), '_', ' ')))}"></td>
                 <td th:text="${u.getBankAccount().getIban()}"></td>
