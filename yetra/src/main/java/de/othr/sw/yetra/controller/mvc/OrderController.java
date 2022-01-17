@@ -7,6 +7,8 @@ import de.othr.sw.yetra.service.OrderServiceIF;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,7 +44,6 @@ public class OrderController {
                             @AuthenticationPrincipal User user,
                             @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
-        //TODO: use OrderDTO
         //TODO: page size as RequestParam or @Value everywhere
         model.addAttribute("orders", orderService.getOrders(user, PageRequest.of(page, 20)));
         return "orderTable";
