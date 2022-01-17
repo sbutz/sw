@@ -42,6 +42,15 @@ public class ShareService implements ShareServiceIF {
     }
 
     @Override
+    public Share getShare(String isin) throws ServiceException {
+        return shareRepo
+                .findById(isin)
+                .orElseThrow(()-> {
+                    throw new ServiceException(404, "Share not found");
+                });
+    }
+
+    @Override
     public ShareDetailsDTO getShareDetails(String isin, TimePeriodDTO timePeriod) throws ServiceException {
         Share share = this.getShare(isin);
         Collection<MarketValueDTO> marketValues = new ArrayList<>();
@@ -81,16 +90,6 @@ public class ShareService implements ShareServiceIF {
 
         return new ShareDetailsDTO(this.getShare(isin), marketValues);
     }
-
-    @Override
-    public Share getShare(String isin) throws ServiceException {
-        return shareRepo
-                .findById(isin)
-                .orElseThrow(()-> {
-                    throw new ServiceException(404, "Share not found");
-                });
-    }
-
 
     @Override
     public Page<Share> getShares(Pageable pageable) {

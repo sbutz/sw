@@ -80,26 +80,12 @@ public class OrderService implements OrderServiceIF {
     }
 
     @Override
-    public Order getOrder(long id) throws ServiceException {
-        return orderRepo
-                .findById(id)
-                .orElseThrow(() -> {
-                    throw new ServiceException(404, "Order not found");
-                });
-    }
-
-    @Override
     public Order getOrder(long id, User user) throws ServiceException {
         return orderRepo
                 .findOrderByIdAndClient(id, user)
                 .orElseThrow(() -> {
                     throw new ServiceException(404, "Order not found");
                 });
-    }
-
-    @Override
-    public Page<Order> getOrders(Pageable pageable) {
-        return orderRepo.findAll(pageable);
     }
 
     @Override

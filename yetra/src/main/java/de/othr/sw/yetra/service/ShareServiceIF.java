@@ -5,8 +5,6 @@ import de.othr.sw.yetra.entity.Share;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-//TODO: gleiche Reihenfolge der Methoden bei allen services
-//TODO: seperates Interface fuer nicht oeffentliche Methoden?
 public interface ShareServiceIF {
 
     Share createShare(Share share) throws ServiceException;

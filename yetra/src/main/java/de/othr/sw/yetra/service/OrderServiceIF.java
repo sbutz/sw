@@ -9,11 +9,7 @@ public interface OrderServiceIF {
 
     Order createOrder(Order order);
 
-    Order getOrder(long id) throws ServiceException;
-
     Order getOrder(long id, User user) throws ServiceException;
-
-    Page<Order> getOrders(Pageable pageable);
 
     Page<Order> getOrders(User user, Pageable pageable);
 }
