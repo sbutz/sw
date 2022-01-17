@@ -95,6 +95,11 @@ public class ShareService implements ShareServiceIF {
     }
 
     @Override
+    public Iterable<Share> getSharesNameContains(String name) {
+        return shareRepo.findAllNameContains(name);
+    }
+
+    @Override
     public Iterable<Share> getShares(Iterable<String> filter) throws ServiceException {
         if (filter == null || Iterables.isEmpty(filter))
             throw new IllegalArgumentException("filter must not be null or empty");

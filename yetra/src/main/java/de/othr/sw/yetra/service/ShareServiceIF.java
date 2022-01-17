@@ -15,5 +15,7 @@ public interface ShareServiceIF {
 
     Page<Share> getShares(Pageable pageable);
 
+    Iterable<Share> getSharesNameContains(String name);
+
     Iterable<Share> getShares(Iterable<String> isins) throws ServiceException;
 }
