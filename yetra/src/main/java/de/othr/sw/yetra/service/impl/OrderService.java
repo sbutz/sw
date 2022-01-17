@@ -8,6 +8,7 @@ import de.othr.sw.yetra.service.OrderServiceIF;
 import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import de.othr.sw.yetra.service.TransactionServiceIF;
+import de.othr.sw.yetra.util.MathUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
@@ -51,6 +52,7 @@ public class OrderService implements OrderServiceIF {
 
         order.setStatus(OrderStatus.OPEN);
         order.setTimestamp(LocalDateTime.now());
+        order.setUnitPrice(MathUtils.round(order.getUnitPrice(), 3));
 
         order = orderRepo.save(order);
 

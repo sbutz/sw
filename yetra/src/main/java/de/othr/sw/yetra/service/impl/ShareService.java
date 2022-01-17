@@ -7,6 +7,7 @@ import de.othr.sw.yetra.entity.Transaction;
 import de.othr.sw.yetra.repository.ShareRepository;
 import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.service.ShareServiceIF;
+import de.othr.sw.yetra.util.MathUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,8 @@ public class ShareService implements ShareServiceIF {
         if (shareRepo.existsById(share.getIsin()))
             throw new ServiceException(409, "Share already exists");
 
+        //TODO: check price > 0 -> illegal Arrguemtn Exception
+        share.setCurrentPrice(MathUtils.round(share.getCurrentPrice(), 3));
         return shareRepo.save(share);
     }
 

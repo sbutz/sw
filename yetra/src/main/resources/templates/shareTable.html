@@ -21,10 +21,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="share,index: ${shares}">
-                <td th:text="${share.getIsin()}"></td>
-                <td th:text="${share.getName()}"></td>
-                <td th:text="${share.getCurrentPrice()} + ' EUR'"></td>
+            <tr th:each="s,index: ${shares}">
+                <td th:text="${s.getIsin()}"></td>
+                <td th:text="${s.getName()}"></td>
+                <td th:text="${#numbers.formatDecimal(s.getCurrentPrice(), 1, 3)} + ' EUR'"></td>
             </tr>
             <tr th:replace="common/table :: emptyTable(shares, 'There are no shares yet.')"></tr>
         </tbody>
