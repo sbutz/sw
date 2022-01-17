@@ -15,7 +15,6 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>#</th>
                 <th>ISIN</th>
                 <th>Name</th>
                 <th>Current Price</th>
@@ -23,7 +22,6 @@
         </thead>
         <tbody>
             <tr th:each="share,index: ${shares}">
-                <td th:text="${index.count}"></td>
                 <td th:text="${share.getIsin()}"></td>
                 <td th:text="${share.getName()}"></td>
                 <td th:text="${share.getCurrentPrice()} + ' EUR'"></td>
