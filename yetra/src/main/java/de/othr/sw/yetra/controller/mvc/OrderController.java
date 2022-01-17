@@ -6,6 +6,7 @@ import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.service.OrderServiceIF;
 import de.othr.sw.yetra.service.ShareServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,14 +39,17 @@ public class OrderController {
     @Autowired
     private DTOMapper<Order,OrderDTO> dtoMapper;
 
+    @Autowired
+    @Qualifier("pageSize")
+    private int pageSize;
+
     @GetMapping("")
     @PreAuthorize("hasAuthority('ORDERS_READ')")
     public String getOrders(Model model,
                             @AuthenticationPrincipal User user,
                             @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
-        //TODO: page size as RequestParam or @Value everywhere
-        model.addAttribute("orders", orderService.getOrders(user, PageRequest.of(page, 20)));
+        model.addAttribute("orders", orderService.getOrders(user, PageRequest.of(page, pageSize)));
         return "orderTable";
     }
 

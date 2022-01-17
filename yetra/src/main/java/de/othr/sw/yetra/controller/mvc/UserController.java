@@ -4,6 +4,7 @@ import de.othr.sw.yetra.entity.User;
 import de.othr.sw.yetra.entity.UserRole;
 import de.othr.sw.yetra.service.UserServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,11 +30,15 @@ public class UserController {
     @Autowired
     private UserServiceIF userService;
 
+    @Autowired
+    @Qualifier("pageSize")
+    private int pageSize;
+
     @GetMapping(value = "")
     public String getUsers(Model model,
                            @RequestParam(value = "page", required = false, defaultValue = "0") int page)
     {
-            model.addAttribute("users", userService.getUsers(PageRequest.of(page, 20)));
+            model.addAttribute("users", userService.getUsers(PageRequest.of(page, pageSize)));
         return "userTable";
     }
 
