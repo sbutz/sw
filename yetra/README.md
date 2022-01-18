@@ -27,6 +27,16 @@ Passwort: 123
 - Andreas Huber: `ynvest`
   - Nutzt meinen Orderservice.
 
+## Build
+### Fat Jar
+```shell
+mvn -Pall package
+```
+### Bibliothek für Partnerprojekte
+```shell
+mvn -Pexternal package
+```
+
 ### Aktualisieren der Dependencies
 ```shell
 mvn install:install-file \
