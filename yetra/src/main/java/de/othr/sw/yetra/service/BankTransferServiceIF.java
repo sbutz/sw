@@ -4,5 +4,5 @@ import eBank.DTO.UeberweisungDTO;
 
 public interface BankTransferServiceIF {
 
-    boolean transfer(UeberweisungDTO ueberweisung) throws ServiceException;
+    void transfer(UeberweisungDTO ueberweisung) throws ServiceException;
 }

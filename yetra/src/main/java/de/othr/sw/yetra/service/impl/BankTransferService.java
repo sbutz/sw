@@ -2,17 +2,21 @@ package de.othr.sw.yetra.service.impl;
 
 import de.othr.sw.yetra.service.BankTransferServiceIF;
 import eBank.DTO.UeberweisungDTO;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 
 @Service
 public class BankTransferService implements BankTransferServiceIF {
+
+    @Autowired
+    private Logger logger;
 
     @Autowired
     private WebClient webClient;
@@ -21,24 +25,32 @@ public class BankTransferService implements BankTransferServiceIF {
     private Duration timeout;
 
     @Override
-    public boolean transfer(UeberweisungDTO ueberweisung) {
+    public void transfer(UeberweisungDTO ueberweisung) {
         if (ueberweisung.getIbanEmpfaenger().equals(ueberweisung.getIbanSender()))
-            return true;
+            return;
 
-        //TODO: test when server available (is http status set in error case?)
-        ResponseEntity<Void> response = webClient
-                .post()
-                .uri(uriBuilder -> uriBuilder.path("/ueberweisung").build())
-                .body(BodyInserters.fromValue(ueberweisung))
-                .retrieve()
-                .toBodilessEntity()
-                .onErrorMap(WebClientRequestException.class,
-                        e -> new ServiceUnavailableException("Bank Transfer Service not available."))
-                .block(timeout);
+        ResponseEntity<Void> response;
+        try {
+            response = webClient
+                    .post()
+                    .uri(uriBuilder -> uriBuilder.path("/restapi/ueberweisung").build())
+                    .body(Mono.just(ueberweisung), UeberweisungDTO.class)
+                    .retrieve()
+                    .toBodilessEntity()
+                    .block(timeout);
+        } catch (WebClientRequestException e) {
+            throw  new ServiceUnavailableException("Bank transfer service not available.");
+        } catch (Exception e) {
+            logger.error("Error during bank transfer");
+            logger.error(e.getMessage());
+            throw new InternalErrorException("Error during bank transfer.");
+        }
 
-        if (response == null)
-            throw new ServiceUnavailableException("Bank Transfer Service not available.");
-        else
-            return response.getStatusCode().is2xxSuccessful();
+        if (response == null) {
+            throw new InternalErrorException("Bank transfer failed with empty response.");
+        } else if (!response.getStatusCode().is2xxSuccessful()) {
+            logger.error("Bank transfer failed with status " + response.getStatusCode().value());
+            throw new InternalErrorException("Bank transfer failed.");
+        }
     }
 }
