@@ -25,15 +25,15 @@ public class Transaction extends SingleIdEntity<Long> {
     private double unitPrice;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne()
     private Share share;
 
     @NotNull
-    @OneToOne
+    @OneToOne(orphanRemoval = false)
     private Order buyOrder;
 
     @NotNull
-    @OneToOne
+    @OneToOne(orphanRemoval = false)
     private Order sellOrder;
 
     public Transaction() {

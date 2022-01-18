@@ -1,6 +1,8 @@
 package de.othr.sw.yetra.entity;
 
 import de.othr.sw.yetra.entity.util.SingleIdEntity;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.thymeleaf.expression.Strings;
 
 import javax.persistence.*;
@@ -16,10 +18,11 @@ public class UserRole extends SingleIdEntity<String> {
     @Id
     @Column(length = 64)
     @Pattern(regexp = "^ROLE_.+")
-    @Size(min=6,max=64)
+    @Size(min = 6, max = 64)
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(CascadeType.PERSIST)
     private Set<UserPrivilege> privileges;
 
     public UserRole() {
