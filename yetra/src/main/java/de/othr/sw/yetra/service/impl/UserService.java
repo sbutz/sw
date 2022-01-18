@@ -42,8 +42,6 @@ public class UserService implements UserServiceIF, UserDetailsService {
     @Override
     public User createUser(User user) throws ServiceException {
         if (userRepo.findUserByUsername(user.getUsername()).isPresent())
-            //TODO: specialized excpetions
-            //no http codes in service code
             throw new ConflictException("User already exists");
 
         Set<ConstraintViolation<User>> errors = validator.validate(user);
