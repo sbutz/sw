@@ -93,6 +93,15 @@
             <artifactId>spring-boot-starter-activemq</artifactId>
             <version>2.6.2</version>
         </dependency>
+
+        <!-- Sina Amann  eBank -->
+        <dependency>
+            <groupId>eBank</groupId>
+            <artifactId>eBank</artifactId>
+            <scope>runtime</scope>
+            <version>0.0.1</version>
+            <systemPath>${basedir}/lib/eBank-0.0.1-external.jar</systemPath>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
