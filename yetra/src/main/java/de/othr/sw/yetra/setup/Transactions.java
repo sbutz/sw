@@ -5,14 +5,13 @@ import de.othr.sw.yetra.entity.*;
 import de.othr.sw.yetra.repository.OrderRepository;
 import de.othr.sw.yetra.repository.ShareRepository;
 import de.othr.sw.yetra.repository.TransactionRepository;
-import de.othr.sw.yetra.repository.UserRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
@@ -31,15 +30,11 @@ import java.util.Iterator;
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
 @Component
-@DependsOn(Users.component)
 @Scope(SCOPE_SINGLETON)
 public class Transactions {
 
     @Autowired
     private Logger logger;
-
-    @Autowired
-    private UserRepository userRepo;
 
     @Autowired
     private ShareRepository shareRepo;
@@ -56,6 +51,8 @@ public class Transactions {
     @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
     private int batchSize;
 
+    @Autowired
+    @Qualifier("import")
     private User importUser;
 
     private HashMap<String, Share> shares = new HashMap<>();
@@ -74,8 +71,6 @@ public class Transactions {
             return;
         }
         logger.info("Creating Transactions...");
-
-        importUser = userRepo.findUserByUsername("import").get();
 
         CSVFormat csvFormat = CSVFormat.Builder.create()
                 .setDelimiter(',')

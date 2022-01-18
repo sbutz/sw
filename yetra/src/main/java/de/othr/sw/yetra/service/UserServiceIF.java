@@ -11,6 +11,8 @@ public interface UserServiceIF {
 
     User getUser(long id) throws ServiceException;
 
+    User getUser(String username) throws ServiceException;
+
     Page<User> getUsers(Pageable pageable);
 
     Iterable<UserRole> getUserRoles();

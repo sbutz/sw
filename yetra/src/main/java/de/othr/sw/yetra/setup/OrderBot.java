@@ -7,19 +7,16 @@ import de.othr.sw.yetra.entity.Share;
 import de.othr.sw.yetra.entity.User;
 import de.othr.sw.yetra.repository.OrderRepository;
 import de.othr.sw.yetra.repository.ShareRepository;
-import de.othr.sw.yetra.repository.UserRepository;
 import de.othr.sw.yetra.service.OrderServiceIF;
 import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.util.MathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 import java.util.Random;
 
@@ -27,18 +24,16 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 
 
 @Component
-@DependsOn(Users.component)
 @Scope(SCOPE_SINGLETON)
 public class OrderBot {
 
-    private static final int interval = 20;
+    private final static int interval = 20;
 
-    private static final int delay = 10;
+    private final static int delay = 10;
 
-    private static final Logger logger = LoggerFactory.getLogger(OrderBot.class);
+    private final static Logger logger = LoggerFactory.getLogger(OrderBot.class);
 
-    @Autowired
-    private UserRepository userRepo;
+    private final static Random random = new Random();
 
     @Autowired
     private OrderServiceIF orderService;
@@ -49,6 +44,8 @@ public class OrderBot {
     @Autowired
     private ShareRepository shareRepo;
 
+    @Autowired
+    @Qualifier("bot")
     private User bot;
 
     private final Random random = new Random();

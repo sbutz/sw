@@ -60,9 +60,18 @@ public class UserService implements UserServiceIF, UserDetailsService {
     }
 
     @Override
-    public User getUser(long id) {
+    public User getUser(long id) throws ServiceException {
         return userRepo
                 .findById(id)
+                .orElseThrow(() -> {
+                    throw new NotFoundException("User not found");
+                });
+    }
+
+    @Override
+    public User getUser(String username) throws ServiceException {
+        return userRepo
+                .findUserByUsername(username)
                 .orElseThrow(() -> {
                     throw new NotFoundException("User not found");
                 });
@@ -80,10 +89,10 @@ public class UserService implements UserServiceIF, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepo
-                .findUserByUsername(username)
-                .orElseThrow(() -> {
-                    throw new UsernameNotFoundException("User (name=" + username + ") not found");
-                });
+        try {
+            return getUser(username);
+        } catch (ServiceException e) {
+            throw new UsernameNotFoundException("User (name=" + username + ") not found");
+        }
     }
 }

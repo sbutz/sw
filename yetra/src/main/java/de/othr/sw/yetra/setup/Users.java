@@ -1,31 +1,38 @@
 package de.othr.sw.yetra.setup;
 
 import de.othr.sw.yetra.entity.*;
-import de.othr.sw.yetra.service.impl.UserService;
+import de.othr.sw.yetra.service.ServiceException;
+import de.othr.sw.yetra.service.UserServiceIF;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
-@Component(value = Users.component)
-@DependsOn(UserRoles.component)
+@Configuration()
 @Scope(SCOPE_SINGLETON)
 public class Users {
-
-    public static final String component = "UserSetup";
 
     @Autowired
     private Logger logger;
 
     @Autowired
-    private UserService userService;
+    private UserServiceIF userService;
+
+    @Autowired
+    @Qualifier("admin")
+    private UserRole adminRole;
+
+    @Autowired
+    @Qualifier("tradingPartner")
+    private UserRole tradingPartnerRole;
 
     @Value("${yetra.bank.account}")
     private String iban;
@@ -35,23 +42,30 @@ public class Users {
 
     @PostConstruct
     public void createUsers() {
-        logger.info("Creating users...");
-
-        createUser("admin", adminPassword, "ROLE_ADMIN", iban);
-        createUser("import", "secret123", "ROLE_TRADING_PARTNER", iban);
-        createUser("bot", "secret123", "ROLE_TRADING_PARTNER", iban);
+        logger.info("Creating admin user...");
+        getOrCreateUser("admin", adminPassword, adminRole, iban);
     }
 
-    public void createUser(String username, String password, String role, String iban) {
+    @Bean("import")
+    public User getImport() {
+        return getOrCreateUser("import", "secret123", tradingPartnerRole, iban);
+    }
+
+    @Bean("bot")
+    public User getBot() {
+        return getOrCreateUser("bot", "secret123", tradingPartnerRole, iban);
+    }
+
+    private User getOrCreateUser(String username, String password, UserRole role, String iban) {
         try {
-            userService.loadUserByUsername(username);
-        } catch (UsernameNotFoundException e) {
+            return userService.getUser(username);
+        } catch (ServiceException e) {
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
-            user.setRole(new UserRole(role));
+            user.setRole(role);
             user.setBankAccount(new BankAccount(iban));
-            userService.createUser(user);
+            return userService.createUser(user);
         }
     }
 }
