@@ -24,9 +24,8 @@ public class ShareServiceRestController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('SHARES_READ')")
-    public Iterable<Share> getShares(
-            @RequestParam(name= "filter", required = false) Optional<String[]> filter,
-            @RequestParam(name= "name", required = false) Optional<String> name
+    public Iterable<Share> getShares(@RequestParam(name= "filter", required = false) Optional<String[]> filter,
+                                     @RequestParam(name= "name", required = false) Optional<String> name
     ) {
         if (filter.isPresent())
             return shareService.getShares(Arrays.asList(filter.get()));
@@ -38,9 +37,8 @@ public class ShareServiceRestController {
 
     @GetMapping("/{isin}")
     @PreAuthorize("hasAuthority('SHARES_READ')")
-    public ShareDetailsDTO getShareDetails(
-            @PathVariable(name = "isin") String isin,
-            @RequestParam(name = "timePeriod", required = false, defaultValue = "DAY") TimePeriodDTO timePeriod
+    public ShareDetailsDTO getShareDetails(@PathVariable(name = "isin") String isin,
+                                           @RequestParam(name = "timePeriod", required = false, defaultValue = "DAY") TimePeriodDTO timePeriod
     ) {
         return shareService.getShareDetails(isin, timePeriod);
     }
