@@ -95,22 +95,19 @@ public class OrderService implements OrderServiceIF {
             sellOrder.setStatus(OrderStatus.CLOSED);
             order.getShare().setCurrentPrice(order.getUnitPrice());
 
-            if (!buyOrder.getClient().getBankAccount().equals(sellOrder.getClient().getBankAccount())) {
-                UeberweisungDTO buyToSell = new UeberweisungDTO(
-                        buyOrder.getClient().getBankAccount().getIban(),
-                        sellOrder.getClient().getBankAccount().getIban(),
-                        buyOrder.getQuantity() * buyOrder.getUnitPrice(),
-                        "Transaction Id: " + t.getId()
-                );
-                bankTransferService.transfer(buyToSell);
-            }
+            UeberweisungDTO buyToSell = new UeberweisungDTO(
+                    buyOrder.getClient().getBankAccount().getIban(),
+                    sellOrder.getClient().getBankAccount().getIban(),
+                    buyOrder.getQuantity() * buyOrder.getUnitPrice(),
+                    "Transaction Id: " + t.getId()
+            );
+            bankTransferService.transfer(buyToSell);
 
             /*
              * If the order amount has already transferred from buyer to seller, the transaction will be committed.
              * If transferring the order fee fails, this is not a problem.
              * Just log the required the data. A admin will read the application log an perform a manual transfer.
              */
-            //TODO: test if the try-catch prevent a rollback
             try {
                 UeberweisungDTO orderFeeBuy = new UeberweisungDTO(
                         buyOrder.getClient().getBankAccount().getIban(),

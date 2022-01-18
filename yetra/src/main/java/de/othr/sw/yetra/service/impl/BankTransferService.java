@@ -22,6 +22,9 @@ public class BankTransferService implements BankTransferServiceIF {
 
     @Override
     public boolean transfer(UeberweisungDTO ueberweisung) {
+        if (ueberweisung.getIbanEmpfaenger().equals(ueberweisung.getIbanSender()))
+            return true;
+
         //TODO: test when server available (is http status set in error case?)
         ResponseEntity<Void> response = webClient
                 .post()
