@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             // disable csrf for rest apis
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/" ).permitAll()
+                .antMatchers("/", "/img/**" ).permitAll()
                 .antMatchers(HttpMethod.GET, "/orders/**", "/api/orders/**").hasAuthority("ORDERS_READ")
                 .antMatchers(HttpMethod.POST, "/orders/**", "/api/orders/**").hasAuthority("ORDERS_WRITE")
                 .antMatchers(HttpMethod.GET, "/shares/**", "/api/shares/**").hasAuthority("SHARES_READ")
