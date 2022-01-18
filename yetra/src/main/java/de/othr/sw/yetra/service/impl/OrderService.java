@@ -7,7 +7,10 @@ import de.othr.sw.yetra.repository.OrderRepository;
 import de.othr.sw.yetra.service.*;
 import de.othr.sw.yetra.service.ServiceException;
 import de.othr.sw.yetra.util.MathUtils;
+import eBank.DTO.UeberweisungDTO;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +31,9 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SING
 public class OrderService implements OrderServiceIF {
 
     @Autowired
+    private Logger logger;
+
+    @Autowired
     private OrderRepository orderRepo;
 
     @Autowired
@@ -40,6 +46,9 @@ public class OrderService implements OrderServiceIF {
     private TransactionServiceIF transactionService;
 
     @Autowired
+    private BankTransferServiceIF bankTransferService;
+
+    @Autowired
     private JmsTemplate jmsTemplate;
 
     @Autowired
@@ -47,6 +56,12 @@ public class OrderService implements OrderServiceIF {
 
     @Autowired
     private Validator validator;
+
+    @Value("${yetra.order.fee}")
+    private double orderFee;
+
+    @Value("${yetra.bank.account}")
+    private String iban;
 
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
@@ -72,24 +87,58 @@ public class OrderService implements OrderServiceIF {
 
         Optional<Order> o = this.findMatchingOrder(order);
         if (o.isPresent()) {
-            Order matchingOrder = o.get();
-            transactionService.createTransaction(
-                    order.getType() == OrderType.BUY ? order : matchingOrder,
-                    order.getType() == OrderType.BUY ? matchingOrder : order
-            );
-            order.setStatus(OrderStatus.CLOSED);
-            matchingOrder.setStatus(OrderStatus.CLOSED);
+            Order buyOrder = order.getType() == OrderType.BUY ? order : o.get();
+            Order sellOrder = order.getType() == OrderType.SELL ? order : o.get();
+
+            Transaction t = transactionService.createTransaction(buyOrder, sellOrder);
+            buyOrder.setStatus(OrderStatus.CLOSED);
+            sellOrder.setStatus(OrderStatus.CLOSED);
             order.getShare().setCurrentPrice(order.getUnitPrice());
 
-            //TODO: geld ueberweisen
-            //TODO: falls trading partner, trade gebühr verlangen
-            //falls error -> abort and rollback changes
+            if (!buyOrder.getClient().getBankAccount().equals(sellOrder.getClient().getBankAccount())) {
+                UeberweisungDTO buyToSell = new UeberweisungDTO(
+                        buyOrder.getClient().getBankAccount().getIban(),
+                        sellOrder.getClient().getBankAccount().getIban(),
+                        buyOrder.getQuantity() * buyOrder.getUnitPrice(),
+                        "Transaction Id: " + t.getId()
+                );
+                bankTransferService.transfer(buyToSell);
+            }
 
-            if (order.getClient().getNotifyChannel() != null)
-                jmsTemplate.convertAndSend(order.getClient().getNotifyChannel(), dtoMapper.toDTO(order));
+            /*
+             * If the order amount has already transferred from buyer to seller, the transaction will be committed.
+             * If transferring the order fee fails, this is not a problem.
+             * Just log the required the data. A admin will read the application log an perform a manual transfer.
+             */
+            //TODO: test if the try-catch prevent a rollback
+            try {
+                UeberweisungDTO orderFeeBuy = new UeberweisungDTO(
+                        buyOrder.getClient().getBankAccount().getIban(),
+                        iban,
+                        orderFee,
+                        "Order Fee for " + buyOrder.getId()
+                );
+                bankTransferService.transfer(orderFeeBuy);
+            } catch (ServiceException e) {
+                logger.error("Failed to transfer order fee for order " + buyOrder.getId());
+            }
+            try {
+                UeberweisungDTO orderFeeSell = new UeberweisungDTO(
+                        sellOrder.getClient().getBankAccount().getIban(),
+                        iban,
+                        orderFee,
+                        "Order Fee for " + sellOrder.getId()
+                );
+                bankTransferService.transfer(orderFeeSell);
+            } catch (ServiceException e) {
+                logger.error("Failed to transfer order fee for order " + sellOrder.getId());
+            }
 
-            if (matchingOrder.getClient().getNotifyChannel() != null)
-                jmsTemplate.convertAndSend(matchingOrder.getClient().getNotifyChannel(), dtoMapper.toDTO(matchingOrder));
+            if (buyOrder.getClient().getNotifyChannel() != null)
+                jmsTemplate.convertAndSend(buyOrder.getClient().getNotifyChannel(), dtoMapper.toDTO(buyOrder));
+
+            if (sellOrder.getClient().getNotifyChannel() != null)
+                jmsTemplate.convertAndSend(sellOrder.getClient().getNotifyChannel(), dtoMapper.toDTO(sellOrder));
         }
 
         return order;
