@@ -17,6 +17,12 @@
         <!-- Limitation of the target server -->
         <java.version>14</java.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>lib</id>
+            <url>file://${basedir}/lib</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -98,9 +104,7 @@
         <dependency>
             <groupId>eBank</groupId>
             <artifactId>eBank</artifactId>
-            <scope>runtime</scope>
-            <version>0.0.1</version>
-            <systemPath>${basedir}/lib/eBank-0.0.1-external.jar</systemPath>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <profiles>

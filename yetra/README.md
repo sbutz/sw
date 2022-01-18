@@ -1,4 +1,4 @@
-# Korrekturinfo
+# Readme
 
 ## Test Nutzer
 Nutzername: admin \
@@ -19,3 +19,22 @@ Passwort: 123
   Die Verantwortung dafür liege bei einem eigenen Projekt,
   einem elektronischen Wertpapierregister.
   Anforderungen dafür werden aktuell von der Bundesregierung erarbeitet.
+  
+## Partner Projekte
+- Sina Amann: `eBank`
+  - Stellt Überweisungsdienst zur Verfügung.
+  - Nutzt meinen Orderservice.
+- Andreas Huber: `ynvest`
+  - Nutzt meinen Orderservice.
+
+### Aktualisieren der Dependencies
+```shell
+mvn install:install-file \
+  -Dfile=./eBank-0.0.1-SNAPSHOT-external.jar \
+  -DgroupId=eBank \
+  -DartifactId=eBank \
+  -Dversion=0.0.1-SNAPSHOT \
+  -Dpackaging=jar \
+  -DgeneratePom=true \
+  -DlocalRepositoryPath=./lib
+```
