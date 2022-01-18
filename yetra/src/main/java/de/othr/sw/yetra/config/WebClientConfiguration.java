@@ -23,7 +23,7 @@ public class WebClientConfiguration {
 
     @Bean
     public Duration defaultTimeout() {
-        return Duration.ofSeconds(1);
+        return Duration.ofSeconds(5);
     }
 
     @Bean
