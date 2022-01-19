@@ -48,14 +48,7 @@ public class OrderBot {
     @Qualifier("bot")
     private User bot;
 
-    private final Random random = new Random();
-
-    @PostConstruct
-    public void init() {
-        bot = userRepo.findUserByUsername("bot").get();
-    }
-
-    @Scheduled(fixedDelay = interval * 1000, initialDelay = delay * 1000)
+    //@Scheduled(fixedDelay = interval * 1000, initialDelay = delay * 1000)
     public void completeOpenOrders() {
         try {
             for (Order order : orderRepo.findOpenOrders()) {
@@ -73,7 +66,7 @@ public class OrderBot {
         }
     }
 
-    @Scheduled(fixedDelay = interval * 1000, initialDelay = delay * 1000)
+    //@Scheduled(fixedDelay = interval * 1000, initialDelay = delay * 1000)
     public void randomOrders() {
         try {
             Iterable<Share> shares = shareRepo.findAll();
