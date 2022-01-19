@@ -29,11 +29,11 @@ public class Transaction extends SingleIdEntity<Long> {
     private Share share;
 
     @NotNull
-    @OneToOne(orphanRemoval = false)
+    @OneToOne(orphanRemoval = true)
     private Order buyOrder;
 
     @NotNull
-    @OneToOne(orphanRemoval = false)
+    @OneToOne(orphanRemoval = true)
     private Order sellOrder;
 
     public Transaction() {
