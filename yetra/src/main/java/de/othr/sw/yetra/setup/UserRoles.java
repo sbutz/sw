@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import javax.annotation.PostConstruct;
+
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
 @Configuration()
@@ -18,9 +20,13 @@ public class UserRoles {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
-    @Bean("admin")
-    public UserRole getAdminRole() {
-        UserRole adminRole = new UserRole("ROLE_ADMIN");
+    private UserRole adminRole;
+
+    private UserRole tradingPartnerRole;
+
+    @PostConstruct
+    public void createRoles() {
+        adminRole = new UserRole("ROLE_ADMIN");
         adminRole.setPrivileges(Sets.newHashSet(
                 new UserPrivilege("ORDERS_READ"),
                 new UserPrivilege("ORDERS_WRITE"),
@@ -30,17 +36,25 @@ public class UserRoles {
                 new UserPrivilege("USERS_WRITE"),
                 new UserPrivilege("TRANSACTIONS_READ")
         ));
-        return userRoleRepository.save(adminRole);
-    }
-
-    @Bean("tradingPartner")
-    public UserRole getTradingPartnerRole() {
-        UserRole tradingPartnerRole = new UserRole("ROLE_TRADING_PARTNER");
+        adminRole = userRoleRepository.save(adminRole);
+        tradingPartnerRole = new UserRole("ROLE_TRADING_PARTNER");
         tradingPartnerRole.setPrivileges(Sets.newHashSet(
                 new UserPrivilege("ORDERS_READ"),
                 new UserPrivilege("ORDERS_WRITE"),
                 new UserPrivilege("SHARES_READ")
         ));
-        return userRoleRepository.save(tradingPartnerRole);
+        tradingPartnerRole = userRoleRepository.save(tradingPartnerRole);
+    }
+
+    @Bean("admin")
+    @Scope(SCOPE_SINGLETON)
+    public UserRole getAdminRole() {
+        return adminRole;
+    }
+
+    @Bean("tradingPartner")
+    @Scope(SCOPE_SINGLETON)
+    public UserRole getTradingPartnerRole() {
+        return tradingPartnerRole;
     }
 }
