@@ -120,13 +120,6 @@
                             <mainClass>de.othr.sw.yetra.YetraApplication</mainClass>
                             <executable>true</executable>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>repackage</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
