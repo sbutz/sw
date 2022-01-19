@@ -1,0 +1,142 @@
+\documentclass[12pt, a4paper, titlepage]{article}
+
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=3cm}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{parskip}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks, citecolor=black, filecolor=black, linkcolor=black,       
+	urlcolor=black]{hyperref} 
+
+\usepackage{booktabs}
+
+\newcommand{\andi}[0]{Andreas Huber}
+\newcommand{\andiProj}[0]{\textit{ynvest}}
+\newcommand{\sina}[0]{Sina Amann}
+\newcommand{\sinaProj}[0]{\textit{eBank}}
+
+
+\begin{document}
+
+\title{2. Meilenstein im Fach Softwareentwicklung}
+\author{Stefan Butz \\
+		Studiengruppen: IN7 \\
+		Matrikelnummer: 3175600}
+
+\maketitle
+
+\section{Einleitung}
+Dieses Dokument enthält die aktualisierten Bausteine des ersten Meilensteins.
+Um eine Mischung aus deutschen und englischen Bezeichnern im Quellcode zu
+vermeiden, wurden alle Bezeichner ins Englische übersetzt.
+Aus diesem Grund wird jedes Diagramm beigelegt, auch falls es darin sonst
+keine funktionalen Änderungen gab.
+
+Folgende Farblegen gibt Hilfestellung beim Lesen der nachfolgenden Diagramme.
+\begin{itemize}
+	\item \textcolor{green}{grün}:
+	Gekennzeichnetes Objekt wurde gegenüber dem ersten Meilenstein hinzugefügt.
+	\item \textcolor{YellowOrange}{orange}:
+	Gekennzeichnetes Objekt wurde gegenüber dem ersten Meilenstein geändert.
+	\item \textcolor{red}{rot}:
+	Gekennzeichnetes Objekt wurde gegenüber dem ersten Meilenstein entfernt.
+	\item \textcolor{blue}{blau}:
+	Gekennzeichnetes Objekt ist Teil eines Partnerprojektes.
+\end{itemize}
+
+\clearpage
+\section{Anwendungsfalldiagramm}
+\begin{figure}[H]
+	\centering
+    %\includegraphics[width=\textwidth]{Use-Case-Diagramm.png}
+    \includegraphics[height=15.5cm]{Use-Case-Diagramm.png}
+	\caption{Use-Case-Diagramm mit wesentlichen Anwendungsfällen}
+	\label{fig:use_case}
+\end{figure}
+
+\clearpage
+\section{Domänenmodell}
+Die größte Änderung betrifft hier die Entität User.
+Durch den neuen Themnblock Web Security kamen bis dahin unbekannte
+Anforderungen an die Benutzer-Verwaltung hinzu. Aus diesem Grund wurden
+die Entitäten Staff und TradingPartner durch entfernt und ein Rollensystem
+hinzugefügt.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth]{Domaenenmodell.png}
+    %\includegraphics[width=17cm]{Domaenenmodell.png}
+	\caption{Domänenmodell als Klassendiagramm}
+	\label{fig:domain}
+\end{figure}
+
+Bei den Beziehungen zwischen User und Order wurde absichtlich auf eine
+bidirektionale Beziehung verzichtet. Dafür gibt es zwei Gründe.
+\begin{enumerate}
+	\item Ein Nutzer (möglicherweise ein Handelspartner, der wiederum sehr
+	viele Kunden hat) erstellt potenziel viele Aufträge.
+	Diese in eine Java Collection zu laden (auch mit Lazy Loading) wäre
+	ineffizient.
+	\item Das Abfragen der Aufträge aus einem Repository erlaubt einfachere
+	und effizientere Filterung, Sortierung und Paginierung als der Zugriff
+	über eine Java Collection.
+\end{enumerate}
+Gleiches gilt für die Beziehungen zwischen Share und Order sowie Share und
+Transaction.
+
+\section{Komponentenmodel}
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth]{Komponentendiagramm.png}
+	\caption{Systemarchitektur als Komponentenmodell}
+	\label{fig:components}
+\end{figure}
+
+\section{Schnittstellen}
+
+\subsection{Angebotene Schnittstellen}
+\label{subsec:Schnittstellen}
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth]{Schnittstellen.png}
+	\caption{Schnittstellenbeschreibung als Interfaces}
+	\label{fig:interfaces}
+\end{figure}
+Die in \autoref{fig:interfaces} abgebildeten Schnittstellen werden von den
+Partnerprojekten \sinaProj von \sina und \andiProj von \andi genutzt.
+
+\subsection{Konsumierte Schnittstellen}
+Vom Partnerprojekt \sinaProj wird der Überweisungdienst genutzt. Eine genaue
+Schnittstellenbeschreibung dessen entnehmen Sie bitte den Planungsdokumenten
+von \sina.
+
+
+\section{Anmerkungen zur fachlichen Implementierung}
+Auf eine Speicherung, welcher Kunde welche Aktien besitzt, wurde bewusst
+verzichtet. Die Verantwortung dafür liege bei einem gesonderten Projekt,
+einem elektronischen Wertpapierregister. Die Bunderregierung von Deutschland
+erarbeitet aktuell die Anforderung, die ein solches erfüllen müsste.
+Eine sinnvolle Implementierung ist daher nur bedingt möglich.
+
+\section{Anmerkungen zur technischen Implementierung}
+Folgende technischen Besonderheiten verdienen eine Erwähnung:
+\begin{itemize}
+	\item Zur Ansteuerung der Partnerschnittstellen wurde nicht die Klasse
+	RestTemplate sondern WebClient verwendet. RestTemplate ist deprecated.
+	WebClient ist der offizielle Nachfolger. WebClient ermöglicht ausßerdem
+	einfacher Authenfizierung über HTTP Basic Auth.
+	\item Um einen flüssigen Handel zu bieten und die Anwendung besser zu
+	veranschaulichen, wurde ein Bot implementiert. Dieser stellt in regelmäßigen
+	Abständen neue Angebot und Nachfragen ein und befriedigt so den Markt.
+	\item Durch die Nutzung vieler Repositories und die Injektion des aktuellen
+	Nutzer in die Controller wurde stets der Scope Singleton verwendet.
+	Obwhol dies der Standard für alle Beans ist, wurde, um die Requirements zu
+	erfüllen, jede Bean mit der Annotation Scope gekennzeichnet.
+	\item Es wurde ein Testnutzer mit dem Nutzernamen admin und dem
+	korrektorfreundlichen Password 123 angelegt.
+\end{itemize}
+
+\end{document}
