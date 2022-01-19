@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_SINGLETON;
 
@@ -48,7 +49,7 @@ public class OrderBot {
     @Qualifier("bot")
     private User bot;
 
-    @Scheduled(fixedDelay = interval * 1000, initialDelay = delay * 1000)
+    @Scheduled(fixedDelay = interval, initialDelay = delay, timeUnit = TimeUnit.SECONDS)
     public void completeOpenOrders() {
         try {
             for (Order order : orderRepo.findOpenOrders()) {
@@ -66,7 +67,7 @@ public class OrderBot {
         }
     }
 
-    @Scheduled(fixedDelay = interval * 1000, initialDelay = delay * 1000)
+    @Scheduled(fixedDelay = interval, initialDelay = delay, timeUnit = TimeUnit.SECONDS)
     public void randomOrders() {
         try {
             Iterable<Share> shares = shareRepo.findAll();
