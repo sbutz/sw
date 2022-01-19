@@ -10,7 +10,7 @@
     </parent>
     <groupId>de.othr.sw</groupId>
     <artifactId>yetra</artifactId>
-    <version>0.3</version>
+    <version>1.0</version>
     <name>yetra</name>
     <description>Elektronische Handelsplattform für Wertpapiere</description>
     <properties>
