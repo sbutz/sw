@@ -40,7 +40,6 @@ public class Order extends SingleIdEntity<Long> {
     private User client;
 
     @NotNull
-    @PastOrPresent(message = "Timestamp must not be in the future.")
     private LocalDateTime timestamp;
 
     public Order() {
