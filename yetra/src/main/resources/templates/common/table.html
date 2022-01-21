@@ -24,40 +24,17 @@
 
 <nav th:fragment="pagination(page)"
     th:with="baseUrl=${#request.getRequestURI()}">
-    <ul th:if="${__${page}__.getTotalPages() > 1}"
-        class="pagination justify-content-center">
-        <!-- previous -->
-        <li class="page-item">
+    <ul class="pagination justify-content-center">
+        <li class="page-item"
+            th:classappend="${__${page}__.hasPrevious() ? '' : 'disabled'}">
             <a th:href="@{${baseUrl}(page=${__${page}__.getNumber()})}"
                class="page-link link-dark"
-               th:classappend="${__${page}__.hasPrevious() ? '' : 'disabled'}"
                th:text="Previous"></a>
         </li>
-        <!-- previous -->
-        <li th:if="${__${page}__.hasPrevious()}"
-            class="page-item">
-            <a th:href="@{${baseUrl}(page=${__${page}__.getNumber() - 1})}"
-               class="page-link link-dark"
-               th:text="${__${page}__.getNumber()}"></a>
-        </li>
-        <!-- current -->
-        <li class="page-item active">
-            <a th:href="@{${baseUrl}(page=${__${page}__.getNumber()})}"
-               class="page-link link-dark"
-               th:text="${__${page}__.getNumber() + 1}"></a>
-        </li>
-        <!-- next -->
-        <li th:if="${__${page}__.hasNext()}"
-            class="page-item">
+        <li class="page-item"
+            th:classappend="${__${page}__.hasNext() ? '' : 'disabled'}">
             <a th:href="@{${baseUrl}(page=${__${page}__.getNumber() + 1})}"
                class="page-link link-dark"
-               th:text="${__${page}__.getNumber() + 2}"></a>
-        </li>
-        <!-- next -->
-        <li class="page-item">
-            <a th:href="@{${baseUrl}(page=${__${page}__.getNumber() + 1})}"
-               class="page-link link-dark"
-               th:classappend="${__${page}__.hasNext() ? '' : 'disabled'}"
                th:text="Next"></a>
         </li>
     </ul>
